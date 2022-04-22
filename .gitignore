@@ -1,2 +1,3 @@
 /user_*
 /generated_plots/user*
+**/__pycache__/
