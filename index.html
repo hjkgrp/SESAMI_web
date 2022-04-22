@@ -98,24 +98,6 @@
     <div style='font-size:22px; padding-top: 30px' class="container">
       <b>Plotting options</b>
 
-      <!-- Figure type -->
-      <div class = 'row' style='margin-top: 0.25cm;'>
-        <div class='col-lg-4'>
-          Figure type
-        </div>
-        <div class='col-lg-8'>
-          <input autocomplete="off" id='plottype_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="Multiplot" list='plottype_list' onmousedown="value = '';" />
-          <datalist id='plottype_list' style='font-size: 22px;'>
-            <option value="Multiplot">
-            <option value="Isotherm">
-            <option value="BET">
-            <option value="ESW">
-            <option value="BETLin">
-            <option value="BETESWLin">              
-          </datalist>
-        </div>
-      </div>      
-
       <!-- Figure legend -->
       <div class = 'row' style='margin-top: 0.25cm;'>
         <div class='col-lg-4'>
@@ -200,13 +182,33 @@
       <p style='font-size:22px; margin-top:0.25cm;' id='ML_prediction'></p>
     </div>
 
-    <!-- TODO have the plots show here, and a button that allows the user to download the png -->
-    <div id='plot_div' style='font-size:22px; padding-top: 30px; width:100%; text-align:center;' class="container">
-      <img src='generated_plots/structure_summary.png' id='plot_display' alt='SESAMI 1 plot'>
-      <button id='download_button' class='btn btn-primary round_button' style='font-size:22px;'>Download figure</button>
+    <!-- This div displays figures and has a button that allows the user to download the figure pngs. -->
+    <div id='plot_div' style='font-size:22px; padding-top: 30px; width:100%;' class="container">
+      <!-- Figure type -->
+      <div class = 'row'>
+        <div class='col-lg-4'>
+          Figure type
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='plottype_dropdown' style='font-size: 22px; width:100%' class='form-control' list='plottype_list' onmousedown="value = '';" onChange='switch_plot(this.value)'/>
+          <datalist id='plottype_list' style='font-size: 22px;'>
+            <option value="Multiplot">
+            <option value="Isotherm">
+            <option value="BET">
+            <option value="ESW">
+            <option value="BETLin">
+            <option value="BETESWLin">              
+          </datalist>
+        </div>
+      </div>      
+
+      <div style='text-align:center;'>
+        <img style='margin-top: 0.25cm;' src='generated_plots/structure_summary.png' id='plot_display' alt='SESAMI 1 plot'>
+        <button id='download_button' class='btn btn-primary round_button' style='font-size:22px;'>Download figure</button>
+      </div>
     </div>
 
-<!-- This html element stores any uploaded CSV files. -->
+<!-- This html element stores any uploaded CSV files. Does not display. -->
 <input id="file_input" type="file" name="file_input" style="display:none" />
 
 </body>
@@ -215,6 +217,9 @@
 
 <!-- Beginning of JavaScript section -->
 <script>
+
+  // Global variable
+  let FIGURE_PATH = null
 
   // A helper function that clears text out and sets default values.
   function clean_slate() {
@@ -383,9 +388,8 @@
     R2cutoff = $('#r2cutoff_dropdown').val()
     R2min = $('#r2min_dropdown').val()
     gas = $('#gas_dropdown').val()
-    plot_type = $('#plottype_dropdown').val()
 
-    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas, 'plot type': plot_type}
+    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas}
 
     $.post("/run_SESAMI", JSON.stringify(myDict)).done(
       function (response) {
@@ -408,13 +412,53 @@
         $('#BETESW_readout').text('The BET-ESW results are ' + BETESW_analysis)
 
         $('#plot_div').show()
-        $('#plot_display').src = "../user_0/structure_summary.png" // TODO change from user_0 to specific user ID down the line
+        FIGURE_PATH = 'generated_plots/structure_summary.png'
+        $("#plot_display").attr("src",FIGURE_PATH);
+        // $('#plot_display').src = FIGURE_PATH // TODO change from user_0 to specific user ID down the line
       })
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
         alert(errorThrown)
       })
   })
 
+  // Runs when the "Download Figure" button is clicked.
+  $('#download_button').click(function () {
+    var a = document.createElement('a');
+    a.href = FIGURE_PATH // "img.png";
+    a.download = FIGURE_PATH // "output.png";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  })
+
+  function switch_plot(plot_type) {
+    // TODO change from user_0 to specific user ID down the line
+
+    switch (plot_type){
+      case 'Multiplot':
+        FIGURE_PATH = 'generated_plots/structure_summary.png'
+        break
+      case 'Isotherm':
+        FIGURE_PATH = 'generated_plots/Isotherm_structure.png'
+        break
+      case 'BET':
+        FIGURE_PATH = 'generated_plots/BETPlot_structure.png'
+        break
+      case 'ESW':
+        FIGURE_PATH = 'generated_plots/BETESWPlot_structure.png'
+        break
+      case 'BETLin':
+        FIGURE_PATH = 'generated_plots/BETPlot2_structure.png'
+        break
+      case 'BETESWLin':
+        FIGURE_PATH = 'generated_plots/BETESWPlot_structure.png'
+        break
+    }
+
+    console.log('New figure path')
+    console.log(FIGURE_PATH)
+    $("#plot_display").attr("src",FIGURE_PATH);
+  }
 
   // The code below runs when the site first loads up.
   clean_slate()
