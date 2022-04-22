@@ -1,0 +1,404 @@
+<!-- Import libaries-->
+<script src="libraries/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="libraries/ngl.js"></script>
+<script type="text/javascript" src="libraries/webGavrog/runtime.js"></script>
+<script type="text/javascript" src="libraries/webGavrog/vendors.js"></script>
+<script type="text/javascript" src="libraries/webGavrog/main.js"></script>
+<script src="libraries/3Dmol-min.js"></script>
+<script src="libraries/bootstrap.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.1.min.js"></script>
+
+<!-- Import CSS -->
+<link rel="stylesheet" href="libraries/bootstrap.min.css">
+<link rel="stylesheet" href="libraries/bootstrap_custom.min.css">
+
+<!-- Custom CSS code is placed within the <style> tag: -->
+  <style>
+    .round_button {
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      min-width: 130px;
+      width: 33%;
+      background-color: #0000FF; /*blue*/
+    }
+  </style>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    <title>SESAMI Website</title>
+  </head>
+
+  <body>
+    <!-- This div contains a navbar. -->
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-danger">
+      <div class="container">
+        <a href="../" class="navbar-brand" style='font-size: 30px;'>SESAMI website</a>
+      </div>
+    </div>
+
+    <!-- This div contains general information. -->
+    <div style='font-size:22px;' class="container">
+      Welcome! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    </div>
+
+    <!-- This div contains the gas selection option. -->
+    <div style='font-size:22px; padding-top: 30px;' class="container">
+      <b>General options</b>
+      <div class='row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>Type of gas</div>
+        <div class='col-lg-8'>
+          <input id='gas_dropdown' autocomplete="off" style='font-size: 22px; width:100%' class='form-control' placeholder="Argon" list='gas_list' onmousedown="value = '';" />
+          <datalist id='gas_list' style='font-size: 22px;'>
+            <option value="Argon">
+            <option value="Nitrogen">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- R^2 cutoff -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          R<sup>2</sup> cutoff (SESAMI)
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='r2cutoff_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="0.9995" list='r2cutoff_list' onmousedown="value = '';" />
+          <datalist id='r2cutoff_list' style='font-size: 22px;'>
+            <option value="0.99">
+            <option value="0.999">
+            <option value="0.9995">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- R^2 min -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          R<sup>2</sup> min (SESAMI)
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='r2min_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="0.998" list='r2min_list' onmousedown="value = '';" />
+          <datalist id='r2min_list' style='font-size: 22px;'>
+            <option value="0.980">
+            <option value="0.998">
+          </datalist>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- This div contains plotting options. -->
+    <div style='font-size:22px; padding-top: 30px' class="container">
+      <b>Plotting options</b>
+
+      <!-- Figure type -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure type
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='plottype_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="Multiplot" list='plottype_list' onmousedown="value = '';" />
+          <datalist id='plottype_list' style='font-size: 22px;'>
+            <option value="Multiplot">
+            <option value="Isotherm">
+            <option value="BET">
+            <option value="ESW">
+            <option value="BETLin">
+            <option value="BETESWLin">              
+          </datalist>
+        </div>
+      </div>      
+
+      <!-- Figure legend -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure legend 
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='legend_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="Yes" list='legend_list' onmousedown="value = '';" />
+          <datalist id='legend_list' style='font-size: 22px;'>
+            <option value="Yes">
+            <option value="No">
+          </datalist>   
+        </div>
+      </div>
+
+      <!-- Figure font size -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure font size
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='fontsize_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="10" list='fontsize_list' onmousedown="value = '';" />
+          <datalist id='fontsize_list' style='font-size: 22px;'>
+            <option value="6">
+            <option value="8">
+            <option value="10">
+            <option value="12">
+            <option value="14">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- Figure font type -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure font type
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='fonttype_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="sans-serif" list='fonttype_list' onmousedown="value = '';" />
+          <datalist id='fonttype_list' style='font-size: 22px;'>
+            <option value="sans-serif">
+            <option value="serif">
+            <option value="monospace">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- Figure dpi -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure dpi
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='dpi_dropdown' style='font-size: 22px; width:100%' class='form-control' placeholder="300" list='dpi_list' onmousedown="value = '';" />
+          <datalist id='dpi_list' style='font-size: 22px;'>
+            <option value="300">
+            <option value="600">
+          </datalist>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- This div contains important buttons that run the pivotal commands on the website. -->
+    <div style='font-size:22px; padding-top: 30px' class="container">
+      <b style='font-size:22px;'>Buttons!</b>
+      <!-- Create a section containing buttons -->
+      <div class='col-lg-12'>
+        <div style='width:100%; text-align:center; margin-top:0.25cm;'>
+          <button id='upload_button' class='btn btn-primary round_button' style='font-size:22px;'>Upload CSV</button>
+          <button id='run_button' class='btn btn-primary round_button' style='font-size:22px;'>Run calculation</button>
+        </div>
+      </div>
+      <div style='font-size:22px; margin-top:0.25cm;' id='upload_status'></div>
+    </div>
+
+
+    <!-- This div contains the print out of calculations run on the website. -->
+    <div style='font-size:22px; padding-top: 30px' class="container">
+      <p style='font-size:22px; margin-top:0.25cm;' id='BET_readout'></p>
+      <p style='font-size:22px; margin-top:0.25cm;' id='BETESW_readout'></p>
+      <p style='font-size:22px; margin-top:0.25cm;' id='ML_prediction'></p>
+    </div>
+
+    <!-- TODO have the plots show here, and a button that allows the user to download the png -->
+
+<!-- This html element stores any uploaded CSV files. -->
+<input id="file_input" type="file" name="file_input" style="display:none" />
+
+</body>
+
+
+
+<!-- Beginning of JavaScript section -->
+<script>
+
+  // A helper function that clears text out and sets default values.
+  function clean_slate() {
+    $('#BET_readout').text('')
+    $('#BETESW_readout').text('')    
+    $('#ML_prediction').text('')
+
+    // setting default values
+    $('#gas_dropdown').val('Argon') 
+    $('#r2cutoff_dropdown').val('0.9995') 
+    $('#r2min_dropdown').val('0.998')
+    $('#plottype_dropdown').val('Multiplot') 
+    $('#legend_dropdown').val('Yes')
+    $('#fontsize_dropdown').val('10') 
+    $('#fonttype_dropdown').val('sans-serif') 
+    $('#dpi_dropdown').val('300')     
+  }
+
+  // Used to parse a CSV to an array.
+  // ref: http://stackoverflow.com/a/1293163/2343
+  // This will parse a delimited string into an array of
+  // arrays. The default delimiter is the comma, but this
+  // can be overriden in the second argument.
+  function CSVToArray( strData, strDelimiter ){
+      // Check to see if the delimiter is defined. If not,
+      // then default to comma.
+      strDelimiter = (strDelimiter || ",");
+
+      // Create a regular expression to parse the CSV values.
+      var objPattern = new RegExp(
+          (
+              // Delimiters.
+              "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+
+              // Quoted fields.
+              "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+
+              // Standard fields.
+              "([^\"\\" + strDelimiter + "\\r\\n]*))"
+          ),
+          "gi"
+          );
+
+
+      // Create an array to hold our data. Give the array
+      // a default empty first row.
+      var arrData = [[]];
+
+      // Create an array to hold our individual pattern
+      // matching groups.
+      var arrMatches = null;
+
+      // Keep looping over the regular expression matches
+      // until we can no longer find a match.
+      while (arrMatches = objPattern.exec( strData )){
+
+          // Get the delimiter that was found.
+          var strMatchedDelimiter = arrMatches[ 1 ];
+
+          // Check to see if the given delimiter has a length
+          // (is not the start of string) and if it matches
+          // field delimiter. If id does not, then we know
+          // that this delimiter is a row delimiter.
+          if (
+              strMatchedDelimiter.length &&
+              strMatchedDelimiter !== strDelimiter
+              ){
+
+              // Since we have reached a new row of data,
+              // add an empty row to our data array.
+              arrData.push( [] );
+
+          }
+
+          var strMatchedValue;
+
+          // Now that we have our delimiter out of the way,
+          // let's check to see which kind of value we
+          // captured (quoted or unquoted).
+          if (arrMatches[ 2 ]){
+
+              // We found a quoted value. When we capture
+              // this value, unescape any double quotes.
+              strMatchedValue = arrMatches[ 2 ].replace(
+                  new RegExp( "\"\"", "g" ),
+                  "\""
+                  );
+
+          } else {
+
+              // We found a non-quoted value.
+              strMatchedValue = arrMatches[ 3 ];
+
+          }
+
+          // Now that we have our value string, let's add
+          // it to the data array.
+          arrData[ arrData.length - 1 ].push( strMatchedValue );
+      }
+
+      // Return the parsed data.
+      return( arrData );
+  }
+
+  // Used for ensuring that only .csv files are uploaded.
+  function getExtension(filename) {
+    var parts = filename.split('.');
+    return parts[parts.length - 1];
+  }
+  function isCSV(filename) {
+    var ext = getExtension(filename);
+    return ext == 'csv';
+  }
+
+  // Runs when the "Upload CSV" button is clicked.
+  $('#upload_button').on('click', function () { // button triggers upload
+    clean_slate()
+    $('#file_input').trigger('click'); // OS file selection
+  });
+  $("#file_input").change(function () {
+    // Check if uploaded file is a CSV
+    if (!isCSV(this.value)) { // if the uploaded file is not a CSV
+      this.value = null; // clear the non-CSV file
+      $('#upload_status').text('')
+      alert("The uploaded file must be a csv file.");
+      return; // if not a CSV, doesn't continue     
+    }
+
+    let myFile = document.getElementById('file_input').files[0]; // the uploaded file
+    $('#upload_status').text('Selected CSV: ' + myFile.name);
+    // TODO here would be a good place to check if the uploaded CSV is of the right format. If not, clear the file_input and upload_status elements.
+
+    myFile.text().then(function (my_content) {
+      // my_content is the content of the loaded CSV file
+
+      my_content = CSVToArray(my_content, ',')
+
+      myDict = {'my_content': my_content}
+
+      $.post("/save_txt", JSON.stringify(myDict)).done(
+        function (response) {
+        })
+        .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
+          alert(errorThrown)
+        })
+
+    })
+
+  });
+
+  // Runs when the "Run calculation" button is clicked.
+  $('#run_button').click(function () {
+    // Check if a CSV is uploaded.
+    let myFile = document.getElementById('file_input').files[0]; // the uploaded file
+    if (myFile == undefined) {
+      alert("Must upload a CSV for analysis first.");
+      return;
+    }
+
+    dpi = $('#dpi_dropdown').val() // Check which dpi is selected in the dpi dropdown. TODO
+    font_size = $('#fontsize_dropdown').val()
+    font_type = $('#fonttype_dropdown').val()
+    legend = $('#legend_dropdown').val()
+    R2cutoff = $('#r2cutoff_dropdown').val()
+    R2min = $('#r2min_dropdown').val()
+    gas = $('#gas_dropdown').val()
+    plot_type = $('#plottype_dropdown').val()
+
+    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas, 'plot type': plot_type}
+
+    $.post("/run_SESAMI", JSON.stringify(myDict)).done(
+      function (response) {
+
+        // TODO have failure handling
+        if (response == 'Linear failure') {
+          alert("No suitable linear region has been found. Try lowering R2min.")
+          return;
+        }
+
+        // TODO response should be a dictionary
+        console.log(response)
+        console.log(response == 'Linear failure')
+
+        ML_prediction = response['ML_prediction']
+        BET_analysis = response['BET_analysis']
+        BETESW_analysis = response['BETESW_analysis']
+        $('#ML_prediction').text('The ML (SESAMI 2) prediction is ' + ML_prediction + ' m2/g')
+        $('#BET_readout').text('The BET results are ' + BET_analysis)
+        $('#BETESW_readout').text('The BET-ESW results are ' + BETESW_analysis)
+      })
+      .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
+        alert(errorThrown)
+      })
+  })
+
+
+</script>
+<!-- End of Javascript section -->

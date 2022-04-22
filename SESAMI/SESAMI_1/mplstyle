@@ -1,0 +1,36 @@
+# Seaborn paper context
+figure.figsize: 7.0, 6.0
+axes.labelsize: LARGE
+axes.titlesize: LARGE
+xtick.labelsize: medium
+ytick.labelsize: medium
+
+legend.fontsize: LARGE
+legend.frameon: True
+legend.fancybox: False
+legend.framealpha: None
+legend.facecolor: inherit
+legend.edgecolor: inherit
+
+grid.linewidth: 0.8
+
+lines.linewidth: 1.4
+lines.markersize: 8.0
+lines.markeredgewidth: 0
+
+xtick.major.width: 0.8
+ytick.major.width: 0.8
+xtick.minor.width: 0.5
+ytick.minor.width: 0.5
+
+xtick.major.pad: 5.6
+ytick.major.pad: 5.6
+xtick.minor.visible: True
+ytick.minor.visible: True
+
+font.sans-serif: Helvetica, Verdana, DejaVu Sans,sans-serif
+font.size: 13.0
+
+patch.linewidth: 1
+patch.edgecolor: black
+patch.force_edgecolor : True 
