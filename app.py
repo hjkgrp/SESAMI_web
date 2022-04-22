@@ -57,8 +57,6 @@ def run_SESAMI():
 
     # Running the calculation. Makes plots.
     BET_dict, BET_ESW_dict = calculation_runner(MAIN_PATH, plotting_information, session["ID"])
-    print(f'BET_dict: {BET_dict}')
-    print(BET_dict is None)
 
     # Displaying statistics
     if BET_dict is None or BET_ESW_dict is None:
@@ -70,15 +68,15 @@ def run_SESAMI():
         BET_dict["A_BET"] = '%.3f'%BET_dict["A_BET"]
         BET_dict["R2"] = '%.6f'%BET_dict["R2"]
 
-        BET_analysis = f'C = {BET_dict["C"]}<br>\
-            q<sub>m</sub> = {BET_dict["qm"]} mol/kg<br>\
-            BET surface area = {BET_dict["A_BET"]} m<sup>2</sup>/g<br>\
-            Consistency 1: Yes<br>\
-            Consistency 2: Yes<br>\
-            Consistency 3: {BET_dict["con3"]}<br>\
-            Consistency 4: {BET_dict["con4"]}<br>\
-            Length of region: {BET_dict["length"]}<br>\
-            R<sup>2</sup>: {BET_dict["R2"]}' # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
+        BET_analysis = f'C = {BET_dict["C"]}\n\
+            qmsub = {BET_dict["qm"]} mol/kg\n\
+            BET surface area = {BET_dict["A_BET"]} m2sup/g\n\
+            Consistency 1: Yes\n\
+            Consistency 2: Yes\n\
+            Consistency 3: {BET_dict["con3"]}\n\
+            Consistency 4: {BET_dict["con4"]}\n\
+            Length of region: {BET_dict["length"]}\n\
+            R2sup: {BET_dict["R2"]}' # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
         # reformatting
         BET_ESW_dict["C"] = '%.4g'%BET_ESW_dict["C"]
@@ -86,20 +84,19 @@ def run_SESAMI():
         BET_ESW_dict["A_BET"] = '%.3f'%BET_ESW_dict["A_BET"]
         BET_ESW_dict["R2"] = '%.6f'%BET_ESW_dict["R2"]
 
-        BETESW_analysis = f'C = {BET_ESW_dict["C"]}<br>\
-            q<sub>m</sub> = {BET_ESW_dict["qm"]} mol/kg<br>\
-            BET surface area = {BET_ESW_dict["A_BET"]}m<sup>2</sup>/g<br>\
-            Consistency 1: Yes<br>\
-            Consistency 2: Yes<br>\
-            Consistency 3: {BET_ESW_dict["con3"]}<br>\
-            Consistency 4: {BET_ESW_dict["con4"]}<br>\
-            Length of region: {BET_ESW_dict["length"]}<br>\
-            R<sup>2</sup>: {BET_ESW_dict["R2"]}' # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
+        BETESW_analysis = f'C = {BET_ESW_dict["C"]}\n\
+            qmsub = {BET_ESW_dict["qm"]} mol/kg\n\
+            BET surface area = {BET_ESW_dict["A_BET"]}m2sup/g\n\
+            Consistency 1: Yes\n\
+            Consistency 2: Yes\n\
+            Consistency 3: {BET_ESW_dict["con3"]}\n\
+            Consistency 4: {BET_ESW_dict["con4"]}\n\
+            Length of region: {BET_ESW_dict["length"]}\n\
+            R2sup: {BET_ESW_dict["R2"]}' # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
 
     ### SESAMI 2
     ML_prediction = calculation_v2_runner(MAIN_PATH, session["ID"])
-    print(f'ML_prediction is {ML_prediction}')
 
     calculation_results = {'ML_prediction': ML_prediction, 'BET_analysis': BET_analysis, 'BETESW_analysis': BETESW_analysis}
 

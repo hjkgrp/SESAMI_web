@@ -198,8 +198,7 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
 
   test_data['FittedValues'] = lasso.predict(test_data[col_list])
 
-  # print(f'The surface area prediction for the structure is {test_data.iloc[0]["FittedValues"]}')
-
   test_prediction = test_data.iloc[0]["FittedValues"]
+  test_prediction = f'{test_prediction:.2f}' # 2 digits after the decimal place
 
   return test_prediction
