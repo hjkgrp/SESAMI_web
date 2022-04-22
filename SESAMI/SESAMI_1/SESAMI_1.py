@@ -26,6 +26,6 @@ def calculation_runner(MAIN_PATH, plotting_information):
     data = pd.read_table(f'{MAIN_PATH}user_0/input.txt', skiprows=1, sep='\t', names=column_names) # TODO change from user_0 to specific user ID down the line
     data = b.prepdata(data, p0=p0)
 
-    BET_dict, BET_ESW_dict = b.generatesummary(data, plotting_information, sumpath=f'{MAIN_PATH}user_0/', ) # TODO change from user_0 to specific user ID down the line
+    BET_dict, BET_ESW_dict = b.generatesummary(data, plotting_information, sumpath=f'{MAIN_PATH}generated_plots/', ) # TODO have save with user ID later
 
     return BET_dict, BET_ESW_dict

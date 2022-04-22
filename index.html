@@ -22,6 +22,13 @@
       width: 33%;
       background-color: #0000FF; /*blue*/
     }
+
+    #plot_display {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
   </style>
 
   <head>
@@ -194,6 +201,10 @@
     </div>
 
     <!-- TODO have the plots show here, and a button that allows the user to download the png -->
+    <div id='plot_div' style='font-size:22px; padding-top: 30px; width:100%; text-align:center;' class="container">
+      <img src='generated_plots/structure_summary.png' id='plot_display' alt='SESAMI 1 plot'>
+      <button id='download_button' class='btn btn-primary round_button' style='font-size:22px;'>Download figure</button>
+    </div>
 
 <!-- This html element stores any uploaded CSV files. -->
 <input id="file_input" type="file" name="file_input" style="display:none" />
@@ -220,6 +231,8 @@
     $('#fontsize_dropdown').val('10') 
     $('#fonttype_dropdown').val('sans-serif') 
     $('#dpi_dropdown').val('300')     
+
+    $('#plot_div').hide()
   }
 
   // Used to parse a CSV to an array.
@@ -393,12 +406,18 @@
         $('#ML_prediction').text('The ML (SESAMI 2) prediction is ' + ML_prediction + ' m2/g')
         $('#BET_readout').text('The BET results are ' + BET_analysis)
         $('#BETESW_readout').text('The BET-ESW results are ' + BETESW_analysis)
+
+        $('#plot_div').show()
+        $('#plot_display').src = "../user_0/structure_summary.png" // TODO change from user_0 to specific user ID down the line
       })
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
         alert(errorThrown)
       })
   })
 
+
+  // The code below runs when the site first loads up.
+  clean_slate()
 
 </script>
 <!-- End of Javascript section -->

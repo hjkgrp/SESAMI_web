@@ -17,6 +17,10 @@ def index():
 def serve_library_files(path):
     return flask.send_from_directory('libraries', path)
 
+@app.route('/generated_plots/<path:path>') # TODO change from user_0 to specific user ID down the line
+def serve_plots(path):
+    return flask.send_from_directory('generated_plots', path)
+
 # Saves the uploaded CSV as a TXT file
 @app.route('/save_txt', methods=['POST'])
 def save_txt():
