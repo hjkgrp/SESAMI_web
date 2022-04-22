@@ -6,6 +6,7 @@ import os
 import time
 import stat
 import shutil
+import pandas as pd
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 from SESAMI.SESAMI_2.SESAMI_2 import calculation_v2_runner
 
@@ -30,7 +31,7 @@ def serve_images(path):
 def serve_plots(path):
     return flask.send_from_directory('generated_plots', path)
 
-# Saves the uploaded CSV as a TXT file
+# Saves the uploaded CSV as a CSV and TXT file
 @app.route('/save_txt', methods=['POST'])
 def save_txt():
     my_dict = json.loads(flask.request.get_data()) # This is a dictionary.
@@ -155,6 +156,49 @@ def get_ID():
     """ 
     return str(session['ID'])
 
+# Function to check if a type is a number.
+def type_number(my_type):
+    return not (my_type == 'int64' or my_type == 'float64') # true if my_type is not a number
+
+@app.route('/check_csv', methods=['GET'])
+def check_csv():
+    ### Checks
+
+    input_location = f'{MAIN_PATH}user_{session["ID"]}/input.txt'
+
+    data = pd.read_table(input_location, skiprows=1, sep='\t')
+
+    if data.shape[1] != 2:
+        return 'Wrong number of columns in the CSV. There should be two. Please refer to the example CSV.'
+
+    column_names = ['Pressure', 'Loading']
+    data = pd.read_table(input_location, skiprows=1, sep='\t', names=column_names)        
+    dataTypeSeries = data.dtypes # Series object containing the data type objects of each column of the DataFrame.
+
+    # For each column, check its type. If it is not of int64 or float64 type, raise an Exception.
+    for col in column_names:
+        if type_number(dataTypeSeries[col]): 
+            # non numbers in this column
+            return 'The CSV must contain numbers only. Please refer to the example CSV.'
+
+    # Checking for NaN values
+    if data.isnull().values.any():
+        return 'The CSV cannot have any empty cells (gaps), since they lead to NaN values. Please refer to the example CSV.'
+
+    # Checking to ensure the first row of the CSV reads Pressure, Loading
+    data_header = pd.read_table(input_location, nrows=1, sep='\t', names=column_names) 
+    if (data_header['Pressure'][0] != 'Pressure (Pa)') or (data_header['Loading'][0] != 'Loading (mol/kg)'):
+        return 'The CSV does not have the correct first row. The first entries of the two columns should be Pressure (Pa) and Loading (mol/kg), respectively. Please refer to the example CSV.'
+
+    # Check to make sure the lowest loading divided by the highest loading is not less than 0.05
+    # If it is, the isotherm does not have enough low pressure data.
+    data = pd.read_table(input_location, skiprows=1, sep='\t', names=column_names)    
+    loading_data = list(data['Loading'])
+    if loading_data[0] / loading_data[-1] >= 0.05:
+        return "Lacking data at low pressure region."
+
+    # If the code gets to this point, the CSV likely doesn't have any problems with it.
+    return 'All good!'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

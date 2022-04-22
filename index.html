@@ -372,9 +372,16 @@
       return; // if not a CSV, doesn't continue     
     }
 
+
     let myFile = document.getElementById('file_input').files[0]; // the uploaded file
     $('#upload_status').text('Selected CSV: ' + myFile.name);
-    // TODO here would be a good place to check if the uploaded CSV is of the right format. If not, clear the file_input and upload_status elements.
+
+    if (this.files[0].size == 0) { // check if CSV is empty
+      this.value = null; // clear the non-CSV file
+      $('#upload_status').text('')
+      alert("The uploaded file cannot be empty.");
+      return;   
+    }
 
     myFile.text().then(function (my_content) {
       // my_content is the content of the loaded CSV file
@@ -385,11 +392,23 @@
 
       $.post("/save_txt", JSON.stringify(myDict)).done(
         function (response) {
+
+          // TODO here would be a good place to check if the uploaded CSV is of the right format. If not, clear the file_input and upload_status elements.
+          $.get("/check_csv").done(
+            function (response) {
+              console.log('The result of check_csv')
+              console.log(response)
+              if (response != 'All good!') {
+                this.value = null; // clear the bad CSV file
+                $('#upload_status').text('')
+                alert(response)
+              }
+            })
+
         })
         .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
           alert(errorThrown)
         })
-
     })
 
   });
