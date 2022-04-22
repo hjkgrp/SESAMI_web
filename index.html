@@ -203,7 +203,7 @@
       </div>      
 
       <div style='text-align:center;'>
-        <img style='margin-top: 0.25cm;' src='generated_plots/structure_summary.png' id='plot_display' alt='SESAMI 1 plot'>
+        <img style='margin-top: 0.25cm;' src='images/yoshi.webp' id='plot_display' alt='SESAMI 1 plot'>
         <button id='download_button' class='btn btn-primary round_button' style='font-size:22px;'>Download figure</button>
       </div>
     </div>
@@ -218,8 +218,10 @@
 <!-- Beginning of JavaScript section -->
 <script>
 
-  // Global variable
+  // Global variables
   let FIGURE_PATH = null
+  let OUTPUT_NAME = null
+  var USER_ID = null
 
   // A helper function that clears text out and sets default values.
   function clean_slate() {
@@ -381,7 +383,7 @@
       return;
     }
 
-    dpi = $('#dpi_dropdown').val() // Check which dpi is selected in the dpi dropdown. TODO
+    dpi = $('#dpi_dropdown').val() // Check which dpi is selected in the dpi dropdown. 
     font_size = $('#fontsize_dropdown').val()
     font_type = $('#fonttype_dropdown').val()
     legend = $('#legend_dropdown').val()
@@ -400,10 +402,6 @@
           return;
         }
 
-        // TODO response should be a dictionary
-        console.log(response)
-        console.log(response == 'Linear failure')
-
         ML_prediction = response['ML_prediction']
         BET_analysis = response['BET_analysis']
         BETESW_analysis = response['BETESW_analysis']
@@ -412,9 +410,9 @@
         $('#BETESW_readout').text('The BET-ESW results are ' + BETESW_analysis)
 
         $('#plot_div').show()
-        FIGURE_PATH = 'generated_plots/structure_summary.png'
+        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_multiplot.png'
         $("#plot_display").attr("src",FIGURE_PATH);
-        // $('#plot_display').src = FIGURE_PATH // TODO change from user_0 to specific user ID down the line
+        OUTPUT_NAME = 'multiplot.png'
       })
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
         alert(errorThrown)
@@ -424,44 +422,57 @@
   // Runs when the "Download Figure" button is clicked.
   $('#download_button').click(function () {
     var a = document.createElement('a');
-    a.href = FIGURE_PATH // "img.png";
-    a.download = FIGURE_PATH // "output.png";
+    a.href = FIGURE_PATH 
+    a.download = OUTPUT_NAME
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   })
 
   function switch_plot(plot_type) {
-    // TODO change from user_0 to specific user ID down the line
 
     switch (plot_type){
       case 'Multiplot':
-        FIGURE_PATH = 'generated_plots/structure_summary.png'
+        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_multiplot.png'
+        OUTPUT_NAME = 'multiplot.png'
         break
       case 'Isotherm':
-        FIGURE_PATH = 'generated_plots/Isotherm_structure.png'
+        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_isotherm.png'
+        OUTPUT_NAME = 'isotherm.png'
         break
       case 'BET':
-        FIGURE_PATH = 'generated_plots/BETPlot_structure.png'
+        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_BETPlot.png'
+        OUTPUT_NAME = 'BET.png'
         break
       case 'ESW':
-        FIGURE_PATH = 'generated_plots/BETESWPlot_structure.png'
+        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_ESWPlot.png'
+        OUTPUT_NAME = 'ESW.png'
         break
       case 'BETLin':
-        FIGURE_PATH = 'generated_plots/BETPlot2_structure.png'
+        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_BETPlotLinear.png'
+        OUTPUT_NAME = 'BET_linear.png'
         break
       case 'BETESWLin':
-        FIGURE_PATH = 'generated_plots/BETESWPlot_structure.png'
+        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_BETESWPlot.png'
+        OUTPUT_NAME = 'BET-ESW.png'
         break
     }
 
     console.log('New figure path')
     console.log(FIGURE_PATH)
-    $("#plot_display").attr("src",FIGURE_PATH);
+    $("#plot_display").attr("src", FIGURE_PATH);
   }
 
   // The code below runs when the site first loads up.
   clean_slate()
+
+  $.get("/new_user").done(
+    function (response) {
+      // Purpose of this is just to make a user ID for the new browser that has accessed the site.
+      console.log('The new ID')
+      console.log(response)
+      USER_ID = response
+    })
 
 </script>
 <!-- End of Javascript section -->

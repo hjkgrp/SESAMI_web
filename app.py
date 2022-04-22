@@ -1,11 +1,16 @@
 import flask
+from flask import session
 import json
 import csv
 import os
+import time
+import stat
+import shutil
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 from SESAMI.SESAMI_2.SESAMI_2 import calculation_v2_runner
 
 app = flask.Flask(__name__)
+app.secret_key = 'TODO make this actually secret later'
 
 MAIN_PATH = os.path.abspath('.') + '/' # the main directory
 
@@ -17,7 +22,11 @@ def index():
 def serve_library_files(path):
     return flask.send_from_directory('libraries', path)
 
-@app.route('/generated_plots/<path:path>') # TODO change from user_0 to specific user ID down the line
+@app.route('/images/<path:path>') 
+def serve_images(path):
+    return flask.send_from_directory('images', path)
+
+@app.route('/generated_plots/<path:path>') 
 def serve_plots(path):
     return flask.send_from_directory('generated_plots', path)
 
@@ -28,28 +37,26 @@ def save_txt():
     my_content = my_dict['my_content']
 
     # Writing the CSV the user provided.
-    with open(f'{MAIN_PATH}user_0/input.csv', 'w', newline='') as f: # TODO change from user_0 to specific user ID down the line
+    with open(f'{MAIN_PATH}user_{session["ID"]}/input.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerows(my_content)
 
     # Converting the CSV to a TXT
-    with open(f'{MAIN_PATH}user_0/input.txt', 'w') as output_file: # TODO change from user_0 to specific user ID down the line
-        with open(f'{MAIN_PATH}user_0/input.csv', 'r') as input_file:
+    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', 'w') as output_file:
+        with open(f'{MAIN_PATH}user_{session["ID"]}/input.csv', 'r') as input_file:
             [output_file.write("\t".join(row)+'\n') for row in csv.reader(input_file)] # \t is tab    
 
     return '0'
 
 @app.route('/run_SESAMI', methods=['POST']) 
 def run_SESAMI():
-    user_id = 0 # TODO fix this later
-
-    ### SESAMI 1 # TODO fix this up
+    ### SESAMI 1
     plotting_information = json.loads(flask.request.get_data()) # This is a dictionary.
 
     ### End of the user input check.
 
     # Running the calculation. Makes plots.
-    BET_dict, BET_ESW_dict = calculation_runner(MAIN_PATH, plotting_information)
+    BET_dict, BET_ESW_dict = calculation_runner(MAIN_PATH, plotting_information, session["ID"])
     print(f'BET_dict: {BET_dict}')
     print(BET_dict is None)
 
@@ -91,12 +98,66 @@ def run_SESAMI():
 
 
     ### SESAMI 2
-    ML_prediction = calculation_v2_runner(MAIN_PATH, user_id)
+    ML_prediction = calculation_v2_runner(MAIN_PATH, session["ID"])
     print(f'ML_prediction is {ML_prediction}')
 
     calculation_results = {'ML_prediction': ML_prediction, 'BET_analysis': BET_analysis, 'BETESW_analysis': BETESW_analysis}
 
     return calculation_results
+
+def file_age_in_seconds(pathname): 
+    """
+    file_age_in_seconds returns the age of the file/folder specified in pathname since the last modification.
+    It is used as a helper function in the set_ID function.
+
+    :return: The age of the file/folder specified in pathname since the last modification, in seconds.
+    """ 
+
+    return time.time() - os.stat(pathname)[stat.ST_MTIME] # time since last modification
+
+# The two functions that follow handle user session creation and information passing
+@app.route('/new_user', methods=['GET'])
+def set_ID():
+    """
+    set_ID sets the session user ID. 
+    This is also used to generate unique folders, so that multiple users can use the website at a time. 
+        The user's folder is user_[ID]
+    This function also deletes user folders and files that have not been used for a while in order to reduce clutter.
+
+    :return: string, The session ID for this user.
+    """ 
+
+    session['ID'] = time.time() # a unique ID for this session
+
+    os.makedirs(f'user_{session["ID"]}') # Making a folder for this user.
+
+    target_str = 'user_'
+    target_str_2 = str(session["ID"])
+
+    # Delete all user folders that haven't been used for a while, to prevent folder accumulation.
+    for root, dirs, files in os.walk(MAIN_PATH):
+        for dir in dirs:
+            # Note: the way this is set up, don't name folders with the phrase "user_" in them if you want them to be permanent.
+            if target_str in dir and file_age_in_seconds(dir) > 7200: # 7200s is two hours
+                # target_str in dir to find all folders with user_ in them
+                shutil.rmtree(dir)
+
+        for file in files:
+            if target_str_2 in file and file_age_in_seconds(file) > 7200:
+                os.remove(file)
+
+    return str(session['ID'])
+
+@app.route('/get_ID', methods=['GET'])
+def get_ID():
+    """
+    get_ID gets the session user ID. 
+    This is used for getting building block generated MOFs.
+
+    :return: string, The session ID for this user.
+    """ 
+    return str(session['ID'])
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

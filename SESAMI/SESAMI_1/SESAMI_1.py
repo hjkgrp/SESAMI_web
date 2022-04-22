@@ -5,7 +5,7 @@ import sys
 import pandas as pd
 from SESAMI.SESAMI_1.betan import BETAn
 
-def calculation_runner(MAIN_PATH, plotting_information):
+def calculation_runner(MAIN_PATH, plotting_information, USER_ID):
 
     minlinelength = 4
     
@@ -23,9 +23,9 @@ def calculation_runner(MAIN_PATH, plotting_information):
     b = BETAn(gas, temperature, minlinelength, plotting_information)
 
     column_names = ['Pressure', 'Loading']
-    data = pd.read_table(f'{MAIN_PATH}user_0/input.txt', skiprows=1, sep='\t', names=column_names) # TODO change from user_0 to specific user ID down the line
+    data = pd.read_table(f'{MAIN_PATH}user_{USER_ID}/input.txt', skiprows=1, sep='\t', names=column_names)
     data = b.prepdata(data, p0=p0)
 
-    BET_dict, BET_ESW_dict = b.generatesummary(data, plotting_information, sumpath=f'{MAIN_PATH}generated_plots/', ) # TODO have save with user ID later
+    BET_dict, BET_ESW_dict = b.generatesummary(data, plotting_information, name=f'user_{USER_ID}', sumpath=f'{MAIN_PATH}generated_plots/', ) # TODO have save with user ID later
 
     return BET_dict, BET_ESW_dict

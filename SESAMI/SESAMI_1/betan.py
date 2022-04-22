@@ -30,10 +30,7 @@ class BETAn():
         self.R = 8.314 #J/mol/K
         self.N_A = 6.023e23 #molecules/mol
         
-        # self.T = 87.0 #K # TODO adjust?
         self.T = selected_temperature
-
-        print(f'The selected gas is {selected_gas}') # TODO remove later
 
         if selected_gas == 'Argon':
             self.selected_gas_cs = 0.142e-18 #m2/molecule; Ref: 10.1039/D1TA08021K
@@ -571,11 +568,11 @@ class BETAn():
             self.makeeswplot(plotting_information, ax4,data,maketitle='No', with_fit='Yes', fit_data=[bet_info, betesw_info ])
             self.makelinregplot(plotting_information, ax5, rbetesw[0], rbetesw[1], data, maketitle="No") # TODO can set maketitle to "Yes" if you want the individual plots to have titles
             dpi = plotting_information['dpi']
-            fig.savefig(os.path.join(sumpath, 'Isotherm_%s.png'%(name)),format='png', dpi = dpi, bbox_inches='tight')
-            fig3.savefig( os.path.join(sumpath, 'BETPlot2_%s.png'%(name) ), format='png', dpi = dpi, bbox_inches='tight')
-            fig2.savefig( os.path.join(sumpath , 'BETPlot_%s.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
-            fig4.savefig( os.path.join(sumpath , 'ESWPlot_%s.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
-            fig5.savefig( os.path.join(sumpath , 'BETESWPlot_%s.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
+            fig.savefig(os.path.join(sumpath, '%s_isotherm.png'%(name)),format='png', dpi = dpi, bbox_inches='tight')
+            fig3.savefig( os.path.join(sumpath, '%s_BETPlotLinear.png'%(name) ), format='png', dpi = dpi, bbox_inches='tight')
+            fig2.savefig( os.path.join(sumpath , '%s_BETPlot.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
+            fig4.savefig( os.path.join(sumpath , '%s_ESWPlot.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
+            fig5.savefig( os.path.join(sumpath , '%s_BETESWPlot.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
             plt.close(fig)
             plt.close(fig3)
             plt.close(fig2)
@@ -598,7 +595,7 @@ class BETAn():
             BET_ESW_dict = self.makelinregplot(plotting_information, ax5f, rbetesw[0], rbetesw[1], data, mode='BET-ESW')
         blanksubplot.axis('off')
         figf.tight_layout()
-        figf.savefig(os.path.join( sumpath, '%s_summary.png'%name), format='png', dpi=dpi, bbox_inches='tight')
+        figf.savefig(os.path.join( sumpath, '%s_multiplot.png'%name), format='png', dpi=dpi, bbox_inches='tight')
         plt.close(figf)
 
         return BET_dict, BET_ESW_dict

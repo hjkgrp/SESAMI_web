@@ -62,8 +62,6 @@ class ML():
         column_names = ['Pressure', 'Loading']
         df = pd.read_table(isotherm_data_path, skiprows=1, sep='\t', names=column_names) # That text file gets made by the app.py python script.
 
-        # print(f'The df is \n{df}') # TODO remove later
-
         for i, p_bin in enumerate(pressure_bins):
             try:
                 val = df.loc[(df['Pressure']>=pressure_bins[i][0] )  & (df['Pressure']< pressure_bins[i][1]), 'Loading'].mean()
@@ -167,14 +165,14 @@ class ML():
     
 
 # This function returns the ML prediction of the surface area for the new structure.
-def calculation_v2_runner(MAIN_PATH, user_id):
+def calculation_v2_runner(MAIN_PATH, USER_ID):
   my_ML = ML() #This initiates the class. 
 
   #This is the description for this particular type of run. All of the output files will have this in their name which can be used to identify them. 
   desc="ML_model" 
 
-  isotherm_data_path= MAIN_PATH + 'user_0/input.txt' #path to isotherm data. # TODO change from user_0 to specific user ID down the line
-  output_data_path= MAIN_PATH + 'user_0' #Output data path. # TODO change from user_0 to specific user ID down the line
+  isotherm_data_path= f'{MAIN_PATH}user_{USER_ID}/input.txt' #path to isotherm data.
+  output_data_path= f'{MAIN_PATH}user_{USER_ID}' #Output data path.
 
   test_data = pd.DataFrame({'name': ['user_input']}) # This will hold the features of the new MOF/material that is input at the GUI
 
