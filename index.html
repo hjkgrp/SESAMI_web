@@ -462,7 +462,7 @@
 
         $('#plot_div').show()
         $('#print_out').show()
-        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_multiplot.png'
+        FIGURE_PATH = 'generated_plots/multiplot.png'
         $("#plot_display").attr("src",FIGURE_PATH);
         OUTPUT_NAME = 'multiplot.png'
       })
@@ -485,27 +485,27 @@
 
     switch (plot_type){
       case 'Multiplot':
-        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_multiplot.png'
+        FIGURE_PATH = 'generated_plots/multiplot.png'
         OUTPUT_NAME = 'multiplot.png'
         break
       case 'Isotherm':
-        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_isotherm.png'
+        FIGURE_PATH = 'generated_plots/isotherm.png'
         OUTPUT_NAME = 'isotherm.png'
         break
       case 'BET':
-        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_BETPlot.png'
+        FIGURE_PATH = 'generated_plots/BETPlot.png'
         OUTPUT_NAME = 'BET.png'
         break
       case 'ESW':
-        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_ESWPlot.png'
+        FIGURE_PATH = 'generated_plots/ESWPlot.png'
         OUTPUT_NAME = 'ESW.png'
         break
       case 'BETLin':
-        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_BETPlotLinear.png'
+        FIGURE_PATH = 'generated_plots/BETPlotLinear.png'
         OUTPUT_NAME = 'BET_linear.png'
         break
       case 'BETESWLin':
-        FIGURE_PATH = 'generated_plots/user_' + USER_ID + '_BETESWPlot.png'
+        FIGURE_PATH = 'generated_plots/BETESWPlot.png'
         OUTPUT_NAME = 'BET-ESW.png'
         break
     }

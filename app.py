@@ -29,7 +29,7 @@ def serve_images(path):
 
 @app.route('/generated_plots/<path:path>') 
 def serve_plots(path):
-    return flask.send_from_directory('generated_plots', path)
+    return flask.send_from_directory(f'user_{session["ID"]}', path)
 
 # Saves the uploaded CSV as a CSV and TXT file
 @app.route('/save_txt', methods=['POST'])
@@ -130,7 +130,6 @@ def set_ID():
     os.makedirs(f'user_{session["ID"]}') # Making a folder for this user.
 
     target_str = 'user_'
-    target_str_2 = str(session["ID"])
 
     # Delete all user folders that haven't been used for a while, to prevent folder accumulation.
     for root, dirs, files in os.walk(MAIN_PATH):
@@ -139,10 +138,6 @@ def set_ID():
             if target_str in dir and file_age_in_seconds(dir) > 7200: # 7200s is two hours
                 # target_str in dir to find all folders with user_ in them
                 shutil.rmtree(dir)
-
-        for file in files:
-            if target_str_2 in file and file_age_in_seconds(file) > 7200:
-                os.remove(file)
 
     return str(session['ID'])
 

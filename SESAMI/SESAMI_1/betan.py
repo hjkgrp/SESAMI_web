@@ -20,10 +20,6 @@ import scipy.stats as ss
 
 mpl.rcParams['mathtext.default'] = 'regular' # preventing italics in axis labels
 pd.set_option('display.max_rows', 500)
-os.chdir(os.curdir)
-
-stylepath = os.path.join(os.path.dirname(__file__), 'mplstyle')
-plt.style.use(stylepath)
 
 class BETAn():
     def __init__(self, selected_gas, selected_temperature, minlinelength, plotting_information):
@@ -553,7 +549,7 @@ class BETAn():
         fp,fq,fconscore,flength,fR2 = curbest
         return (fp,fq)
      
-    def saveimgsummary(self, plotting_information, bet_info, betesw_info, data, name ='', sumpath=os.path.join(os.curdir,'imgsummary'),saveindividual = "No", eswminima = None): 
+    def saveimgsummary(self, plotting_information, bet_info, betesw_info, data, sumpath=os.path.join(os.curdir,'imgsummary'),saveindividual = "No", eswminima = None): 
         '''
         This function creates a summary of the BET process and stores it as a collection in the specified outlet directory.
         '''
@@ -568,11 +564,11 @@ class BETAn():
             self.makeeswplot(plotting_information, ax4,data,maketitle='No', with_fit='Yes', fit_data=[bet_info, betesw_info ])
             self.makelinregplot(plotting_information, ax5, rbetesw[0], rbetesw[1], data, maketitle="No") # TODO can set maketitle to "Yes" if you want the individual plots to have titles
             dpi = plotting_information['dpi']
-            fig.savefig(os.path.join(sumpath, '%s_isotherm.png'%(name)),format='png', dpi = dpi, bbox_inches='tight')
-            fig3.savefig( os.path.join(sumpath, '%s_BETPlotLinear.png'%(name) ), format='png', dpi = dpi, bbox_inches='tight')
-            fig2.savefig( os.path.join(sumpath , '%s_BETPlot.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
-            fig4.savefig( os.path.join(sumpath , '%s_ESWPlot.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
-            fig5.savefig( os.path.join(sumpath , '%s_BETESWPlot.png'%(name) ), format ='png', dpi = dpi, bbox_inches = 'tight')
+            fig.savefig(os.path.join(sumpath, 'isotherm.png'),format='png', dpi = dpi, bbox_inches='tight')
+            fig3.savefig( os.path.join(sumpath, 'BETPlotLinear.png'), format='png', dpi = dpi, bbox_inches='tight')
+            fig2.savefig( os.path.join(sumpath , 'BETPlot.png'), format ='png', dpi = dpi, bbox_inches = 'tight')
+            fig4.savefig( os.path.join(sumpath , 'ESWPlot.png'), format ='png', dpi = dpi, bbox_inches = 'tight')
+            fig5.savefig( os.path.join(sumpath , 'BETESWPlot.png'), format ='png', dpi = dpi, bbox_inches = 'tight')
             plt.close(fig)
             plt.close(fig3)
             plt.close(fig2)
@@ -595,19 +591,22 @@ class BETAn():
             BET_ESW_dict = self.makelinregplot(plotting_information, ax5f, rbetesw[0], rbetesw[1], data, mode='BET-ESW')
         blanksubplot.axis('off')
         figf.tight_layout()
-        figf.savefig(os.path.join( sumpath, '%s_multiplot.png'%name), format='png', dpi=dpi, bbox_inches='tight')
+        figf.savefig(os.path.join( sumpath, 'multiplot.png'), format='png', dpi=dpi, bbox_inches='tight')
         plt.close(figf)
 
         return BET_dict, BET_ESW_dict
                     
-    def generatesummary(self, data, plotting_information, name='structure', filepath= os.curdir, filename='summary.txt', eswpoints=3,
+    def generatesummary(self, data, plotting_information, MAIN_PATH, filepath= os.curdir, filename='summary.txt', eswpoints=3,
                         sumpath=os.path.join(os.curdir, 'imgsummary'),saveindividual="Yes"):
         '''
         This function will call the required functions to compute BET, ESW and BET + ESW areas and write the output into the files.
         Format:
         Name BETLowerPressureLimit BETHigherPressureLimit BETArea Nm_BET C_BET Consistency 1 Consistency2 Consistency3 Consistency4 ESWq ESWpressure ESWSA BETESWLowerPressureLimit BETESWHigherPressureLimit BETESWArea Nm_BETESW C_BETESW Consistency 1 Consistency2 Consistency3 Consistency4 
         '''
-        name = '%s'%name
+
+        stylepath = os.path.join(MAIN_PATH, 'SESAMI', 'SESAMI_1', 'mplstyle')
+        plt.style.use(stylepath)
+
         #We are calling the eswdata function once from this function to get the variable minima.
         [loading, phi, eswminima, eswarea] = self.eswdata(data, eswpoints)[:4]
         #will get the linear region from using the BET criteria only. 
@@ -666,6 +665,6 @@ class BETAn():
         betesw_info = [rbetesw , betesw_params]
         mpl.rcParams.update({'font.size': plotting_information['font size']}) # changing the font size to be used in the figures
         mpl.rcParams['font.family'] =  plotting_information['font type'] # setting the font family to be used in the figures
-        BET_dict, BET_ESW_dict = self.saveimgsummary(plotting_information, bet_info, betesw_info, data, name=name, sumpath=sumpath, saveindividual = saveindividual, eswminima = eswminima)
+        BET_dict, BET_ESW_dict = self.saveimgsummary(plotting_information, bet_info, betesw_info, data, sumpath=sumpath, saveindividual = saveindividual, eswminima = eswminima)
         
         return BET_dict, BET_ESW_dict    
