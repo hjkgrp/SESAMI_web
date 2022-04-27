@@ -14,6 +14,7 @@ app = flask.Flask(__name__)
 app.secret_key = "TODO make this actually secret later"
 
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
+RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function run_SESAMI is currently running.
 
 
 @app.route("/")
@@ -75,6 +76,12 @@ def run_SESAMI():
         The distance between the two points.
 
     """
+    global RUN_SESAMI_RUNNING
+
+    # Only one user can run this function at a time.
+    while RUN_SESAMI_RUNNING:
+        time.sleep(5) # Sleep for 5 seconds.
+    RUN_SESAMI_RUNNING = True
 
     ### SESAMI 1
     plotting_information = json.loads(flask.request.get_data())  # This is a dictionary.
@@ -88,6 +95,7 @@ def run_SESAMI():
 
     # Displaying statistics
     if BET_dict is None or BET_ESW_dict is None:
+        RUN_SESAMI_RUNNING = False
         return "Linear failure"
     else:
         # reformatting
@@ -131,6 +139,7 @@ def run_SESAMI():
         "BETESW_analysis": BETESW_analysis,
     }
 
+    RUN_SESAMI_RUNNING = False
     return calculation_results
 
 
