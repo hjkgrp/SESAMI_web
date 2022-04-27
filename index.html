@@ -413,7 +413,7 @@
 
   });
 
-  // Function for formatting SESAMI 1 output. Replaces \n with breaks
+  // Function for formatting SESAMI 1 output. Replaces \n with breaks. Also adds some superscript and subscript.
   // https://stackoverflow.com/questions/4535888/jquery-text-and-newlines
   $.fn.multiline = function(text){
       this.text(text);
@@ -518,7 +518,7 @@
 
   $.get("/new_user").done(
     function (response) {
-      // Purpose of this is just to make a user ID for the new browser that has accessed the site.
+      // Purpose of this is to make a user ID for the new browser that has accessed the site.
       USER_ID = response
     })
 
