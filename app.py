@@ -38,8 +38,23 @@ def serve_plots(path):
 
 
 # Saves the uploaded CSV as a CSV and TXT file
-@app.route("/save_txt", methods=["POST"])
-def save_txt():
+@app.route("/save_csv_txt", methods=["POST"])
+def save_csv_txt():
+    """
+    TODO fix the docstring
+    Calculate the distance between two points.
+
+    Parameters
+    ----------
+    rA, rB : np.ndarray
+        The coordinates of each point.
+
+    Returns
+    -------
+    distance: float
+        The distance between the two points.
+
+    """
     my_dict = json.loads(flask.request.get_data())  # This is a dictionary.
     my_content = my_dict["my_content"]
 
@@ -48,7 +63,7 @@ def save_txt():
         writer = csv.writer(f)
         writer.writerows(my_content)
 
-    # Converting the CSV to a TXT
+    # Converting the CSV to a TXT, and saving the TXT.
     with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "w") as output_file:
         with open(f'{MAIN_PATH}user_{session["ID"]}/input.csv', "r") as input_file:
             [
@@ -57,6 +72,155 @@ def save_txt():
             ]  # \t is tab
 
     return "0"
+
+# Saves the uploaded AIF as an AIF and TXT file
+@app.route("/save_aif_txt", methods=["POST"])
+def save_aif_txt():
+    """
+    TODO fix the docstring
+    Calculate the distance between two points.
+
+    Parameters
+    ----------
+    rA, rB : np.ndarray
+        The coordinates of each point.
+
+    Returns
+    -------
+    distance: float
+        The distance between the two points.
+
+    """
+    my_dict = json.loads(flask.request.get_data())  # This is a dictionary.
+    my_content = my_dict["my_content"]
+
+    # Writing the AIF the user provided.
+    with open(f'{MAIN_PATH}user_{session["ID"]}/input.aif', "w", newline="") as f:
+        f.writelines(my_content)
+
+    # Converting the AIF to a TXT, and saving the TXT.
+    status = aif_to_txt(my_content)
+
+    return status
+
+def aif_to_txt(content):
+    """
+    TODO fix the docstring
+    Calculate the distance between two points.
+
+    Parameters
+    ----------
+    rA, rB : np.ndarray
+        The coordinates of each point.
+
+    Returns
+    -------
+    distance: float
+        The distance between the two points.
+
+    """
+    # This function converts the AIF into a isotherm text file.
+    # content is the content of the AIF
+
+    # Currently, the code does not check the adsorbate, p0, nor the temperature in the AIF file.
+
+    content = content.splitlines() # split into an array based on new line characters
+
+    # Find the adsorption data, in order to convert to an isotherm data file.
+    start_idx = None # Will instatiate in the loop below.
+    end_idx = None # Will instatiate in the loop below.
+    for idx, line in enumerate(content):
+        if line[:5] == 'loop_' and content[idx+1][:16] == '_adsorp_pressure' and \
+        content[idx+2][:10] == '_adsorp_p0' and content[idx+3][:14] == '_adsorp_amount': # getting only the first 5/16/10/14 characters of respective lines
+            start_idx = idx
+            break # No need to keep checking. We found the start of the adsorption data.
+    if start_idx == None:
+        return("Incorrectly formatted AIF file. Please see example file.")
+
+    # quote from AIF paper Langmuir 2021, 37, 4222−4226: "The data loops, as used here, are terminated by a new data item, a new data loop, or an end of file"
+    # Code block below grabs the adsorption data from the AIF file.
+    counter = 0
+    full_adsorption_data = []
+    while True:
+        # Note, we have start_idx + 4 because want to skip the first three lines, which are _adsorp_pressure, _adsorp_p0, and _adsorp_amount
+        if (start_idx + 4 + counter) >= len(content): # termination by end of file
+            break 
+
+        line = content[start_idx + 4 + counter]
+
+        if line[0] == '_': # termination by a new data item
+            break
+        if line[:5] == 'loop_': # termination by a new data loop
+            break
+
+        full_adsorption_data.append(line)
+
+        counter += 1
+
+    if len(full_adsorption_data) == 0:
+        return("Missing adsorption data in the AIF file.")
+
+    # Now, we have all of the adsorption data in the variable full_adsorption_data.
+
+    # Next, find the units of loading
+    units_loading = None
+    for line in content:
+        if '_units_loading' in line:
+            units_loading = line.split() # split on spaces
+            units_loading = units_loading[1]
+            break
+
+    if units_loading == None:
+        return("Incorrectly formatted AIF file. Did not include units of loading.")
+    supported_units_loading = ['mol/kg', 'mmol/g'] # TODO expand on allowed units in the future
+    if units_loading not in supported_units_loading: 
+        return(f'Invalid/unsupported loading units in AIF file. Supported units are {supported_units_loading}')
+
+    # Grabbing just the adsorption amount data
+    adsorption_data = [item.split()[2] for item in full_adsorption_data] # Get the third element of each row (after splitting on spaces)
+
+    # Convert adsorption_data to mol/kg
+    if units_loading == 'mmol/g':
+        conversion_multiplier =  1
+        adsorption_data = [datum * conversion_multiplier for datum in adsorption_data] # Results in a list with entries of the correct units
+    elif units_loading == 'mol/kg':
+        pass # No action needed.
+
+    # Next, find the units of pressure
+    units_pressure = None
+    for line in content:
+        if '_units_pressure' in line:
+            units_pressure = line.split() # split on spaces
+            units_pressure = units_pressure[1]
+
+    if units_pressure == None:
+        return("Incorrectly formatted AIF file. Did not include units of pressure.")
+    supported_units_pressure = ['Pa', 'pascal', 'bar'] # TODO expand on allowed units in the future
+    if units_pressure not in supported_units_pressure: 
+        return(f'Invalid/unsupported pressure units in AIF file. Supported units are {supported_units_pressure}')
+
+    # Grabbing just the pressure data
+    pressure_data = [item.split()[0] for item in full_adsorption_data] # Get the first element of each row (after splitting on spaces)
+
+    # # Grabbing just the p0 data
+    # saturation_pressure_data = [item.split()[1] for item in full_adsorption_data] # Get the second element of each row (after splitting on spaces)
+    # saturation_pressure = saturation_pressure_data[0] # All elements in saturation_pressure_data should be the same anyway. Since saturation pressure depends on the temperature and adsorbate type, and these aren't changing.
+    # p0 = float(saturation_pressure)
+
+    # Convert pressure units
+    if units_pressure in ['Pa', 'pascal']:
+        pass # No action needed
+    else: # bar
+        conversion_multiplier =  100000
+        pressure_data = [datum * conversion_multiplier for datum in pressure_data] # Results in a list with entries of the correct units
+
+    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', 'w') as f:
+        f.write("\t".join(['Pressure', 'Loading'])+'\n') # The column titles
+        [f.write("\t".join([pressure_data[i], adsorption_data[i]])+'\n') for i in range(len(pressure_data))] # \t is tab          
+        # join on tabs, and add a new line after each join
+
+    # If the code gets to this point, the AIF hopefully doesn't have any problems with it.
+    return "All good!"
 
 
 @app.route("/run_SESAMI", methods=["POST"])
@@ -101,8 +265,8 @@ def run_SESAMI():
         # reformatting
         BET_dict["C"] = "%.4g" % BET_dict["C"]
         BET_dict["qm"] = "%.2f" % BET_dict["qm"]
-        BET_dict["A_BET"] = "%.3f" % BET_dict["A_BET"]
-        BET_dict["R2"] = "%.6f" % BET_dict["R2"]
+        BET_dict["A_BET"] = "%.1f" % BET_dict["A_BET"]
+        BET_dict["R2"] = "%.4f" % BET_dict["R2"]
 
         BET_analysis = f'C = {BET_dict["C"]}\n\
             qmsub = {BET_dict["qm"]} mol/kg\n\
@@ -117,8 +281,8 @@ def run_SESAMI():
         # reformatting
         BET_ESW_dict["C"] = "%.4g" % BET_ESW_dict["C"]
         BET_ESW_dict["qm"] = "%.2f" % BET_ESW_dict["qm"]
-        BET_ESW_dict["A_BET"] = "%.3f" % BET_ESW_dict["A_BET"]
-        BET_ESW_dict["R2"] = "%.6f" % BET_ESW_dict["R2"]
+        BET_ESW_dict["A_BET"] = "%.1f" % BET_ESW_dict["A_BET"]
+        BET_ESW_dict["R2"] = "%.4f" % BET_ESW_dict["R2"]
 
         BETESW_analysis = f'C = {BET_ESW_dict["C"]}\n\
             qmsub = {BET_ESW_dict["qm"]} mol/kg\n\

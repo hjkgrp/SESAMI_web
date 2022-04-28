@@ -46,7 +46,9 @@
 
   <!-- This div contains general information. -->
   <div style='font-size:22px;' class="container">
-    Welcome! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    Welcome! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br>
+    Calculations assume T = 77K and p0 = 1e5 Pa <br>
+    Assumptions of the ML model are TODO
   </div>
 
   <!-- This div contains the gas selection option. -->
@@ -125,6 +127,9 @@
           <option value="10">
           <option value="12">
           <option value="14">
+          <option value="16">
+          <option value="18">
+          <option value="20">
         </datalist>
       </div>
     </div>
@@ -167,7 +172,7 @@
     <!-- Create a section containing buttons -->
     <div class='col-lg-12'>
       <div style='width:100%; text-align:center; margin-top:0.25cm;'>
-        <button id='upload_button' class='btn btn-primary round_button' style='font-size:22px;'>Upload CSV</button>
+        <button id='upload_button' class='btn btn-primary round_button' style='font-size:22px;'>Upload CSV or AIF</button>
         <button id='run_button' class='btn btn-primary round_button' style='font-size:22px;'>Run calculation</button>
       </div>
     </div>
@@ -250,7 +255,6 @@
     $('#fonttype_dropdown').val('sans-serif') 
     $('#dpi_dropdown').val('300')     
 
-    $('#plot_div').hide()
   }
 
   function clean_slate_partial() {
@@ -357,59 +361,87 @@
     var ext = getExtension(filename);
     return ext == 'csv';
   }
+  function isAIF(filename) {
+    var ext = getExtension(filename);
+    return ext == 'aif';
+  }
 
   // Runs when the "Upload CSV" button is clicked.
   $('#upload_button').on('click', function () { // button triggers upload
-    clean_slate()
+    clean_slate_partial()
     $('#file_input').trigger('click'); // OS file selection
   });
   $("#file_input").change(function () {
-    // Check if uploaded file is a CSV
-    if (!isCSV(this.value)) { // if the uploaded file is not a CSV
-      this.value = null; // clear the non-CSV file
+    // Check if uploaded file is a CSV or AIF
+    if (!isCSV(this.value) && !isAIF(this.value)) { // if the uploaded file is not a CSV nor an AIF
+      this.value = null; // clear the non-CSV and non-AIF file
       $('#upload_status').text('')
-      alert("The uploaded file must be a csv file.");
-      return; // if not a CSV, doesn't continue     
+      alert("The uploaded file must be a csv or AIF file.");
+      return; // If not a CSV nor an AIF, doesn't continue.     
     }
 
-
     let myFile = document.getElementById('file_input').files[0]; // the uploaded file
-    $('#upload_status').text('Selected CSV: ' + myFile.name);
+    if (isCSV(this.value)) {
+      $('#upload_status').text('Selected CSV: ' + myFile.name);
+    } else {
+      $('#upload_status').text('Selected AIF: ' + myFile.name);
+    }
 
-    if (this.files[0].size == 0) { // check if CSV is empty
-      this.value = null; // clear the non-CSV file
+    if (this.files[0].size == 0) { // check if file is empty
+      this.value = null; // clear the file
       $('#upload_status').text('')
       alert("The uploaded file cannot be empty.");
       return;   
     }
 
-    myFile.text().then(function (my_content) {
-      // my_content is the content of the loaded CSV file
+    // Converting the uploaded file to a TXT, and checking its formatting
+    if (isCSV(this.value)) { // CSV case
+      myFile.text().then(function (my_content) {
+        // my_content is the content of the loaded CSV
+        my_content = CSVToArray(my_content, ',')
 
-      my_content = CSVToArray(my_content, ',')
+        myDict = {'my_content': my_content}
 
-      myDict = {'my_content': my_content}
+        $.post("/save_csv_txt", JSON.stringify(myDict)).done(
+          function (response) {
 
-      $.post("/save_txt", JSON.stringify(myDict)).done(
-        function (response) {
+            // Check if the uploaded CSV is of the right format. If not, clear the file_input and upload_status elements.
+            $.get("/check_csv").done(
+              function (response) {
+                if (response != 'All good!') {
+                  this.value = null; // clear the bad CSV file
+                  $('#upload_status').text('')
+                  alert(response)
+                }
+              })
 
-          // TODO here would be a good place to check if the uploaded CSV is of the right format. If not, clear the file_input and upload_status elements.
-          $.get("/check_csv").done(
-            function (response) {
-              console.log('The result of check_csv')
-              console.log(response)
-              if (response != 'All good!') {
-                this.value = null; // clear the bad CSV file
-                $('#upload_status').text('')
-                alert(response)
-              }
-            })
 
-        })
-        .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
-          alert(errorThrown)
-        })
-    })
+          })
+          .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
+            alert(errorThrown)
+          })
+      })
+    } else { // AIF case
+      myFile.text().then(function (my_content) {
+
+        myDict = {'my_content': my_content}
+
+        $.post("/save_aif_txt", JSON.stringify(myDict)).done(
+          function (response) {
+
+            // Check if the uploaded AIF is of the right format. If not, clear the file_input and upload_status elements.
+            if (response != 'All good!') {
+              this.value = null; // clear the bad CSV file
+              $('#upload_status').text('')
+              alert(response)
+            }
+
+          })
+          .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
+            alert(errorThrown)
+          })
+      })
+    }
 
   });
 
@@ -447,7 +479,7 @@
     $.post("/run_SESAMI", JSON.stringify(myDict)).done(
       function (response) {
 
-        // TODO have failure handling
+        // Failure handling
         if (response == 'Linear failure') {
           alert("No suitable linear region has been found. Try lowering R2min.")
           return;
@@ -456,7 +488,7 @@
         ML_prediction = response['ML_prediction']
         BET_analysis = response['BET_analysis']
         BETESW_analysis = response['BETESW_analysis']
-        $('#ML_prediction').multiline(ML_prediction + ' m2/g')
+        $('#ML_prediction').multiline(ML_prediction + ' m2sup/g')
         $('#BET_readout').multiline(BET_analysis)
         $('#BETESW_readout').multiline(BETESW_analysis)
 
