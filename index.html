@@ -474,7 +474,7 @@
     R2min = $('#r2min_dropdown').val()
     gas = $('#gas_dropdown').val()
 
-    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas}
+    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas} // Plotting information
 
     $.post("/run_SESAMI", JSON.stringify(myDict)).done(
       function (response) {
