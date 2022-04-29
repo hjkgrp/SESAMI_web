@@ -48,7 +48,8 @@
 
   <!-- This div contains general information. -->
   <div style='font-size:22px;' class="container">
-    Download an example CSV or AIF here!
+    Download an example CSV or AIF here! <br>
+    Currently, you will need to manually drop an f from .aiff when you download the AIF file (rename the file).
   </div>
 
 
@@ -62,45 +63,13 @@
           <button class='btn btn-primary round_button' style='font-size:22px;'>Example CSV</button>
         </a>
 
-        <!-- Unfortunately, href download doesn't do the right file extension for the AIF file. So I do a work around. -->
-        <button id="example_aif" class='btn btn-primary round_button' style='font-size:22px;'>Example AIF</button>
+        <a href="/example_aif" download>
+          <button class='btn btn-primary round_button' style='font-size:22px;'>Example AIF</button>
+        </a>
+
       </div>
     </div>
     <div style='font-size:22px; margin-top:0.25cm;' id='upload_status'></div>
   </div>
 
 </body>
-
-
-<!-- Beginning of JavaScript section -->
-<script>
-
-  // filename is the name of the file to be downloaded. text is the contents of the file.
-  function download(filename, text) {
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
-
-    element.style.display = 'none';
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
-  }
-
-  // When the "Download descriptors" button is clicked, download the descriptors for the selected MOF
-  $('#example_aif').click(function () {
-
-    // Grab the contents of the example aif
-    $.post("/example_aif", JSON.stringify(name)).done(
-      function (response) {
-        download('example_loading_data.aif', response)
-      })
-
-  })
-
-
-</script>
-<!-- End of Javascript section -->
-

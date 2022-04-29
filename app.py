@@ -47,9 +47,7 @@ def serve_csv():
 
 @app.route("/example_aif")
 def serve_aif():
-    with open("example_input/example_loading_data.aif" , "r") as f:
-        contents = f.read()
-    return contents
+    return flask.send_from_directory("example_input", "example_loading_data.aif")
 
 # Saves the uploaded CSV as a CSV and TXT file
 @app.route("/save_csv_txt", methods=["POST"])
