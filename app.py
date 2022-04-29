@@ -37,6 +37,20 @@ def serve_plots(path):
     return flask.send_from_directory(f'user_{session["ID"]}', path)
 
 
+@app.route("/example_inputs")
+def serve_examples():
+    return flask.send_from_directory(".", "example_inputs.html")
+
+@app.route("/example_csv")
+def serve_csv():
+    return flask.send_from_directory("example_input", "example_loading_data.csv")
+
+@app.route("/example_aif")
+def serve_aif():
+    with open("example_input/example_loading_data.aif" , "r") as f:
+        contents = f.read()
+    return contents
+
 # Saves the uploaded CSV as a CSV and TXT file
 @app.route("/save_csv_txt", methods=["POST"])
 def save_csv_txt():
