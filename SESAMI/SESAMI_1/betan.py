@@ -202,7 +202,14 @@ class BETAn:
         This function takes an axis as an input and makes an isotherm plot on it.
         If xscale='log' and tryminorticks='Yes', the xscale will be from 0 to 1. The user has no control over it.
         """
-        ax.errorbar(data["P_rel"], data["Loading"], yerr=yerr, fmt="o", capsize=3)
+        ax.errorbar(
+            data["P_rel"],
+            data["Loading"],
+            yerr=yerr,
+            fmt="o",
+            capsize=3,
+            label="BET Data points",
+        )
 
         ax.xaxis.label.set_text("$p/p_0$")
         ax.yaxis.label.set_text("$q$" + " / " + "$%s$" % self.loadunits)
@@ -233,6 +240,7 @@ class BETAn:
                 ax.get_ylim()[1],
                 colors=plt.cm.Greens(200),
                 linestyles="dashed",
+                label="ESW minimum",
             )
         if self.con1limit is not None:
             ax.vlines(
@@ -241,6 +249,7 @@ class BETAn:
                 ax.get_ylim()[1],
                 linestyles="dashed",
                 color=plt.cm.Purples(230),
+                label="Consistency 1 maximum",
             )
 
         if with_fit == "Yes":
@@ -255,11 +264,13 @@ class BETAn:
                     facecolor=plt.cm.PuOr(70),
                     edgecolor="none",
                     alpha=0.6,
+                    label="BET region",
                 )
                 ax.plot(
                     data["P_rel"].values,
                     self.th_loading(data["P_rel"].values, bet_params),
                     color=plt.cm.PuOr(20),
+                    label="BET fit",
                 )
             if rbetesw != (None, None):
                 ax.axvspan(
@@ -268,16 +279,21 @@ class BETAn:
                     facecolor=plt.cm.Greens(70),
                     edgecolor="none",
                     alpha=0.6,
+                    label="BET-ESW region",
                 )
                 ax.plot(
                     data["P_rel"].values,
                     self.th_loading(data["P_rel"].values, betesw_params),
                     color=plt.cm.Greens(200),
+                    label="BET-ESW fit",
                 )
 
         if maketitle == "Yes":
             titletext = "Isotherm Data"
             ax.set_title(titletext)
+
+        if plotting_information["legend"] == "Yes":  # Add a legend in this case.
+            ax.legend(loc="upper left")
 
     def makeconsistencyplot(
         self, plotting_information, ax3, data, maketitle="Yes", tryminorticks="Yes"
@@ -292,7 +308,7 @@ class BETAn:
         if maketitle == "Yes":
             titletext = "BET Consistency Plot"
             ax3.set_title(titletext)
-        ax3.errorbar(data["P_rel"], data["BET_y2"], fmt="o")
+        ax3.errorbar(data["P_rel"], data["BET_y2"], fmt="o", label="BET Data points")
         ax3.set_ylim(ax3.get_ylim())
 
         if tryminorticks == "Yes":
@@ -316,6 +332,7 @@ class BETAn:
                 ax3.get_ylim()[1],
                 colors=plt.cm.Purples(230),
                 linestyles="dashed",
+                label="Consistency 1 maximum",
             )
         else:
             x_max = data["P_rel"][data["BET_y2"].idxmax()]
@@ -330,8 +347,12 @@ class BETAn:
                 ax3.get_ylim()[1],
                 colors=plt.cm.Greens(200),
                 linestyles="dashed",
+                label="ESW minimum",
             )
         ax3.set_xlim(right=1.000)
+
+        if plotting_information["legend"] == "Yes":  # Add a legend in this case.
+            ax3.legend(loc="upper left")
 
     def makelinregplot(
         self, plotting_information, ax2, p, q, data, maketitle="Yes", mode="BET"
@@ -398,7 +419,9 @@ class BETAn:
             plt.setp(ax2.xaxis.get_majorticklabels(), rotation=30)
             plt.setp(ax2.yaxis.get_majorticklabels(), rotation=30)
             # fig2.subplots_adjust(left =-0.1)
-            ax2.legend()
+
+            if plotting_information["legend"] == "Yes":  # Add a legend in this case.
+                ax2.legend()
 
         # Returning stats to display in the website.
         my_dict = {
@@ -488,6 +511,7 @@ class BETAn:
                 ax.get_ylim()[1],
                 colors=plt.cm.Greens(200),
                 linestyles="dashed",
+                label="ESW minimum",
             )
         else:
             ax.text(
@@ -507,6 +531,7 @@ class BETAn:
                 ax.get_ylim()[1],
                 colors=plt.cm.Purples(230),
                 linestyles="dashed",
+                label="Consistency 1 maximum",
             )
 
         if with_fit == "Yes":
@@ -521,12 +546,14 @@ class BETAn:
                     facecolor=plt.cm.PuOr(70),
                     edgecolor="none",
                     alpha=0.6,
+                    label="BET region",
                 )
                 load_bet = self.th_loading(data["P_rel"].values, bet_params)
                 ax.plot(
                     load_bet,
                     self.gen_phi(load_bet, data["P_rel"].values),
                     color=plt.cm.PuOr(20),
+                    label="BET fit",
                 )
             if rbetesw != (None, None):
                 ax.axvspan(
@@ -535,13 +562,18 @@ class BETAn:
                     facecolor=plt.cm.Greens(70),
                     edgecolor="none",
                     alpha=0.6,
+                    label="BET-ESW region",
                 )
                 load_betesw = self.th_loading(data["P_rel"].values, betesw_params)
                 ax.plot(
                     load_betesw,
                     self.gen_phi(load_betesw, data["P_rel"].values),
                     color=plt.cm.Greens(200),
+                    label="BET-ESW fit",
                 )
+
+        if plotting_information["legend"] == "Yes":  # Add a legend in this case.
+            ax.legend(loc="upper center")
 
     # include ANOVA, t-tests, shapiro wilk test, outliers, generate graphs of residuals.
     def linregauto(self, p, q, data):
@@ -846,14 +878,14 @@ class BETAn:
                 dpi=dpi,
                 bbox_inches="tight",
             )
-            fig3.savefig(
-                os.path.join(sumpath, "BETPlotLinear.png"),
+            fig2.savefig(
+                os.path.join(sumpath, "BETPlot.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
             )
-            fig2.savefig(
-                os.path.join(sumpath, "BETPlot.png"),
+            fig3.savefig(
+                os.path.join(sumpath, "BETPlotLinear.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
@@ -876,6 +908,7 @@ class BETAn:
             plt.close(fig4)
             plt.close(fig5)
 
+        # Next, the multiplot.
         figf = plt.figure(figsize=(3 * 7.0, 2 * 6.0))
         [[axf, ax3f, ax4f], [ax2f, ax5f, blanksubplot]] = figf.subplots(
             nrows=2, ncols=3

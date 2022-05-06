@@ -21,8 +21,8 @@ def calculation_runner(MAIN_PATH, plotting_information, USER_ID):
 
     minlinelength = 4
 
-    p0 = 1e5  # TODO adjust later
-    temperature = 77  # TODO adjust later
+    p0 = 1e5  # Note that this is fixed 
+    temperature = 77  # Note that this is fixed 
     gas = plotting_information["gas"]
 
     # changing some variable types
