@@ -7,7 +7,7 @@ This website is based on [MOFSimplify](https://github.com/hjkgrp/MOFSimplify) we
 AIF file: use http://raw2aif.herokuapp.com/ 
 - Details of AIF file can be found in [this](https://github.com/AIF-development-team/adsorptioninformationformat) repository.
 
-CSV file: 
+CSV file: see [example](/example_input/example_loading_data.csv)
 # Using the Software
 1. Use the following command in the terminal to run:
 `python app.py`
@@ -21,5 +21,5 @@ J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
 
 # AUTHORS
 - Archit Datar (SESAMI python code development)
-- Gianmarco Terrones (SESAMI web interface)
-- Prof. Yongchul G. Chung (Project supervision)
+- Gianmarco Terrones (SESAMI web interface development)
+- Prof. Yongchul G. Chung (project supervision, database integration, website maintaince)
