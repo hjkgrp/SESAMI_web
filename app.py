@@ -489,6 +489,62 @@ def check_csv():
     # If the code gets to this point, the CSV likely doesn't have any problems with it.
     return "All good!"
 
+## below is for Database Integration
+## Handle feedback
+@app.route('/process_feedback', methods=['POST'])
+def process_feedback():
+    """
+    process_feedback inserts MOFSimplify form feedback into the MongoDB feedback database. 
+    If an uploaded file has an incorrect extension (i.e. is a disallowed file format), the user is directed to an error page.
+    """
+    client = MongoClient('18.18.63.68', 27017)  # connect to mongodb
+    # The first argument is the IP address. The second argument is the port.
+    db = client.feedback
+    # The MOFSimplify collection in the feedback database.
+    collection = db.MOFSimplify
+    fields = ['feedback_form_name', 'rating', 'email', 'reason',
+              'comments', 'cif_file_name', 'structure', 'solvent']
+    #$meta_fields = ['IP', 'datetime', 'cif_file', 'MOF_name']
+    final_dict = {}
+    for field in fields:
+        final_dict[field] = request.form.get(field)
+
+    # Populate special fields
+    uploaded_file = request.files['file']
+    if uploaded_file.filename == '' and request.form.get('feedback_form_name') != 'upload_form':
+        # User did not upload the optional TGA trace
+        print('No TGA trace')
+    # if final_dict['file']==b'':
+    #     file_ext = ''
+    else:
+        final_dict['filetype'] = uploaded_file.content_type
+        filename = secure_filename(uploaded_file.filename)
+        final_dict['filename'] = filename
+        final_dict['file'] = uploaded_file.read()
+        file_ext = os.path.splitext(filename)[1].lower()
+        if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+            return ('', 204)  # 204 no content response
+            # return flask.send_from_directory('./splash_page/', 'error.html')
+
+    # Special tasks if the form is upload_form
+    if request.form.get('feedback_form_name') == 'upload_form':
+        uploaded_cif = request.files['cif_file']
+        cif_filename = secure_filename(uploaded_cif.filename)
+        file_ext = os.path.splitext(cif_filename)[1].lower()
+        if file_ext != '.cif':
+            return ('', 204)  # 204 no content response
+            # return flask.send_from_directory('./splash_page/', 'error.html')
+        final_dict['cif_file_name'] = cif_filename
+        final_dict['structure'] = uploaded_cif.read()
+
+    final_dict['ip'] = request.remote_addr
+    final_dict['timestamp'] = datetime.now().isoformat()
+
+    print(final_dict)
+    # insert the dictionary into the mongodb collection
+    collection.insert(final_dict)
+    return ('', 204)  # 204 no content response
+    # return flask.send_from_directory('./splash_page/', 'success.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
