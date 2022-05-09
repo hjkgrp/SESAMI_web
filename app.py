@@ -9,6 +9,8 @@ import shutil
 import pandas as pd
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 from SESAMI.SESAMI_2.SESAMI_2 import calculation_v2_runner
+# installing mysql
+import mysql.connector
 
 app = flask.Flask(__name__)
 app.secret_key = "TODO make this actually secret later"
@@ -489,19 +491,20 @@ def check_csv():
     # If the code gets to this point, the CSV likely doesn't have any problems with it.
     return "All good!"
 
-## below is for Database Integration
+## below is for Database Integration with MySQL
+## more info: https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
 ## Handle feedback
 @app.route('/process_feedback', methods=['POST'])
 def process_feedback():
     """
-    process_feedback inserts MOFSimplify form feedback into the MongoDB feedback database. 
+    process_feedback inserts the website form feedback into the MySQL feedback database. 
     If an uploaded file has an incorrect extension (i.e. is a disallowed file format), the user is directed to an error page.
     """
-    client = MongoClient('18.18.63.68', 27017)  # connect to mongodb
+    client = mysql.connector.connect('34.138.10.193', 3306)  # connect to public ip google gcloud mysql
     # The first argument is the IP address. The second argument is the port.
-    db = client.feedback
-    # The MOFSimplify collection in the feedback database.
-    collection = db.MOFSimplify
+    db = client.isotherm
+    # The SESAMI collection in the feedback database.
+    collection = db.sesami
     fields = ['feedback_form_name', 'rating', 'email', 'reason',
               'comments', 'cif_file_name', 'structure', 'solvent']
     #$meta_fields = ['IP', 'datetime', 'cif_file', 'MOF_name']
