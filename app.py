@@ -23,6 +23,13 @@ RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function r
 def index():
     return flask.send_from_directory(".", "index.html")
 
+@app.route("/about_page")
+def about_page():
+    return flask.send_from_directory(".", "about_page.html")
+
+@app.route("/how_to_cite")
+def cite_page():
+    return flask.send_from_directory(".", "how_to_cite.html")
 
 @app.route("/libraries/<path:path>")
 def serve_library_files(path):
@@ -379,6 +386,7 @@ def set_ID():
     """
 
     session["ID"] = time.time()  # a unique ID for this session
+    session['permission'] = True # keeps track of if user gave us permission to store the isotherms they predict on; defaults to Yes
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.
 
@@ -548,6 +556,21 @@ def process_feedback():
     collection.insert(final_dict)
     return ('', 204)  # 204 no content response
     # return flask.send_from_directory('./splash_page/', 'success.html')
+
+@app.route('/permission', methods=['POST'])
+def change_permission():
+    """
+    change_permission adjusts whether or not the website stores information on the isotherms the user predicts on.
+
+    :return: string, The boolean sent from the front end. We return this because we have to return something, but nothing is done with the returned value on the front end.
+    """
+
+    # Grab data
+    permission = json.loads(flask.request.get_data())
+    session['permission'] = permission
+    print('Permission check')
+    print(permission)
+    return str(permission)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

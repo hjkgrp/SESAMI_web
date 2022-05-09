@@ -1,0 +1,73 @@
+<!-- Import libaries-->
+<script src="libraries/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="libraries/ngl.js"></script>
+<script type="text/javascript" src="libraries/webGavrog/runtime.js"></script>
+<script type="text/javascript" src="libraries/webGavrog/vendors.js"></script>
+<script type="text/javascript" src="libraries/webGavrog/main.js"></script>
+<script src="libraries/3Dmol-min.js"></script>
+<script src="libraries/bootstrap.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.1.min.js"></script>
+
+<!-- Import CSS -->
+<link rel="stylesheet" href="libraries/bootstrap.min.css">
+<link rel="stylesheet" href="libraries/bootstrap_custom.min.css">
+
+<!-- Custom CSS code is placed within the <style> tag: -->
+<style>
+  .round_button {
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 130px;
+    width: 33%;
+    background-color: #0000FF; /*blue*/
+  }
+
+  #plot_display {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+</style>
+
+<body>
+  <!-- This div contains a navbar. -->
+  <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+      <a href="../" class="navbar-brand" style='font-size: 30px;'>A web interface for SESAMI analysis</a>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive" style='font-size: 20px;'>
+        <ul class="navbar-nav">
+          <li class="nav-item" style='padding-left: 30px;'>
+            <a class="nav-link" href="/about_page">About</a>
+          </li>
+          <li class="nav-item" style='padding-left: 30px;'>
+            <a class="nav-link" href="https://github.com/hjkgrp/SESAMI_web">Source Code</a>
+          </li>
+          <li class="nav-item" style='padding-left: 30px;'>
+            <a class="nav-link" href="/how_to_cite">How to Cite</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- This div contains general information. -->
+  <div style='font-size:18px;' class="container">
+  <p>TODO About page information</p> 
+
+  <!-- This div contains a bottom bar.  -->
+  <div class="navbar navbar-expand-lg relative navbar-light bg-light" style="margin-top: 50px; font-size: 18px;">
+    <div class="container">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link disabled">Site developed by Gianmarco Terrones (Kulik Group @ MIT) and maintained by Dr. Yongchul G. Chung (Pusan National
+          University)</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+

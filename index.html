@@ -29,6 +29,18 @@
     margin-right: auto;
     width: 100%;
   }
+
+  .minibutton {
+      background: none;
+      border: none;
+  }
+
+  .round_minibutton {
+    background: none;
+    border-radius: 25px;
+    min-width: 130px;
+    width: 25%;
+  }
 </style>
 
 <head>
@@ -56,7 +68,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive" style='font-size: 20px;'>
         <ul class="navbar-nav">
           <li class="nav-item" style='padding-left: 30px;'>
-            <a class="nav-link" href="example_inputs">Example Input Files</a>
+            <a class="nav-link" href="/about_page">About</a>
+          </li>
+          <li class="nav-item" style='padding-left: 30px;'>
+            <a class="nav-link" href="https://github.com/hjkgrp/SESAMI_web">Source Code</a>
+          </li>
+          <li class="nav-item" style='padding-left: 30px;'>
+            <a class="nav-link" href="/how_to_cite">How to Cite</a>
           </li>
         </ul>
       </div>
@@ -65,7 +83,7 @@
 
   <!-- This div contains general information. -->
   <div style='font-size:18px;' class="container">
-  <p>Forget about installing complicated software or using old excel spreadsheet from your co-workers!</p> 
+  <p>Forget about installing complicated software or using an old excel spreadsheet from your co-workers!</p> 
   <p><b>On the fly</b>, this website performs the <b>Brauner-Emmett-Teller (BET)</b>, <b>Excess Sorption Work (ESW)</b>, <b>BET-ESW</b>, and <b>Machine Learning (ML)</b> methods
   for surface area estimation in nanoporous materials. The web interface allows user to upload either <b>Adsorption Information File (AIF)</b> or <b>Comma Separated-Values (CSV)</b> file.</p>
   <p>Convert RAW output files from equipments to AIF format by visiting: http://raw2aif.herokuapp.com/</p>
@@ -77,133 +95,6 @@
     &#8226 Argon: T = 87 K and p<sub>0</sub> = 1e5 Pa (~1 bar)<br>
   </div>
 
-
-  <!-- This div contains the gas selection option. -->
-  <div style='font-size:16px; padding-top: 30px;' class="container">
-    <b>General options</b>
-    <div class='row' style='margin-top: 0.25cm;'>
-      <div class='col-lg-4'>Type of gas</div>
-      <div class='col-lg-8'>
-        <input id='gas_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="Argon" list='gas_list' onmousedown="value = '';" />
-        <datalist id='gas_list' style='font-size: 16px;'>
-          <option value="Argon">
-          <option value="Nitrogen">
-        </datalist>
-      </div>
-    </div>
-
-    <!-- R^2 cutoff -->
-    <div class = 'row' style='margin-top: 0.25cm;'>
-      <div class='col-lg-4'>
-        R<sup>2</sup> cutoff (SESAMI)
-      </div>
-      <div class='col-lg-8'>
-        <input autocomplete="off" id='r2cutoff_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="0.9995" list='r2cutoff_list' onmousedown="value = '';" />
-        <datalist id='r2cutoff_list' style='font-size: 16px;'>
-          <option value="0.99">
-          <option value="0.999">
-          <option value="0.9995">
-        </datalist>
-      </div>
-    </div>
-
-    <!-- R^2 min -->
-    <div class = 'row' style='margin-top: 0.25cm;'>
-      <div class='col-lg-4'>
-        R<sup>2</sup> min (SESAMI)
-      </div>
-      <div class='col-lg-8'>
-        <input autocomplete="off" id='r2min_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="0.998" list='r2min_list' onmousedown="value = '';" />
-        <datalist id='r2min_list' style='font-size: 16px;'>
-          <option value="0.980">
-          <option value="0.998">
-        </datalist>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- This div contains plotting options. -->
-  <div style='font-size:16px; padding-top: 30px' class="container">
-    <b>Plotting Options</b>
-
-    <!-- Figure legend -->
-    <div class = 'row' style='margin-top: 0.25cm;'>
-      <div class='col-lg-4'>
-        Figure legend 
-      </div>
-      <div class='col-lg-8'>
-        <input autocomplete="off" id='legend_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="Yes" list='legend_list' onmousedown="value = '';" />
-        <datalist id='legend_list' style='font-size: 16px;'>
-          <option value="Yes">
-          <option value="No">
-        </datalist>   
-      </div>
-    </div>
-
-    <!-- Figure font size -->
-    <div class = 'row' style='margin-top: 0.25cm;'>
-      <div class='col-lg-4'>
-        Figure font size
-      </div>
-      <div class='col-lg-8'>
-        <input autocomplete="off" id='fontsize_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="10" list='fontsize_list' onmousedown="value = '';" />
-        <datalist id='fontsize_list' style='font-size: 16px;'>
-          <option value="6">
-          <option value="8">
-          <option value="10">
-          <option value="12">
-          <option value="14">
-          <option value="16">
-          <option value="18">
-          <option value="20">
-        </datalist>
-      </div>
-    </div>
-
-    <!-- Figure font type -->
-    <div class = 'row' style='margin-top: 0.25cm;'>
-      <div class='col-lg-4'>
-        Figure font type
-      </div>
-      <div class='col-lg-8'>
-        <input autocomplete="off" id='fonttype_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="sans-serif" list='fonttype_list' onmousedown="value = '';" />
-        <datalist id='fonttype_list' style='font-size: 16px;'>
-          <option value="sans-serif">
-          <option value="serif">
-          <option value="monospace">
-        </datalist>
-      </div>
-    </div>
-
-    <!-- Figure dpi -->
-    <div class = 'row' style='margin-top: 0.25cm;'>
-      <div class='col-lg-4'>
-        Figure dpi
-      </div>
-      <div class='col-lg-8'>
-        <input autocomplete="off" id='dpi_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="300" list='dpi_list' onmousedown="value = '';" />
-        <datalist id='dpi_list' style='font-size: 16px;'>
-          <option value="300">
-          <option value="600">
-        </datalist>
-      </div>
-    </div>
-
-
-  </div>
-
-  <!-- This div contains important buttons that run the pivotal commands on the website. -->
-  <div style='font-size:16px; padding-top: 30px' class="container">
-    <!-- Create a section containing buttons -->
-    <div class='col-lg-12'>
-      <div style='width:100%; text-align:center; margin-top:0.25cm;'>
-        <button id='upload_button' class='btn btn-primary round_button' style='font-size:16px;'>Upload CSV or AIF</button>
-        <button id='run_button' class='btn btn-primary round_button' style='font-size:16px;'>Run calculation</button>
-      </div>
-    </div>
-    <div style='font-size:16px; margin-top:0.25cm;' id='upload_status'></div>
-  </div>
 
   <!-- This div displays figures and has a button that allows the user to download the figure pngs. -->
   <div id='plot_div' style='font-size:16px; padding-top: 30px; width:100%;' class="container">
@@ -226,7 +117,7 @@
     </div>
 
     <div style='text-align:center;'>
-      <img style='margin-top: 0.25cm;' src='images/yoshi.webp' id='plot_display' alt='SESAMI 1 plot'>
+      <img style='margin-top: 0.25cm;' id='plot_display' alt='SESAMI 1 plot'>
       <button id='download_button' class='btn btn-primary round_button' style='font-size:16px;'>Download figure</button>
     </div>
   </div>
@@ -239,6 +130,150 @@
     <p style='font-size:16px; margin-top:0.25cm;' id='BETESW_readout'></p>
     <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='ML_prediction_header'>ML (SESAMI 2) prediction is:</p>
     <p style='font-size:16px; margin-top:0.25cm;' id='ML_prediction'></p>
+  </div>
+
+
+  <!-- This div contains important buttons that run the pivotal commands on the website. -->
+  <div style='font-size:16px; padding-top: 30px' class="container">
+    <!-- Create a section containing buttons -->
+    <div class='col-lg-12'>
+      <div style='width:100%; text-align:center; margin-top:0.25cm;'>
+        <button id='upload_button' class='btn btn-primary round_button' style='font-size:16px;'>Upload CSV or AIF</button>
+        <button id='run_button' class='btn btn-primary round_button' style='font-size:16px;'>Run calculation</button>
+      </div>
+    </div>
+    <div style='width:100%; text-align:center; margin-top:0.25cm;'>
+      <p id='permission_line'>May we store information on your isotherms? &nbsp&nbsp<button style='color: green;' id='perm_yes' class='minibutton'>Yes.</button>&nbsp&nbsp&nbsp<button style='color: red;' id='perm_no' class='minibutton'>No.</button></p> <!-- &nbsp is a space gap -->
+    </div>
+    <div style='width:100%; text-align:center; margin-top:0.25cm;'>
+      <p id='calculation_status'></p> <!-- Will indicate wheter a calculation is underway. -->
+    </div>
+    <div style='font-size:16px; margin-top:0.25cm;' id='upload_status'></div>
+  </div>
+
+
+  <!-- This div contains the gas selection option. -->
+  <div style='font-size:16px; padding-top: 30px; text-align:center;' class="container">
+    <button class='round_minibutton' id='general_opt_button'>Show general options</button>
+
+    <div id='general_options'>
+
+      <!-- Adsorbate -->
+      <div class='row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>Type of gas</div>
+        <div class='col-lg-8'>
+          <input id='gas_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="Argon" list='gas_list' onmousedown="value = '';" />
+          <datalist id='gas_list' style='font-size: 16px;'>
+            <option value="Argon">
+            <option value="Nitrogen">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- R^2 cutoff -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          R<sup>2</sup> cutoff (SESAMI)
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='r2cutoff_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="0.9995" list='r2cutoff_list' onmousedown="value = '';" />
+          <datalist id='r2cutoff_list' style='font-size: 16px;'>
+            <option value="0.99">
+            <option value="0.999">
+            <option value="0.9995">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- R^2 min -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          R<sup>2</sup> min (SESAMI)
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='r2min_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="0.998" list='r2min_list' onmousedown="value = '';" />
+          <datalist id='r2min_list' style='font-size: 16px;'>
+            <option value="0.980">
+            <option value="0.998">
+          </datalist>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- This div contains plotting options. -->
+  <div style='font-size:16px; padding-top: 30px; text-align:center;' class="container">
+    <button class='round_minibutton' id='plotting_opt_button'>Show plotting options</button>
+
+    <div id='plotting_options'>
+
+      <!-- Figure legend -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure legend 
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='legend_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="Yes" list='legend_list' onmousedown="value = '';" />
+          <datalist id='legend_list' style='font-size: 16px;'>
+            <option value="Yes">
+            <option value="No">
+          </datalist>   
+        </div>
+      </div>
+
+      <!-- Figure font size -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure font size
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='fontsize_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="10" list='fontsize_list' onmousedown="value = '';" />
+          <datalist id='fontsize_list' style='font-size: 16px;'>
+            <option value="6">
+            <option value="8">
+            <option value="10">
+            <option value="12">
+            <option value="14">
+            <option value="16">
+            <option value="18">
+            <option value="20">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- Figure font type -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure font type
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='fonttype_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="sans-serif" list='fonttype_list' onmousedown="value = '';" />
+          <datalist id='fonttype_list' style='font-size: 16px;'>
+            <option value="sans-serif">
+            <option value="serif">
+            <option value="monospace">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- Figure dpi -->
+      <div class = 'row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>
+          Figure dpi
+        </div>
+        <div class='col-lg-8'>
+          <input autocomplete="off" id='dpi_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="300" list='dpi_list' onmousedown="value = '';" />
+          <datalist id='dpi_list' style='font-size: 16px;'>
+            <option value="300">
+            <option value="600">
+          </datalist>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
   <!-- This div contains a bottom bar.  -->
@@ -280,7 +315,7 @@
     $('#legend_dropdown').val('Yes')
     $('#fontsize_dropdown').val('10') 
     $('#fonttype_dropdown').val('sans-serif') 
-    $('#dpi_dropdown').val('300')     
+    $('#dpi_dropdown').val('300') 
 
   }
 
@@ -291,6 +326,11 @@
     $('#plottype_dropdown').val('Multiplot') 
     $('#plot_div').hide()
     $('#print_out').hide()
+    $('#general_options').hide()    
+    $('#general_opt_button').text('Show general options')    
+    $('#plotting_options').hide() 
+    $('#plotting_opt_button').text('Show plotting options') 
+
   }
 
   // Used to parse a CSV to an array.
@@ -503,12 +543,15 @@
 
     myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas} // Plotting information
 
+    $('#calculation_status').text('Calculating...')
+
     $.post("/run_SESAMI", JSON.stringify(myDict)).done(
       function (response) {
 
         // Failure handling
         if (response == 'Linear failure') {
           alert("No suitable linear region has been found. Try lowering R2min.")
+          $('#calculation_status').text('')
           return;
         }
 
@@ -524,9 +567,12 @@
         FIGURE_PATH = 'generated_plots/multiplot.png'
         $("#plot_display").attr("src",FIGURE_PATH);
         OUTPUT_NAME = 'multiplot.png'
+
+        $('#calculation_status').text('')
       })
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
         alert(errorThrown)
+        $('#calculation_status').text('')
       })
   })
 
@@ -538,6 +584,32 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  })
+
+  // Runs when the "Show general options" button is clicked.
+  $('#general_opt_button').click(function () {
+
+    if ($('#general_opt_button').text() == 'Show general options') {
+      $('#general_options').show()
+      $('#general_opt_button').text('Hide general options')
+    } else {
+      $('#general_options').hide()
+      $('#general_opt_button').text('Show general options')      
+    }
+    
+  })
+
+  // Runs when the "Show plotting options" button is clicked.
+  $('#plotting_opt_button').click(function () {
+
+    if ($('#plotting_opt_button').text() == 'Show plotting options') {
+      $('#plotting_options').show()
+      $('#plotting_opt_button').text('Hide plotting options')
+    } else {
+      $('#plotting_options').hide()
+      $('#plotting_opt_button').text('Show plotting options')      
+    }
+    
   })
 
   function switch_plot(plot_type) {
@@ -580,6 +652,20 @@
       // Purpose of this is to make a user ID for the new browser that has accessed the site.
       USER_ID = response
     })
+
+  // When the "Yes" button is clicked for storage permission line
+  $("#perm_yes").click(function () {
+    $('#permission_line').hide()
+    $.post("/permission", JSON.stringify(true)).done(function (response) {
+    })
+  })
+
+  // When the "No" button is clicked for storage permission line
+  $("#perm_no").click(function () {
+    $('#permission_line').hide()
+    $.post("/permission", JSON.stringify(false)).done(function (response) {
+    })
+  })
 
 </script>
 <!-- End of Javascript section -->
