@@ -1,10 +1,13 @@
 # Introduction
 Forget about installing complicated software. This website is developed to perform the Brauner-Emmett-Teller (BET), Excess Sorption Work (ESW), BET-ESW, and Machine Learning (ML) methods for surface area
-estimation in nanoporous materials. 
-
-The web interface allows user to upload either [Adsorption Information File (AIF)](https://pubs.acs.org/doi/10.1021/acs.langmuir.1c00122) or Comma Separated-Values (CSV) file. 
+estimation in nanoporous materials. The web interface allows user to upload either [Adsorption Information File (AIF)](https://pubs.acs.org/doi/10.1021/acs.langmuir.1c00122) or Comma Separated-Values (CSV) file. 
 
 This website is based on [MOFSimplify](https://github.com/hjkgrp/MOFSimplify) website developed by [Kulik Group](http://hjkgrp.mit.edu/) at MIT.
+
+# Sample Output
+You will be able to change font type, font size, dot-per-inch (dpi) etc on the website for your publication.
+
+![example_input](/example_input/sesami-output.png)
 
 # Calculation Details
 The algorithms employed in this code selects the linear region and to compute the areas. The text are excerpt from page S5 from J. Phys. Chem. C 2019, 123, 33, 20195 - 20209. 
@@ -29,10 +32,6 @@ CSV file: see [example](/example_input/example_loading_data.csv)
 2. Upload `AIF` or `CSV` formatted data.
 3. Click `Run Calculation` and wait.
 
-# Sample Output Files
-You will be able to change font type, font size, dot-per-inch (dpi) etc on the website for your publication.
-
-![example_input](/example_input/sesami-output.png)
 # References
 - [Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116),
 J. Phys. Chem. C 2019, 123, 33, 20195 - 20209
