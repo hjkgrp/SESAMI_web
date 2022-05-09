@@ -1,5 +1,5 @@
 # Introduction
-Forget about installing complicated software or using old excel spreadsheet from your co-workers!! On the fly, this website performs the Brauner-Emmett-Teller (BET), Excess Sorption Work (ESW), BET-ESW, and Machine Learning (ML) methods for surface area
+Forget about installing complicated software or using old excel spreadsheet from your co-workers! On the fly, this website performs the Brauner-Emmett-Teller (BET), Excess Sorption Work (ESW), BET-ESW, and Machine Learning (ML) methods for surface area
 estimation in nanoporous materials. The web interface allows user to upload either [Adsorption Information File (AIF)](https://pubs.acs.org/doi/10.1021/acs.langmuir.1c00122) or Comma Separated-Values (CSV) file. 
 
 This website is based on [MOFSimplify](https://github.com/hjkgrp/MOFSimplify) website developed by [Kulik Group](http://hjkgrp.mit.edu/) at MIT.
