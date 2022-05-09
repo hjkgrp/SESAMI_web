@@ -176,12 +176,7 @@
           R<sup>2</sup> cutoff (SESAMI)
         </div>
         <div class='col-lg-8'>
-          <input autocomplete="off" id='r2cutoff_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="0.9995" list='r2cutoff_list' onmousedown="value = '';" />
-          <datalist id='r2cutoff_list' style='font-size: 16px;'>
-            <option value="0.99">
-            <option value="0.999">
-            <option value="0.9995">
-          </datalist>
+          <input type="text" id="r2cutoff_input" style='font-size: 16px; width:100%' class='form-control' placeholder="0.9995">
         </div>
       </div>
 
@@ -191,11 +186,7 @@
           R<sup>2</sup> min (SESAMI)
         </div>
         <div class='col-lg-8'>
-          <input autocomplete="off" id='r2min_dropdown' style='font-size: 16px; width:100%' class='form-control' placeholder="0.998" list='r2min_list' onmousedown="value = '';" />
-          <datalist id='r2min_list' style='font-size: 16px;'>
-            <option value="0.980">
-            <option value="0.998">
-          </datalist>
+          <input type="text" id="r2min_input" style='font-size: 16px; width:100%' class='form-control' placeholder="0.998">
         </div>
       </div>
 
@@ -310,8 +301,8 @@
 
     // setting default values
     $('#gas_dropdown').val('Argon') 
-    $('#r2cutoff_dropdown').val('0.9995') 
-    $('#r2min_dropdown').val('0.998')
+    $('#r2cutoff_input').val('0.9995') 
+    $('#r2min_input').val('0.998')
     $('#legend_dropdown').val('Yes')
     $('#fontsize_dropdown').val('10') 
     $('#fonttype_dropdown').val('sans-serif') 
@@ -537,9 +528,19 @@
     font_size = $('#fontsize_dropdown').val()
     font_type = $('#fonttype_dropdown').val()
     legend = $('#legend_dropdown').val()
-    R2cutoff = $('#r2cutoff_dropdown').val()
-    R2min = $('#r2min_dropdown').val()
+    R2cutoff = $('#r2cutoff_input').val()
+    R2min = $('#r2min_input').val()
     gas = $('#gas_dropdown').val()
+
+    // Ensuring the user put in numbers for R2 cutoff and R2min
+    if (isNaN(R2cutoff) || isNaN(R2min)) {
+      alert("R2cutoff and R2min must be numbers.");
+      return;
+    }
+    if (R2cutoff >= 1 || R2min >= 1 || R2cutoff <= 1 || R2min <= 1) {
+      alert("R2cutoff and R2min must be between zero and one.");
+      return;
+    }
 
     myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas} // Plotting information
 
