@@ -9,12 +9,14 @@ import shutil
 import pandas as pd
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 from SESAMI.SESAMI_2.SESAMI_2 import calculation_v2_runner
-# installing mysql
-import mysql.connector
+# Mongo Atlas
+from pymongo import MongoClient
 
 app = flask.Flask(__name__)
-app.secret_key = "TODO make this actually secret later"
 
+'''
+app.secret_key = "TODO make this actually secret later"
+'''
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function run_SESAMI is currently running.
 
@@ -506,19 +508,19 @@ def check_csv():
 ## below is for Database Integration with MySQL
 ## more info: https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
 ## Handle feedback
+connection_string = ""
 @app.route('/process_feedback', methods=['POST'])
 def process_feedback():
     """
     process_feedback inserts the website form feedback into the MySQL feedback database. 
     If an uploaded file has an incorrect extension (i.e. is a disallowed file format), the user is directed to an error page.
     """
-    client = mysql.connector.connect('34.138.10.193', 3306)  # connect to public ip google gcloud mysql
-    # The first argument is the IP address. The second argument is the port.
-    db = client.isotherm
+    db = MongoClient(os.environ["MONGODB_URI"]).get_default_database()  # connect to public ip google gcloud mongodb
+
     # The SESAMI collection in the feedback database.
-    collection = db.sesami
+    collection = db.isotherm_collection
     fields = ['feedback_form_name', 'rating', 'email', 'reason',
-              'comments', 'cif_file_name', 'structure', 'solvent']
+              'comments', 'isotherm_data', 'adsorbate', 'temperature']
     #$meta_fields = ['IP', 'datetime', 'cif_file', 'MOF_name']
     final_dict = {}
     for field in fields:
