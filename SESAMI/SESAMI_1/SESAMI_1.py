@@ -22,8 +22,11 @@ def calculation_runner(MAIN_PATH, plotting_information, USER_ID):
     minlinelength = 4
 
     p0 = 1e5  # Note that this is fixed 
-    temperature = 77  # Note that this is fixed 
     gas = plotting_information["gas"]
+    if gas == 'Argon':
+        temperature = 87 # K
+    elif gas == 'Nitrogen':
+        temperature = 77 # K
 
     # changing some variable types
     plotting_information["font size"] = int(plotting_information["font size"])

@@ -9,6 +9,7 @@ import shutil
 import pandas as pd
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 from SESAMI.SESAMI_2.SESAMI_2 import calculation_v2_runner
+from datetime import datetime
 # Mongo Atlas
 from pymongo import MongoClient
 
@@ -507,52 +508,54 @@ def check_csv():
 
 ## below is for Database Integration with MySQL
 ## more info: https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
-## Handle feedback
+## Handle information storage
 connection_string = ""
-@app.route('/process_feedback', methods=['POST'])
-def process_feedback():
+@app.route('/process_info', methods=['POST'])
+def process_info():
     """
-    process_feedback inserts the website form feedback into the MySQL feedback database. 
-    If an uploaded file has an incorrect extension (i.e. is a disallowed file format), the user is directed to an error page.
+    process_info inserts the website info into the MongoDB isotherm database. 
     """
     db = MongoClient(os.environ["MONGODB_URI"]).get_default_database()  # connect to public ip google gcloud mongodb
 
-    # The SESAMI collection in the feedback database.
+    # The SESAMI collection in the isotherm database.
     collection = db.isotherm_collection
-    fields = ['feedback_form_name', 'rating', 'email', 'reason',
-              'comments', 'isotherm_data', 'adsorbate', 'temperature']
-    #$meta_fields = ['IP', 'datetime', 'cif_file', 'MOF_name']
+    fields = ['name', 'email', 'isotherm_data', 'adsorbate', 'temperature']
     final_dict = {}
-    for field in fields:
-        final_dict[field] = request.form.get(field)
+
+    ### TODO temporary section
+    final_dict['name'] = 'Gianmarco'
+    final_dict['email'] = 'gterrone@mit.edu'
+    final_dict['isotherm_data'] = 'DATA HERE'
+    final_dict['adsorbate'] = 'argon'
+    final_dict['temperature'] = 77
+    ###
+
+    # for field in fields: # TODO uncomment this for loop later
+    #     final_dict[field] = request.form.get(field)
 
     # Populate special fields
-    uploaded_file = request.files['file']
-    if uploaded_file.filename == '' and request.form.get('feedback_form_name') != 'upload_form':
-        # User did not upload the optional TGA trace
-        print('No TGA trace')
-    # if final_dict['file']==b'':
-    #     file_ext = ''
-    else:
-        final_dict['filetype'] = uploaded_file.content_type
-        filename = secure_filename(uploaded_file.filename)
-        final_dict['filename'] = filename
-        final_dict['file'] = uploaded_file.read()
-        file_ext = os.path.splitext(filename)[1].lower()
-        if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-            return ('', 204)  # 204 no content response
-            # return flask.send_from_directory('./splash_page/', 'error.html')
+    # uploaded_file = request.files['file']
+    # if uploaded_file.filename == '' and request.form.get('feedback_form_name') != 'upload_form':
+    #     # User did not upload the optional TGA trace
+    #     print('No TGA trace')
 
-    # Special tasks if the form is upload_form
-    if request.form.get('feedback_form_name') == 'upload_form':
-        uploaded_cif = request.files['cif_file']
-        cif_filename = secure_filename(uploaded_cif.filename)
-        file_ext = os.path.splitext(cif_filename)[1].lower()
-        if file_ext != '.cif':
-            return ('', 204)  # 204 no content response
-            # return flask.send_from_directory('./splash_page/', 'error.html')
-        final_dict['cif_file_name'] = cif_filename
-        final_dict['structure'] = uploaded_cif.read()
+    # final_dict['filetype'] = uploaded_file.content_type
+    # filename = secure_filename(uploaded_file.filename)
+    # final_dict['filename'] = filename
+    # final_dict['file'] = uploaded_file.read()
+    # file_ext = os.path.splitext(filename)[1].lower()
+    # if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+    #     return ('', 204)  # 204 no content response
+
+    # # Special tasks if the form is upload_form
+    # if request.form.get('feedback_form_name') == 'upload_form':
+    #     uploaded_cif = request.files['cif_file']
+    #     cif_filename = secure_filename(uploaded_cif.filename)
+    #     file_ext = os.path.splitext(cif_filename)[1].lower()
+    #     if file_ext != '.cif':
+    #         return ('', 204)  # 204 no content response
+    #     final_dict['cif_file_name'] = cif_filename
+    #     final_dict['structure'] = uploaded_cif.read()
 
     final_dict['ip'] = request.remote_addr
     final_dict['timestamp'] = datetime.now().isoformat()
@@ -561,7 +564,6 @@ def process_feedback():
     # insert the dictionary into the mongodb collection
     collection.insert(final_dict)
     return ('', 204)  # 204 no content response
-    # return flask.send_from_directory('./splash_page/', 'success.html')
 
 @app.route('/permission', methods=['POST'])
 def change_permission():
