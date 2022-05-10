@@ -15,9 +15,7 @@ from pymongo import MongoClient
 
 app = flask.Flask(__name__)
 
-'''
-app.secret_key = "TODO make this actually secret later"
-'''
+app.secret_key = "TODO make this actually secret later" # Necessary for sessions
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function run_SESAMI is currently running.
 
