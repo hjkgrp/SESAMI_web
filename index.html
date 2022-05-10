@@ -429,10 +429,11 @@
   $('#example_isotherm').click(function () {
     clean_slate_partial()
 
-    $('#upload_status').text('Example isotherm');
+    $('#upload_status').text('Example isotherm loaded.');
 
-    $.get("/move_example").done( // Copy the example input's txt file into the user's folder.
+    $.get("/copy_example").done( // Copy the example input's txt file into the user's folder.
       function (response) {
+        console.log('Example prepared.')
     })
 
   })
@@ -533,8 +534,9 @@
 
     // Check if a CSV is uploaded.
     let myFile = document.getElementById('file_input').files[0]; // the uploaded file
-    if (myFile == undefined) {
-      alert("Must upload a CSV for analysis first.");
+
+    if (myFile == undefined && $('#upload_status').text() != 'Example isotherm loaded.') { // The user has neither uploaded an isotherm nor selected the example.
+      alert("Must select an isotherm for analysis first. Please either use the example isotherm or upload your own isotherm.");
       return;
     }
 

@@ -269,6 +269,7 @@ def run_SESAMI():
     # Only one user can run this function at a time.
     while RUN_SESAMI_RUNNING:
         time.sleep(5) # Sleep for 5 seconds.
+        print('Sleep 5 seconds')
     RUN_SESAMI_RUNNING = True
 
     ### SESAMI 1
@@ -574,6 +575,29 @@ def change_permission():
     print('Permission check')
     print(permission)
     return str(permission)
+
+@app.route("/copy_example", methods=["GET"])
+def copy_example():
+    """
+    TODO fix the docstring
+    Calculate the distance between two points.
+
+    Parameters
+    ----------
+    rA, rB : np.ndarray
+        The coordinates of each point.
+
+    Returns
+    -------
+    distance: float
+        The distance between the two points.
+
+    """
+
+    shutil.copyfile(f'{MAIN_PATH}example_input/example_input.txt', f'{MAIN_PATH}user_{session["ID"]}/input.txt')
+
+    return "0"
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
