@@ -4,3 +4,4 @@ statsmodels
 pandas
 flask
 sklearn
+pymongo[srv]==4.1.1
