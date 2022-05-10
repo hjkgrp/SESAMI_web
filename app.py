@@ -519,7 +519,7 @@ def process_feedback():
 
     # The SESAMI collection in the feedback database.
     collection = db.isotherm_collection
-    fields = ['feedback_form_name', 'rating', 'email', 'reason',
+    fields = ['feedback_form_name', 'email', 'reason',
               'comments', 'isotherm_data', 'adsorbate', 'temperature']
     #$meta_fields = ['IP', 'datetime', 'cif_file', 'MOF_name']
     final_dict = {}
