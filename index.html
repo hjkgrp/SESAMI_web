@@ -138,6 +138,7 @@
     <!-- Create a section containing buttons -->
     <div class='col-lg-12'>
       <div style='width:100%; text-align:center; margin-top:0.25cm;'>
+        <button id='example_isotherm' class='btn btn-primary round_button' style='font-size:16px;'>Example isotherm</button>
         <button id='upload_button' class='btn btn-primary round_button' style='font-size:16px;'>Upload CSV or AIF</button>
         <button id='run_button' class='btn btn-primary round_button' style='font-size:16px;'>Run calculation</button>
       </div>
@@ -424,6 +425,19 @@
     return ext == 'aif';
   }
 
+  // Runs when the "Example isotherm" button is clicked.
+  $('#example_isotherm').click(function () {
+    clean_slate_partial()
+
+    $('#upload_status').text('Example isotherm');
+
+    $.get("/move_example").done( // Copy the example input's txt file into the user's folder.
+      function (response) {
+    })
+
+  })
+
+
   // Runs when the "Upload CSV" button is clicked.
   $('#upload_button').on('click', function () { // button triggers upload
     clean_slate_partial()
@@ -537,7 +551,7 @@
       alert("R2cutoff and R2min must be numbers.");
       return;
     }
-    if (R2cutoff >= 1 || R2min >= 1 || R2cutoff <= 1 || R2min <= 1) {
+    if (R2cutoff >= 1 || R2min >= 1 || R2cutoff <= 0 || R2min <= 0) {
       alert("R2cutoff and R2min must be between zero and one.");
       return;
     }

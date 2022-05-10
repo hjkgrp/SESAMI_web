@@ -261,6 +261,9 @@ def run_SESAMI():
         The distance between the two points.
 
     """
+
+    # Assumes the user's input.txt has been made by the website already.
+
     global RUN_SESAMI_RUNNING
 
     # Only one user can run this function at a time.
