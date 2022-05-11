@@ -107,6 +107,7 @@
       Name: <input type="text" id='user_name' class='form-control'><br>
       Email: <input type="text" id='user_email' class='form-control'><br>
       Institution: <input type="text" id='user_institution' class='form-control'><br>
+      Material type: <input type="text" id='user_material' class='form-control'><br>
     </div>
   </div>
 
@@ -612,10 +613,11 @@
       'name': $('#user_name').val(),
       'email': $('#user_email').val(),
       'institution': $('#user_institution').val(),
+      'adsorbent': $('#user_material').val(),
       'adsorbate': $('#gas_dropdown').val()
     }
 
-    $.post('/process_info', JSON.stringify(info_dict)).done( // TODO modify this later
+    $.post('/process_info', JSON.stringify(info_dict)).done(
 
       )
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
