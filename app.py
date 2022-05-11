@@ -15,7 +15,7 @@ from pymongo import MongoClient
 
 app = flask.Flask(__name__)
 
-app.secret_key = "TODO make this actually secret later" # Necessary for sessions
+app.secret_key = "TODO make this actually secret later" # Necessary for sessions.
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function run_SESAMI is currently running.
 MONGODB_URI = "mongodb+srv://iast:Tuxe5F5TL0oQQjcM@cluster1.jadjk.mongodb.net/data_isotherm?retryWrites=true&w=majority"
@@ -266,7 +266,7 @@ def run_SESAMI():
 
     # Assumes the user's input.txt has been made by the website already.
 
-    global RUN_SESAMI_RUNNING
+    global RUN_SESAMI_RUNNING # global variable
 
     # Only one user can run this function at a time.
     while RUN_SESAMI_RUNNING:

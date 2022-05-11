@@ -12,9 +12,9 @@
 <link rel="stylesheet" href="libraries/bootstrap.min.css">
 <link rel="stylesheet" href="libraries/bootstrap_custom.min.css">
 
-<!-- Custom CSS code is placed within the <style> tag: -->
+<!-- Custom CSS code is placed within the <style> tag -->
 <style>
-  .round_button {
+  .round_button { /* For the round_button class */
     border-radius: 25px;
     font-size: 16px;
     font-weight: bold;
@@ -23,7 +23,7 @@
     background-color: #0000FF; /*blue*/
   }
 
-  #plot_display {
+  #plot_display { /* For anything with the plot_display ID */
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -58,6 +58,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
   <title>SESAMI Website</title>
 </head>
+
+<!-- Beginning of HTML section -->
 
 <body>
   <!-- This div contains a navbar. -->
@@ -138,6 +140,7 @@
     </div>
   </div>
 
+
   <!-- This div contains the print out of calculations run on the website. -->
   <div style='font-size:16px; padding-top: 30px' id='print_out' class="container">
     <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BET_readout_header'>BET results are:</p>
@@ -169,7 +172,7 @@
   </div>
 
 
-  <!-- This div contains the gas selection option. -->
+  <!-- This div contains general options. -->
   <div style='font-size:16px; padding-top: 30px; text-align:center;' class="container">
     <button class='round_minibutton' id='general_opt_button'>Show general options</button>
 
@@ -302,6 +305,8 @@
 
 </body>
 
+<!-- End of HTML section -->
+
 
 
 <!-- Beginning of JavaScript section -->
@@ -310,9 +315,8 @@
   // Global variables
   let FIGURE_PATH = null
   let OUTPUT_NAME = null
-  var USER_ID = null
 
-  // A helper function that clears text out and sets default values.
+  // A helper function that clears text out, hides elements, and sets default values.
   function clean_slate() {
     clean_slate_partial()
 
@@ -327,6 +331,7 @@
 
   }
 
+  // This function only clears and hides elements but does not reset the general and plotting options.
   function clean_slate_partial() {
     $('#BET_readout').text('')
     $('#BETESW_readout').text('')    
@@ -342,7 +347,7 @@
 
   }
 
-  // Used to parse a CSV to an array.
+  // This next function is used to parse a CSV to an array.
   // ref: http://stackoverflow.com/a/1293163/2343
   // This will parse a delimited string into an array of
   // arrays. The default delimiter is the comma, but this
@@ -428,7 +433,7 @@
       return( arrData );
   }
 
-  // Used for ensuring that only .csv files are uploaded.
+  // Used for ensuring that only .csv and .aif files are uploaded.
   function getExtension(filename) {
     var parts = filename.split('.');
     return parts[parts.length - 1];
@@ -481,7 +486,7 @@
       this.value = null; // clear the file
       $('#upload_status').text('')
       alert("The uploaded file cannot be empty.");
-      return;   
+      return; // If the user uploaded an empty file, doesn't continue.   
     }
 
     // Converting the uploaded file to a TXT, and checking its formatting
@@ -492,7 +497,7 @@
 
         myDict = {'my_content': my_content}
 
-        $.post("/save_csv_txt", JSON.stringify(myDict)).done(
+        $.post("/save_csv_txt", JSON.stringify(myDict)).done( // Saves the uploaded CSV as a CSV and TXT file in the user's folder.
           function (response) {
 
             // Check if the uploaded CSV is of the right format. If not, clear the file_input and upload_status elements.
@@ -516,7 +521,7 @@
 
         myDict = {'my_content': my_content}
 
-        $.post("/save_aif_txt", JSON.stringify(myDict)).done(
+        $.post("/save_aif_txt", JSON.stringify(myDict)).done( // Saves the uploaded AIF as a AIF and TXT file in the user's folder.
           function (response) {
 
             // Check if the uploaded AIF is of the right format. If not, clear the file_input and upload_status elements.
@@ -536,7 +541,7 @@
   });
 
   // Function for formatting SESAMI 1 output. Replaces \n with breaks. Also adds some superscript and subscript.
-  // https://stackoverflow.com/questions/4535888/jquery-text-and-newlines
+  // Source: https://stackoverflow.com/questions/4535888/jquery-text-and-newlines
   $.fn.multiline = function(text){
       this.text(text);
       this.html(this.html().replace(/\n/g,'<br/>'));
@@ -549,7 +554,7 @@
   $('#run_button').click(function () {
     clean_slate_partial()
 
-    // Check if a CSV is uploaded.
+    // Check if the user has uploaded an isotherm or if they have selected the example isotherm.
     let myFile = document.getElementById('file_input').files[0]; // the uploaded file
 
     if (myFile == undefined && $('#upload_status').text() != 'Example isotherm loaded.') { // The user has neither uploaded an isotherm nor selected the example.
@@ -571,28 +576,28 @@
       return;
     }
     if (R2cutoff >= 1 || R2min >= 1 || R2cutoff <= 0 || R2min <= 0) {
-      alert("R2cutoff and R2min must be between zero and one.");
+      alert("R2cutoff and R2min must be between zero and one."); // Values outside this range don't make sense.
       return;
     }
 
     myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas} // Plotting information
 
-    $('#calculation_status').text('Calculating...')
+    $('#calculation_status').text('Calculating...') // Gives the user peace of mind that their button click actually did something :)
 
-    $.post("/run_SESAMI", JSON.stringify(myDict)).done(
+    $.post("/run_SESAMI", JSON.stringify(myDict)).done( // Runs the SESAMI 1 and SESAMI 2 code
       function (response) {
 
         // Failure handling
         if (response == 'Linear failure') {
           alert("No suitable linear region has been found. Try lowering R2min.")
           $('#calculation_status').text('')
-          return;
+          return; // Does not continue if this failure occurs.
         }
 
         ML_prediction = response['ML_prediction']
         BET_analysis = response['BET_analysis']
         BETESW_analysis = response['BETESW_analysis']
-        $('#ML_prediction').multiline(ML_prediction + ' m2sup/g')
+        $('#ML_prediction').multiline(ML_prediction + ' m2sup/g') // The multiline function from earlier formats things nicely.
         $('#BET_readout').multiline(BET_analysis)
         $('#BETESW_readout').multiline(BETESW_analysis)
 
@@ -617,7 +622,7 @@
       'adsorbate': $('#gas_dropdown').val()
     }
 
-    $.post('/process_info', JSON.stringify(info_dict)).done(
+    $.post('/process_info', JSON.stringify(info_dict)).done( // Pushing information to the MongoDB.
 
       )
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
@@ -627,22 +632,22 @@
   })
 
   // Runs when the "Download Figure" button is clicked.
-  $('#download_button').click(function () {
+  $('#download_button').click(function () { 
     var a = document.createElement('a');
-    a.href = FIGURE_PATH 
-    a.download = OUTPUT_NAME
+    a.href = FIGURE_PATH // The download's location.
+    a.download = OUTPUT_NAME // The download's name.
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
+    document.body.removeChild(a); // Downloads the currently displayed figure.
   })
 
-  // Runs when the "Show general options" button is clicked.
+  // Runs when the "Show general options"/"Hide general options" button is clicked.
   $('#general_opt_button').click(function () {
 
-    if ($('#general_opt_button').text() == 'Show general options') {
+    if ($('#general_opt_button').text() == 'Show general options') { // In this case, need to show the section.
       $('#general_options').show()
       $('#general_opt_button').text('Hide general options')
-    } else {
+    } else { // In this case, need to hide the section.
       $('#general_options').hide()
       $('#general_opt_button').text('Show general options')      
     }
@@ -652,10 +657,10 @@
   // Runs when the "Show plotting options" button is clicked.
   $('#plotting_opt_button').click(function () {
 
-    if ($('#plotting_opt_button').text() == 'Show plotting options') {
+    if ($('#plotting_opt_button').text() == 'Show plotting options') { // In this case, need to show the section.
       $('#plotting_options').show()
       $('#plotting_opt_button').text('Hide plotting options')
-    } else {
+    } else { // In this case, need to hide the section.
       $('#plotting_options').hide()
       $('#plotting_opt_button').text('Show plotting options')      
     }
@@ -664,10 +669,10 @@
 
   // Runs when the "About you" button is clicked.
   $('#about_you_button').click(function () {
-    if ($('#about_you_content').is(':visible')) {
+    if ($('#about_you_content').is(':visible')) { // In this case, need to hide the section.
       $('#about_you_content').hide()  
     } else {
-      $('#about_you_content').show()
+      $('#about_you_content').show() // In this case, need to show the section.
     }
     
   })
@@ -704,23 +709,27 @@
     $("#plot_display").attr("src", FIGURE_PATH);
   }
 
+
+
   // The code below runs when the site first loads up.
+
   clean_slate()
 
   $.get("/new_user").done(
     function (response) {
       // Purpose of this is to make a user ID for the new browser that has accessed the site.
-      USER_ID = response
+      // A temporary folder is made in the backend (app.py) where the user's files are stored.
+      // The folder bears the ID of the user.
     })
 
-  // When the "Yes" button is clicked for storage permission line
+  // Runs when the "Yes" button is clicked for storage permission line.
   $("#perm_yes").click(function () {
     $('#permission_line').hide()
     $.post("/permission", JSON.stringify(true)).done(function (response) {
     })
   })
 
-  // When the "No" button is clicked for storage permission line
+  // Runs when the "No" button is clicked for storage permission line.
   $("#perm_no").click(function () {
     $('#permission_line').hide()
     $.post("/permission", JSON.stringify(false)).done(function (response) {
