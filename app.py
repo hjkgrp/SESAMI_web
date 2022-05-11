@@ -20,6 +20,8 @@ MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function run_SESAMI is currently running.
 MONGODB_URI = "mongodb+srv://iast:Tuxe5F5TL0oQQjcM@cluster1.jadjk.mongodb.net/data_isotherm?retryWrites=true&w=majority"
 
+with open(f'{MAIN_PATH}example_input/example_input.txt', "r") as f:
+    EXAMPLE_FILE_CONTENT = f.readlines()
 
 @app.route("/")
 def index():
@@ -513,6 +515,17 @@ def process_info():
     process_info inserts the website info into the MongoDB isotherm database. 
     """
 
+    global EXAMPLE_FILE_CONTENT # global variable
+
+    if not session['permission']: # The user has not given us permission to store information on their isotherms
+        return ('', 204)  # 204 no content response. Don't proceed with the rest of the function.
+
+    # If the user is predicting on the example isotherm data, we don't store that.
+    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "r") as f:
+        isotherm_data = f.readlines()
+    if isotherm_data == EXAMPLE_FILE_CONTENT:
+        return ('', 204)  # 204 no content response. Don't proceed with the rest of the function.
+
     client = MongoClient(MONGODB_URI)  # connect to public ip google gcloud mongodb
 
     db = client.data_isotherm
@@ -521,9 +534,6 @@ def process_info():
     fields = ['name', 'email', 'institution', 'adsorbent', 'isotherm_data', 'adsorbate', 'temperature']
     final_dict = {}
 
-    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "r") as f:
-        isotherm_data = f.readlines()
-
     info_dict = json.loads(flask.request.get_data())  # This is a dictionary.
 
     final_dict['name'] = info_dict['name']
@@ -531,10 +541,7 @@ def process_info():
     final_dict['institution'] = info_dict['institution']
     final_dict['adsorbent'] = info_dict['adsorbent']
     
-    if session['permission']: # The user has given us permission to store information on their isotherms
-        final_dict['isotherm_data'] = isotherm_data
-    else:
-        final_dict['isotherm_data'] = ''
+    final_dict['isotherm_data'] = isotherm_data
     
     final_dict['adsorbate'] = info_dict['adsorbate']
 

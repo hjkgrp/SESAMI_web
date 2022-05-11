@@ -99,7 +99,7 @@
 
 
   <!-- This div is a space for users to enter information about themselves so we can improve our services. -->
-  <div style='font-size:16px; padding-top: 30px; width:100%;' class="container">
+  <div id='about_you_container' style='font-size:16px; padding-top: 30px; width:100%;' class="container">
     Please consider providing the following information so that we can learn about usage patterns and make this website work better for you. <br><br>
     <div style='text-align: center;'>
           <button class='round_minibutton' id='about_you_button'>About you</button>
@@ -732,6 +732,7 @@
   // Runs when the "No" button is clicked for storage permission line.
   $("#perm_no").click(function () {
     $('#permission_line').hide()
+    $('#about_you_container').hide() // Hide the entire section where the user can input their name, email, etc.
     $.post("/permission", JSON.stringify(false)).done(function (response) {
     })
   })
