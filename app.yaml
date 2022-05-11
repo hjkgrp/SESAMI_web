@@ -4,7 +4,7 @@ instance_class: F2
 
 env_variables:
   BUCKET_NAME: "example-gcs-bucket"
-  MONGODB_URI:  "mongodb+srv://iast:BM6AfYMaxsNHZcBK@cluster0-pri.jadjk.mongodb.net/isotherm_db?retryWrites=true&w=majority"
+  MONGODB_URI: "mongodb+srv://iast:7nqdtF3aI2n5mBC9@cluster0-pri.jadjk.mongodb.net/data_isotherm?retryWrites=true&w=majority"
 
 handlers:
 # Matches requests to /images/... to files in static/images/...

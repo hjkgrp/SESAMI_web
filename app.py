@@ -506,8 +506,6 @@ def check_csv():
     # If the code gets to this point, the CSV likely doesn't have any problems with it.
     return "All good!"
 
-## below is for Database Integration with MySQL
-## more info: https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
 ## Handle information storage
 connection_string = ""
 @app.route('/process_info', methods=['POST'])
@@ -515,10 +513,10 @@ def process_info():
     """
     process_info inserts the website info into the MongoDB isotherm database. 
     """
-    db = MongoClient(os.environ["MONGODB_URI"]).get_default_database()  # connect to public ip google gcloud mongodb
-
+    client = MongoClient(os.environ["MONGODB_URI"])  # connect to public ip google gcloud mongodb
+    db = client.data_isotherm
     # The SESAMI collection in the isotherm database.
-    collection = db.isotherm_collection
+    collection = db.BET # data collection in isotherm_db database
     fields = ['name', 'email', 'isotherm_data', 'adsorbate', 'temperature']
     final_dict = {}
 
