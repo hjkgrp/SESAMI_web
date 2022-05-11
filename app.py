@@ -512,6 +512,7 @@ def process_info():
     """
     process_info inserts the website info into the MongoDB isotherm database. 
     """
+
     client = MongoClient(MONGODB_URI)  # connect to public ip google gcloud mongodb
 
     db = client.data_isotherm
@@ -528,7 +529,12 @@ def process_info():
     final_dict['name'] = info_dict['name']
     final_dict['email'] = info_dict['email']
     final_dict['institution'] = info_dict['institution']
-    final_dict['isotherm_data'] = isotherm_data
+    
+    if session['permission']: # The user has given us permission to store information on their isotherms
+        final_dict['isotherm_data'] = isotherm_data
+    else:
+        final_dict['isotherm_data'] = ''
+    
     final_dict['adsorbate'] = info_dict['adsorbate']
 
     if info_dict['adsorbate'] == 'Nitrogen':
