@@ -1,5 +1,5 @@
 import flask
-from flask import session
+from flask import session, request
 import json
 import csv
 import os
@@ -18,6 +18,7 @@ app = flask.Flask(__name__)
 app.secret_key = "TODO make this actually secret later" # Necessary for sessions
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function run_SESAMI is currently running.
+MONGODB_URI = "mongodb+srv://iast:Tuxe5F5TL0oQQjcM@cluster1.jadjk.mongodb.net/data_isotherm?retryWrites=true&w=majority"
 
 
 @app.route("/")
@@ -511,8 +512,8 @@ def process_info():
     """
     process_info inserts the website info into the MongoDB isotherm database. 
     """
+    client = MongoClient(MONGODB_URI)  # connect to public ip google gcloud mongodb
 
-    client = MongoClient(os.environ["MONGODB_URI"])  # connect to public ip google gcloud mongodb
     db = client.data_isotherm
     # The SESAMI collection in the isotherm database.
     collection = db.BET # data collection in isotherm_db database
@@ -568,7 +569,7 @@ def process_info():
 
     print(final_dict)
     # insert the dictionary into the mongodb collection
-    collection.insert(final_dict)
+    db.BET.insert_one(final_dict)
     return ('', 204)  # 204 no content response
 
 @app.route('/permission', methods=['POST'])
@@ -610,4 +611,5 @@ def copy_example():
 
 
 if __name__ == "__main__":
+    print(MONGODB_URI)
     app.run(host="0.0.0.0", port=8000, debug=True)
