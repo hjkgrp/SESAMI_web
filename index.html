@@ -89,10 +89,25 @@
   <p>Convert RAW output files from equipments to AIF format by visiting: http://raw2aif.herokuapp.com/</p>
 
   </div>
-  <div style='font-size:14px;' class="container">
+  <div style='font-size:16px;' class="container">
   Calculations assume the following:<br>
     &#8226 Nitrogen: T = 77 K and p<sub>0</sub> = 1e5 Pa (~1 bar)<br>
-    &#8226 Argon: T = 77 K and p<sub>0</sub> = 1e5 Pa (~1 bar)<br>
+    &#8226 Argon: T = 87 K and p<sub>0</sub> = 1e5 Pa (~1 bar)<br>
+  </div>
+
+
+  <!-- This div is a space for users to enter information about themselves so we can improve our services. -->
+  <div style='font-size:16px; padding-top: 30px; width:100%;' class="container">
+    Please consider providing the following information so that we can learn about usage patterns and make this website work better for you. <br><br>
+    <div style='text-align: center;'>
+          <button class='round_minibutton' id='about_you_button'>About you</button>
+    </div>
+
+    <div id='about_you_content'>
+      Name: <input type="text" id='user_name' class='form-control'><br>
+      Email: <input type="text" id='user_email' class='form-control'><br>
+      Institution: <input type="text" id='user_institution' class='form-control'><br>
+    </div>
   </div>
 
 
@@ -322,6 +337,7 @@
     $('#general_opt_button').text('Show general options')    
     $('#plotting_options').hide() 
     $('#plotting_opt_button').text('Show plotting options') 
+    $('#about_you_content').hide()
 
   }
 
@@ -592,7 +608,14 @@
         $('#calculation_status').text('')
       })
 
-    $.post('/process_info', JSON.stringify(myDict)).done( // TODO modify this later
+    info_dict = {
+      'name': $('#user_name').val(),
+      'email': $('#user_email').val(),
+      'institution': $('#user_institution').val(),
+      'adsorbate': $('#gas_dropdown').val()
+    }
+
+    $.post('/process_info', JSON.stringify(info_dict)).done( // TODO modify this later
 
       )
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
@@ -633,6 +656,16 @@
     } else {
       $('#plotting_options').hide()
       $('#plotting_opt_button').text('Show plotting options')      
+    }
+    
+  })
+
+  // Runs when the "About you" button is clicked.
+  $('#about_you_button').click(function () {
+    if ($('#about_you_content').is(':visible')) {
+      $('#about_you_content').hide()  
+    } else {
+      $('#about_you_content').show()
     }
     
   })

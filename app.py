@@ -516,15 +516,24 @@ def process_info():
     db = client.data_isotherm
     # The SESAMI collection in the isotherm database.
     collection = db.BET # data collection in isotherm_db database
-    fields = ['name', 'email', 'isotherm_data', 'adsorbate', 'temperature']
+    fields = ['name', 'email', 'institution', 'isotherm_data', 'adsorbate', 'temperature']
     final_dict = {}
 
-    ### TODO temporary section
-    final_dict['name'] = 'Gianmarco'
-    final_dict['email'] = 'gterrone@mit.edu'
-    final_dict['isotherm_data'] = 'DATA HERE'
-    final_dict['adsorbate'] = 'argon'
-    final_dict['temperature'] = 77
+    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "r") as f:
+        isotherm_data = f.readlines()
+
+    info_dict = json.loads(flask.request.get_data())  # This is a dictionary.
+
+    final_dict['name'] = info_dict['name']
+    final_dict['email'] = info_dict['email']
+    final_dict['institution'] = info_dict['institution']
+    final_dict['isotherm_data'] = isotherm_data
+    final_dict['adsorbate'] = info_dict['adsorbate']
+
+    if info_dict['adsorbate'] == 'Nitrogen':
+        final_dict['temperature'] = 77
+    elif info_dict['adsorbate'] == 'Argon':
+        final_dict['temperature'] = 87
     ###
 
     # for field in fields: # TODO uncomment this for loop later
