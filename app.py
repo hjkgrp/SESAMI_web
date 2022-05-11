@@ -518,7 +518,7 @@ def process_info():
     db = client.data_isotherm
     # The SESAMI collection in the isotherm database.
     collection = db.BET # data collection in isotherm_db database
-    fields = ['name', 'email', 'institution', 'isotherm_data', 'adsorbate', 'temperature']
+    fields = ['name', 'email', 'institution', 'adsorbent', 'isotherm_data', 'adsorbate', 'temperature']
     final_dict = {}
 
     with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "r") as f:
@@ -529,6 +529,7 @@ def process_info():
     final_dict['name'] = info_dict['name']
     final_dict['email'] = info_dict['email']
     final_dict['institution'] = info_dict['institution']
+    final_dict['adsorbent'] = info_dict['adsorbent']
     
     if session['permission']: # The user has given us permission to store information on their isotherms
         final_dict['isotherm_data'] = isotherm_data
