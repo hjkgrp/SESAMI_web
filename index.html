@@ -591,6 +591,14 @@
         alert(errorThrown)
         $('#calculation_status').text('')
       })
+
+    $.post('/process_info', JSON.stringify(myDict)).done( // TODO modify this later
+
+      )
+      .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
+        alert(errorThrown)
+        $('#calculation_status').text('')
+      })
   })
 
   // Runs when the "Download Figure" button is clicked.
