@@ -513,6 +513,7 @@ def process_info():
     """
     process_info inserts the website info into the MongoDB isotherm database. 
     """
+    print('Connecting to the MongoDB')
     db = MongoClient(os.environ["MONGODB_URI"]).get_default_database()  # connect to public ip google gcloud mongodb
 
     # The SESAMI collection in the isotherm database.
