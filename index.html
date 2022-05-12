@@ -745,6 +745,7 @@
 
   window.setTimeout(viewer_hider, 5) // Small wait period to solve issues with calls to /new_user when the site is first opened in a browser.
 
+  console.log('Getting user ID')
   $.get("/new_user").done(
     function (response) {
       // Purpose of this is to make a user ID for the new browser that has accessed the site.
