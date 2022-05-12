@@ -20,4 +20,4 @@ RUN pip install --no-cache-dir gunicorn==20.1.0
 RUN pip install --no-cache-dir pymongo[srv]==4.1.1
 
 # Running the website
-CMD exec gunicorn --bind 0.0.0.0:8000 --workers 1 --threads 8 --timeout 0 app:app
+CMD exec gunicorn --bind 0.0.0.0:8000 --workers 1 --threads 4 --timeout 0 app:app
