@@ -11,6 +11,9 @@ You will be able to change font type, font size, dot-per-inch (dpi) etc on the w
 
 ![example_input](/example_input/sesami-output.png)
 
+# Website Configuration
+Website is powered by `Mongo DB 5.3.1` and `Googld Cloud Run`
+
 # Calculation Details
 The algorithms employed in this code select the linear region from the isotherms and compute the areas. Detailed algorithm can be found from page S5 from J. Phys. Chem. C 2019, 123, 33, 20195 - 20209. Excerpt from the SI is provided below for completeness.
 
