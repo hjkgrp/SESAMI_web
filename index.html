@@ -723,17 +723,6 @@
 
 
 
-  // The code below runs when the site first loads up.
-
-  clean_slate()
-
-  $.get("/new_user").done(
-    function (response) {
-      // Purpose of this is to make a user ID for the new browser that has accessed the site.
-      // A temporary folder is made in the backend (app.py) where the user's files are stored.
-      // The folder bears the ID of the user.
-    })
-
   // Runs when the "Yes" button is clicked for storage permission line.
   $("#perm_yes").click(function () {
     $('#permission_line').hide()
@@ -748,6 +737,21 @@
     $.post("/permission", JSON.stringify(false)).done(function (response) {
     })
   })
+
+
+  // The code below runs when the site first loads up (i.e. is opened in a browser).
+
+  clean_slate()
+
+  window.setTimeout(viewer_hider, 5) // Small wait period to solve issues with calls to /new_user when the site is first opened in a browser.
+
+  $.get("/new_user").done(
+    function (response) {
+      // Purpose of this is to make a user ID for the new browser that has accessed the site.
+      // A temporary folder is made in the backend (app.py) where the user's files are stored.
+      // The folder bears the ID of the user.
+    })
+
 
 </script>
 <!-- End of Javascript section -->

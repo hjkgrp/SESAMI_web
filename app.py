@@ -299,10 +299,14 @@ def set_ID():
     :return: string, The session ID for this user.
     """
 
+    print('Successfully entered the function set_ID')
+
     session["ID"] = time.time()  # a unique ID for this session
     session['permission'] = True # keeps track of if user gave us permission to store the isotherms they predict on; defaults to Yes
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.
+
+    print('Just made directory')
 
     target_str = "user_"
 
@@ -315,6 +319,8 @@ def set_ID():
             ):  # 7200s is two hours
                 # target_str in dir to find all folders with user_ in them
                 shutil.rmtree(dir)
+
+    print('Just deleted old directories')
 
     return str(session["ID"])
 
