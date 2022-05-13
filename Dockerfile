@@ -9,6 +9,10 @@ ENV PYTHONUNBUFFERED True
 # Adding the necessary files, like app.py, to the image
 ADD . /
 
+# Adding directory
+
+WORKDIR /app
+
 # Installing the necessary packages
 RUN pip install --no-cache-dir flask==2.1.0
 RUN pip install --no-cache-dir pandas==1.4.2
