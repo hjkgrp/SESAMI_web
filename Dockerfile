@@ -8,8 +8,8 @@ ENV PYTHONUNBUFFERED True
 
 # Adding the necessary files, like app.py, to the image
 ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY . /
+WORKDIR ${APP_HOME}
+ADD . $APP_HOME
 
 # Installing the necessary packages
 RUN pip install --no-cache-dir flask==2.1.0
