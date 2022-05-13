@@ -6,9 +6,6 @@ FROM python:3.10-slim
 # Allow statements and log messages to immediately appear in the Knative logs
 ENV PYTHONUNBUFFERED True
 
-# Adding directory
-WORKDIR /app
-
 # Adding the necessary files, like app.py, to the image
 ADD . /
 
