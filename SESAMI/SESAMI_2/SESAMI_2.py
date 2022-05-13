@@ -299,6 +299,8 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
 
     # Loading the LASSO model.
     lasso = pickle.load(open(f"{MAIN_PATH}/SESAMI/SESAMI_2/lasso_model.sav", "rb"))
+        # The LASSO model was trained following the jupyter notebook code in the SESAMI 2 paper
+        # It was saved using pickle.dump(lasso, open('lasso_model.sav', 'wb'))
 
     test_data["FittedValues"] = lasso.predict(test_data[col_list])
 
