@@ -10,62 +10,76 @@ import pandas as pd
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 from SESAMI.SESAMI_2.SESAMI_2 import calculation_v2_runner
 from datetime import datetime
+
 # Mongo Atlas
 from pymongo import MongoClient
 
 app = flask.Flask(__name__)
 
+
 app.secret_key = "TODO make this actually secret later" # Necessary for sessions.
 
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
-RUN_SESAMI_RUNNING = False # This variable keeps track of whether the function run_SESAMI is currently running.
+RUN_SESAMI_RUNNING = False  # This variable keeps track of whether the function run_SESAMI is currently running.
 MONGODB_URI = "mongodb+srv://iast:Tuxe5F5TL0oQQjcM@cluster1.jadjk.mongodb.net/data_isotherm?retryWrites=true&w=majority"
 
 # Next two lines are for later use, when comparing any user uploaded isotherms to the example isotherm.
-with open(f'{MAIN_PATH}example_input/example_input.txt', "r") as f:
+with open(f"{MAIN_PATH}example_input/example_input.txt", "r") as f:
     EXAMPLE_FILE_CONTENT = f.readlines()
+
 
 # Flask redirects (that is what all the app.route stuff is). Deals with anything from the index.html frontend.
 @app.route("/")
 def index():
     return flask.send_from_directory(".", "index.html")
 
+
 @app.route("/about_page")
 def about_page():
     return flask.send_from_directory(".", "about_page.html")
+
 
 @app.route("/how_to_cite")
 def cite_page():
     return flask.send_from_directory(".", "how_to_cite.html")
 
+
 @app.route("/libraries/<path:path>")
 def serve_library_files(path):
     return flask.send_from_directory("libraries", path)
+
 
 @app.route("/images/<path:path>")
 def serve_images(path):
     return flask.send_from_directory("images", path)
 
+
 @app.route("/generated_plots/<path:path>")
 def serve_plots(path):
     return flask.send_from_directory(f'user_{session["ID"]}', path)
+
 
 @app.route("/example_inputs")
 def serve_examples():
     return flask.send_from_directory(".", "example_inputs.html")
 
+
 @app.route("/example_csv")
 def serve_csv():
     return flask.send_from_directory("example_input", "example_loading_data.csv")
+
 
 @app.route("/example_aif")
 def serve_aif():
     return flask.send_from_directory("example_input", "example_loading_data.aif")
 
+
 # Writes the uploaded CSV as a CSV and TXT file. Writes them in the users designated folder.
 @app.route("/save_csv_txt", methods=["POST"])
 def save_csv_txt():
-    my_dict = json.loads(flask.request.get_data())  # This is a dictionary. It is the information passed in from the frontend. 
+    my_dict = json.loads(
+        flask.request.get_data()
+    )  # This is a dictionary. It is the information passed in from the frontend.
     my_content = my_dict["my_content"]
 
     # Writing the CSV the user provided.
@@ -81,12 +95,15 @@ def save_csv_txt():
                 for row in csv.reader(input_file)
             ]  # \t is tab
 
-    return "0" # The return value does not really matter here.
+    return "0"  # The return value does not really matter here.
+
 
 # Writes the uploaded AIF as an AIF and TXT file. Writes them in the users designated folder.
 @app.route("/save_aif_txt", methods=["POST"])
 def save_aif_txt():
-    my_dict = json.loads(flask.request.get_data())  # This is a dictionary. It is the information passed in from the frontend. 
+    my_dict = json.loads(
+        flask.request.get_data()
+    )  # This is a dictionary. It is the information passed in from the frontend.
     my_content = my_dict["my_content"]
 
     # Writing the AIF the user provided.
@@ -98,23 +115,28 @@ def save_aif_txt():
 
     return status
 
+
 def aif_to_txt(content):
     # This helper function converts the AIF into an isotherm text file.
     # content is the content of the AIF
 
     # Currently, the code does not check the adsorbate, p0, nor the temperature in the AIF file.
 
-    content = content.splitlines() # split into an array based on new line characters
+    content = content.splitlines()  # split into an array based on new line characters
 
     # Find the adsorption data, in order to convert to an isotherm data file.
-    start_idx = None # Will instatiate in the loop below.
+    start_idx = None  # Will instatiate in the loop below.
     for idx, line in enumerate(content):
-        if line[:5] == 'loop_' and content[idx+1][:16] == '_adsorp_pressure' and \
-        content[idx+2][:10] == '_adsorp_p0' and content[idx+3][:14] == '_adsorp_amount': # getting only the first 5/16/10/14 characters of respective lines
+        if (
+            line[:5] == "loop_"
+            and content[idx + 1][:16] == "_adsorp_pressure"
+            and content[idx + 2][:10] == "_adsorp_p0"
+            and content[idx + 3][:14] == "_adsorp_amount"
+        ):  # getting only the first 5/16/10/14 characters of respective lines
             start_idx = idx
-            break # No need to keep checking. We found the start of the adsorption data.
-    if start_idx == None: # This means there is a problem.
-        return("Incorrectly formatted AIF file. Please refer to the example AIF in the Source Code.") # Quits, does not proceed with the rest of the function.
+            break  # No need to keep checking. We found the start of the adsorption data.
+    if start_idx is None:  # This means there is a problem.
+        return "Incorrectly formatted AIF file. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
     # quote from AIF paper Langmuir 2021, 37, 4222−4226: "The data loops, as used here, are terminated by a new data item, a new data loop, or an end of file"
     # Code block below grabs the adsorption data from the AIF file.
@@ -122,65 +144,78 @@ def aif_to_txt(content):
     full_adsorption_data = []
     while True:
         # Note, we have start_idx + 4 because want to skip the first three lines, which are _adsorp_pressure, _adsorp_p0, and _adsorp_amount
-        if (start_idx + 4 + counter) >= len(content): # termination by end of file
-            break 
+        if (start_idx + 4 + counter) >= len(content):  # termination by end of file
+            break
 
         line = content[start_idx + 4 + counter]
 
-        if line[0] == '_': # termination by a new data item
+        if line[0] == "_":  # termination by a new data item
             break
-        if line[:5] == 'loop_': # termination by a new data loop
+        if line[:5] == "loop_":  # termination by a new data loop
             break
 
         full_adsorption_data.append(line)
 
         counter += 1
 
-    if len(full_adsorption_data) == 0: # This means there is a problem.
-        return("Missing adsorption data in the AIF file. Please refer to the example AIF in the Source Code.") # Quits, does not proceed with the rest of the function.
+    if len(full_adsorption_data) == 0:  # This means there is a problem.
+        return "Missing adsorption data in the AIF file. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
     # Now, we have all of the adsorption data in the variable full_adsorption_data.
 
     # Next, find the units of loading
     units_loading = None
     for line in content:
-        if '_units_loading' in line:
-            units_loading = line.split() # split on spaces
+        if "_units_loading" in line:
+            units_loading = line.split()  # split on spaces
             units_loading = units_loading[1]
             break
 
-    if units_loading == None: # This means there is a problem.
-        return("Incorrectly formatted AIF file. Did not include units of loading. Please refer to the example AIF in the Source Code.") # Quits, does not proceed with the rest of the function.
-    supported_units_loading = ['mol/kg', 'mmol/g'] # TODO expand on allowed units in the future
-    if units_loading not in supported_units_loading: # This means there is a problem.
-        return(f'Invalid/unsupported loading units in AIF file. Supported units are {supported_units_loading}. Please refer to the example AIF in the Source Code.') # Quits, does not proceed with the rest of the function.
+    if units_loading is None:  # This means there is a problem.
+        return "Incorrectly formatted AIF file. Did not include units of loading. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
+    supported_units_loading = [
+        "mol/kg",
+        "mmol/g",
+    ]  # TODO expand on allowed units in the future
+    if units_loading not in supported_units_loading:  # This means there is a problem.
+        return f"Invalid/unsupported loading units in AIF file. Supported units are {supported_units_loading}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
     # Grabbing just the adsorption amount data
-    adsorption_data = [item.split()[2] for item in full_adsorption_data] # Get the third element of each row (after splitting on spaces)
+    adsorption_data = [
+        item.split()[2] for item in full_adsorption_data
+    ]  # Get the third element of each row (after splitting on spaces)
 
     # Convert adsorption_data to mol/kg
-    if units_loading == 'mmol/g':
+    if units_loading == "mmol/g":
         # Currently the next two lines don't really do anything, since the multiplier is one.
-        conversion_multiplier =  1
-        adsorption_data = [datum * conversion_multiplier for datum in adsorption_data] # Results in a list with entries of the correct units
-    elif units_loading == 'mol/kg':
-        pass # No action needed.
+        conversion_multiplier = 1
+        adsorption_data = [
+            datum * conversion_multiplier for datum in adsorption_data
+        ]  # Results in a list with entries of the correct units
+    elif units_loading == "mol/kg":
+        pass  # No action needed.
 
     # Next, find the units of pressure
     units_pressure = None
     for line in content:
-        if '_units_pressure' in line:
-            units_pressure = line.split() # split on spaces
+        if "_units_pressure" in line:
+            units_pressure = line.split()  # split on spaces
             units_pressure = units_pressure[1]
 
-    if units_pressure == None: # This means there is a problem.
-        return("Incorrectly formatted AIF file. Did not include units of pressure. Please refer to the example AIF in the Source Code.") # Quits, does not proceed with the rest of the function.
-    supported_units_pressure = ['Pa', 'pascal', 'bar'] # TODO expand on allowed units in the future
-    if units_pressure not in supported_units_pressure: # This means there is a problem.
-        return(f'Invalid/unsupported pressure units in AIF file. Supported units are {supported_units_pressure}. Please refer to the example AIF in the Source Code.') # Quits, does not proceed with the rest of the function.
+    if units_pressure is None:  # This means there is a problem.
+        return "Incorrectly formatted AIF file. Did not include units of pressure. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
+    supported_units_pressure = [
+        "Pa",
+        "pascal",
+        "bar",
+    ]  # TODO expand on allowed units in the future
+    if units_pressure not in supported_units_pressure:  # This means there is a problem.
+        return f"Invalid/unsupported pressure units in AIF file. Supported units are {supported_units_pressure}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
     # Grabbing just the pressure data
-    pressure_data = [item.split()[0] for item in full_adsorption_data] # Get the first element of each row (after splitting on spaces)
+    pressure_data = [
+        item.split()[0] for item in full_adsorption_data
+    ]  # Get the first element of each row (after splitting on spaces)
 
     # # Grabbing just the p0 data
     # saturation_pressure_data = [item.split()[1] for item in full_adsorption_data] # Get the second element of each row (after splitting on spaces)
@@ -188,15 +223,20 @@ def aif_to_txt(content):
     # p0 = float(saturation_pressure)
 
     # Convert pressure units
-    if units_pressure in ['Pa', 'pascal']:
-        pass # No action needed
-    else: # bar
-        conversion_multiplier =  100000
-        pressure_data = [datum * conversion_multiplier for datum in pressure_data] # Results in a list with entries of the correct units
+    if units_pressure in ["Pa", "pascal"]:
+        pass  # No action needed
+    else:  # bar
+        conversion_multiplier = 100000
+        pressure_data = [
+            datum * conversion_multiplier for datum in pressure_data
+        ]  # Results in a list with entries of the correct units
 
-    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', 'w') as f:
-        f.write("\t".join(['Pressure', 'Loading'])+'\n') # The column titles
-        [f.write("\t".join([pressure_data[i], adsorption_data[i]])+'\n') for i in range(len(pressure_data))] # \t is tab          
+    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "w") as f:
+        f.write("\t".join(["Pressure", "Loading"]) + "\n")  # The column titles
+        [
+            f.write("\t".join([pressure_data[i], adsorption_data[i]]) + "\n")
+            for i in range(len(pressure_data))
+        ]  # \t is tab
         # join on tabs, and add a new line after each join
 
     # If the code gets to this point, the AIF hopefully doesn't have any problems with it.
@@ -209,26 +249,30 @@ def run_SESAMI():
     # It generates diagnostics (SESAMI 1 and 2) and figures (SESAMI 1).
     # Assumes the user's input.txt has been made by the website already.
 
-    global RUN_SESAMI_RUNNING # global variable
+    global RUN_SESAMI_RUNNING  # global variable
 
     # Only one user can run this function at a time.
     while RUN_SESAMI_RUNNING:
-        time.sleep(5) # Sleep for 5 seconds.
-        print('Sleep 5 seconds')
+        time.sleep(5)  # Sleep for 5 seconds.
+        print("Sleep 5 seconds")
     RUN_SESAMI_RUNNING = True
 
     ### SESAMI 1
-    plotting_information = json.loads(flask.request.get_data())  # This is a dictionary. It is the information passed in from the frontend. 
+    plotting_information = json.loads(
+        flask.request.get_data()
+    )  # This is a dictionary. It is the information passed in from the frontend.
 
     # Running the SESAMI 1 calculation. Makes plots.
     BET_dict, BET_ESW_dict = calculation_runner(
         MAIN_PATH, plotting_information, session["ID"]
     )
 
-    # Packaging the diagnostics to be sent back to the frontend (index.html). 
-    if BET_dict is None or BET_ESW_dict is None: # This is a problem.
-        RUN_SESAMI_RUNNING = False # Important to set this to False when the function is quit, so that other users can use the function. 
-        return "Linear failure" # Quits, does not proceed with the rest of the function.
+    # Packaging the diagnostics to be sent back to the frontend (index.html).
+    if BET_dict is None or BET_ESW_dict is None:  # This is a problem.
+        RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
+        return (
+            "Linear failure"  # Quits, does not proceed with the rest of the function.
+        )
     else:
         # reformatting
         BET_dict["C"] = "%.4g" % BET_dict["C"]
@@ -263,7 +307,9 @@ def run_SESAMI():
             R2sup: {BET_ESW_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
     ### SESAMI 2
-    ML_prediction = calculation_v2_runner(MAIN_PATH, session["ID"]) # ML is machine learning.
+    ML_prediction = calculation_v2_runner(
+        MAIN_PATH, session["ID"]
+    )  # ML is machine learning.
 
     calculation_results = {
         "ML_prediction": ML_prediction,
@@ -271,8 +317,8 @@ def run_SESAMI():
         "BETESW_analysis": BETESW_analysis,
     }
 
-    RUN_SESAMI_RUNNING = False # Important to set this to False when the function is quit, so that other users can use the function. 
-    return calculation_results # Sends back SESAMI 1 and 2 diagnostics to be displayed.
+    RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
+    return calculation_results  # Sends back SESAMI 1 and 2 diagnostics to be displayed.
 
 
 def file_age_in_seconds(pathname):
@@ -300,14 +346,16 @@ def set_ID():
     :return: string, The session ID for this user.
     """
 
-    print('Successfully entered the function set_ID')
+    print("Successfully entered the function set_ID")
 
     session["ID"] = time.time()  # a unique ID for this session
-    session['permission'] = True # keeps track of if user gave us permission to store the isotherms they predict on; defaults to Yes
+    session[
+        "permission"
+    ] = True  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to Yes
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.
 
-    print('Just made directory')
+    print("Just made directory")
 
     target_str = "user_"
 
@@ -321,7 +369,7 @@ def set_ID():
                 # target_str in dir to find all folders with user_ in them
                 shutil.rmtree(dir)
 
-    print('Just deleted old directories')
+    print("Just deleted old directories")
 
     return str(session["ID"])
 
@@ -339,11 +387,11 @@ def check_csv():
 
     ### Checks
 
-    input_location = f'{MAIN_PATH}user_{session["ID"]}/input.txt' # Looks in the user's folder. The input file is made by the function save_csv_txt.
+    input_location = f'{MAIN_PATH}user_{session["ID"]}/input.txt'  # Looks in the user's folder. The input file is made by the function save_csv_txt.
 
     data = pd.read_table(input_location, skiprows=1, sep="\t")
 
-    if data.shape[1] != 2: # This is a problem.
+    if data.shape[1] != 2:  # This is a problem.
         return "Wrong number of columns in the CSV. There should be two. Please refer to the example CSV in the Source Code."
 
     column_names = ["Pressure", "Loading"]
@@ -354,80 +402,95 @@ def check_csv():
 
     # For each column, check its type. If it is not of int64 or float64 type, raise an Exception.
     for col in column_names:
-        if type_number(dataTypeSeries[col]): # This is a problem.
+        if type_number(dataTypeSeries[col]):  # This is a problem.
             # non numbers in this column
             return "The CSV must contain numbers only. Please refer to the example CSV in the Source Code."
 
     # Checking for NaN values
-    if data.isnull().values.any(): # This is a problem.
+    if data.isnull().values.any():  # This is a problem.
         return "The CSV cannot have any empty cells (gaps), since they lead to NaN values. Please refer to the example CSV in the Source Code."
 
     # Checking to ensure the first row of the CSV reads Pressure, Loading
     data_header = pd.read_table(input_location, nrows=1, sep="\t", names=column_names)
     if (data_header["Pressure"][0] != "Pressure (Pa)") or (
         data_header["Loading"][0] != "Loading (mol/kg)"
-    ): # This is a problem.
+    ):  # This is a problem.
         return "The CSV does not have the correct first row. The first entries of the two columns should be Pressure (Pa) and Loading (mol/kg), respectively. Please refer to the example CSV in the Source Code."
 
     # Check to make sure the lowest loading divided by the highest loading is not less than 0.05
     # If it is, the isotherm does not have enough low pressure data.
     data = pd.read_table(input_location, skiprows=1, sep="\t", names=column_names)
     loading_data = list(data["Loading"])
-    if loading_data[0] / loading_data[-1] >= 0.05: # This is a problem.
+    if loading_data[0] / loading_data[-1] >= 0.05:  # This is a problem.
         return "Lacking data at low pressure region."
 
     # If the code gets to this point, the CSV likely doesn't have any problems with it.
     return "All good!"
 
+
 ## Handle information storage
 connection_string = ""
-@app.route('/process_info', methods=['POST'])
+
+
+@app.route("/process_info", methods=["POST"])
 def process_info():
     """
-    process_info inserts the website info into the MongoDB isotherm database. 
+    process_info inserts the website info into the MongoDB isotherm database.
     """
 
-    global EXAMPLE_FILE_CONTENT # global variable
+    global EXAMPLE_FILE_CONTENT  # global variable
 
-    if not session['permission']: # The user has not given us permission to store information on their isotherms
-        return ('', 204)  # 204 no content response. Don't proceed with the rest of the function.
+    if not session[
+        "permission"
+    ]:  # The user has not given us permission to store information on their isotherms
+        return (
+            "",
+            204,
+        )  # 204 no content response. Don't proceed with the rest of the function.
 
     # If the user is predicting on the example isotherm data, we don't store that.
     with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "r") as f:
         isotherm_data = f.readlines()
     if isotherm_data == EXAMPLE_FILE_CONTENT:
-        return ('', 204)  # 204 no content response. Don't proceed with the rest of the function.
+        return (
+            "",
+            204,
+        )  # 204 no content response. Don't proceed with the rest of the function.
 
     client = MongoClient(MONGODB_URI)  # connect to public ip google gcloud mongodb
 
     db = client.data_isotherm
-    collection = db.BET # The BET collection in isotherm_db database
-    fields = ['name', 'email', 'institution', 'adsorbent', 'isotherm_data', 'adsorbate', 'temperature']
+    collection = db.BET  # The BET collection in isotherm_db database
+
+    # The keys of this dictionary will be name, email, institution, adsorbent, isotherm_data, adsorbate, ip, and timestamp.
     final_dict = {}
 
-    info_dict = json.loads(flask.request.get_data())  # This is a dictionary. It is the information passed in from the frontend. 
+    info_dict = json.loads(
+        flask.request.get_data()
+    )  # This is a dictionary. It is the information passed in from the frontend.
 
-    final_dict['name'] = info_dict['name']
-    final_dict['email'] = info_dict['email']
-    final_dict['institution'] = info_dict['institution']
-    final_dict['adsorbent'] = info_dict['adsorbent']
-    final_dict['isotherm_data'] = isotherm_data
-    final_dict['adsorbate'] = info_dict['adsorbate']
+    final_dict["name"] = info_dict["name"]
+    final_dict["email"] = info_dict["email"]
+    final_dict["institution"] = info_dict["institution"]
+    final_dict["adsorbent"] = info_dict["adsorbent"]
+    final_dict["isotherm_data"] = isotherm_data
+    final_dict["adsorbate"] = info_dict["adsorbate"]
 
-    if info_dict['adsorbate'] == 'Nitrogen':
-        final_dict['temperature'] = 77
-    elif info_dict['adsorbate'] == 'Argon':
-        final_dict['temperature'] = 87
+    if info_dict["adsorbate"] == "Nitrogen":
+        final_dict["temperature"] = 77
+    elif info_dict["adsorbate"] == "Argon":
+        final_dict["temperature"] = 87
 
-    final_dict['ip'] = request.remote_addr
-    final_dict['timestamp'] = datetime.now().isoformat()
+    final_dict["ip"] = request.remote_addr
+    final_dict["timestamp"] = datetime.now().isoformat()
 
     print(final_dict)
     # insert the dictionary into the mongodb collection
-    db.BET.insert_one(final_dict)
-    return ('', 204)  # 204 no content response
+    collection.insert_one(final_dict)
+    return ("", 204)  # 204 no content response
 
-@app.route('/permission', methods=['POST'])
+
+@app.route("/permission", methods=["POST"])
 def change_permission():
     """
     change_permission adjusts whether or not the website stores information on the isotherms the user predicts on, as well as user name, email, etc.
@@ -437,18 +500,22 @@ def change_permission():
 
     # Grab data
     permission = json.loads(flask.request.get_data())
-    session['permission'] = permission
-    print('Permission check')
+    session["permission"] = permission
+    print("Permission check")
     print(permission)
     return str(permission)
+
 
 @app.route("/copy_example", methods=["GET"])
 def copy_example():
     # This function copies over the example isotherm into the user's folder. This lets the user run the SESAMI calculations on the example isotherm.
 
-    shutil.copyfile(f'{MAIN_PATH}example_input/example_input.txt', f'{MAIN_PATH}user_{session["ID"]}/input.txt')
+    shutil.copyfile(
+        f"{MAIN_PATH}example_input/example_input.txt",
+        f'{MAIN_PATH}user_{session["ID"]}/input.txt',
+    )
 
-    return "0" # The return value does not really matter here.
+    return "0"  # The return value does not really matter here.
 
 
 if __name__ == "__main__":
