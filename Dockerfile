@@ -6,11 +6,11 @@ FROM python:3.10-slim
 # Allow statements and log messages to immediately appear in the Knative logs
 ENV PYTHONUNBUFFERED True
 
-# Adding the necessary files, like app.py, to the image
-ADD . /
-
 # Adding directory
 WORKDIR /app
+
+# Adding the necessary files, like app.py, to the image
+ADD . /
 
 # Installing the necessary packages
 RUN pip install --no-cache-dir flask==2.1.0
