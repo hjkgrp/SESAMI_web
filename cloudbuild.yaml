@@ -16,6 +16,6 @@
    - '--image'
    - 'gcr.io/$PROJECT_ID/github.com/sesami-web:$COMMIT_SHA'
    - '--region'
-   - 'east1'
+   - 'us-east1'
  images:
  - 'gcr.io/$PROJECT_ID/github.com/sesami-web:$COMMIT_SHA'
