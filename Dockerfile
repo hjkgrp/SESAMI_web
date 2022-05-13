@@ -10,7 +10,6 @@ ENV PYTHONUNBUFFERED True
 ADD . /
 
 # Adding directory
-
 WORKDIR /app
 
 # Installing the necessary packages
