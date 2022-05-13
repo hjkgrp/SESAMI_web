@@ -7,7 +7,9 @@ FROM python:3.10-slim
 ENV PYTHONUNBUFFERED True
 
 # Adding the necessary files, like app.py, to the image
-ADD . /
+ENV APP_HOME /app
+WORKDIR ${APP_HOME}
+ADD . $APP_HOME
 
 # Installing the necessary packages
 RUN pip install --no-cache-dir flask==2.1.0
