@@ -358,6 +358,7 @@ def set_ID():
     ] = True  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to Yes
     session["plot_number"] = 0 # the number identifier for the SESAMI 1 figures
         # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures
+    session["raw_plot_number"] = 0 # the number identifier for the raw data figures
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.
 
@@ -533,18 +534,21 @@ def show_data():
         f'{MAIN_PATH}user_{session["ID"]}/input.txt', skiprows=1, sep="\t", names=column_names
     )
 
+    plt.figure()
     plt.semilogx(data['Pressure'], data['Loading'], color="blue")
     plt.xlabel('Pressure (Pa), log scale')
     plt.ylabel('Loading (mol/kg)')
     plt.title('Your isotherm')
     plt.savefig(
-        f'{MAIN_PATH}user_{session["ID"]}/raw_data.png',
+        f'{MAIN_PATH}user_{session["ID"]}/raw_data_{session["raw_plot_number"]}.png',
         format="png",
         dpi=300,
         bbox_inches="tight",
     )
 
-    return "0"  # The return value does not really matter here.
+    session["raw_plot_number"] += 1
+
+    return str(session["raw_plot_number"] - 1)
 
 if __name__ == "__main__":
     print(MONGODB_URI)

@@ -484,7 +484,7 @@
 
     $.get("/show_data").done(
       function (response) {
-        FIGURE_PATH = 'generated_plots/raw_data.png'
+        FIGURE_PATH = 'generated_plots/raw_data_' + response +  '.png'
         $("#raw_data_figure").attr("src",FIGURE_PATH); // Setting the source of the image element appropriately
       }
 
