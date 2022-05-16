@@ -527,7 +527,7 @@ def copy_example():
 
 @app.route("/show_data", methods=["GET"])
 def show_data():
-    # This function generates a plot of the user's isotherm data.
+    # This function generates a scatter plot of the user's isotherm data.
 
     column_names = ["Pressure", "Loading"]
     data = pd.read_table(
@@ -535,10 +535,13 @@ def show_data():
     )
 
     plt.figure()
-    plt.semilogx(data['Pressure'], data['Loading'], color="blue")
-    plt.xlabel('Pressure (Pa), log scale')
-    plt.ylabel('Loading (mol/kg)')
-    plt.title('Your isotherm')
+    ax = plt.gca()
+    ax.plot(data['Pressure'] ,data['Loading'], 'o', c='blue', markeredgecolor='none', label='Your data')
+    ax.set_xscale('log')
+    ax.set_xlabel('Pressure (Pa), log scale')
+    ax.set_ylabel('Loading (mol/kg)')
+    ax.set_title('Your isotherm')
+    ax.legend()
     plt.savefig(
         f'{MAIN_PATH}user_{session["ID"]}/raw_data_{session["raw_plot_number"]}.png',
         format="png",
