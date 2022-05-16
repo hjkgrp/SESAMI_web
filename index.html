@@ -30,6 +30,13 @@
     width: 100%;
   }
 
+  #raw_data_figure { 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
   .minibutton {
       background: none;
       border: none;
@@ -184,6 +191,12 @@
         <a href="/example_aif" download> Download the example AIF file </a>
       </div>
     </div>
+
+    <!-- This div displays the data the user uploads. -->
+    <div id='raw_data_display'>
+      <img style='margin-top: 0.25cm;' id='raw_data_figure' alt='Your raw data'>
+    </div>
+
   </div>
 
 
@@ -360,6 +373,7 @@
     $('#plotting_options').hide() 
     $('#plotting_opt_button').text('Show plotting options') 
     $('#about_you_content').hide()
+    $('#raw_data_display').hide()
 
   }
 
@@ -463,6 +477,23 @@
     return ext == 'aif';
   }
 
+  // Helper function that displays the isotherm data the user has selected in a semilogx plot.
+  function show_data(){
+    console.log('showing data')
+    $('#raw_data_display').show()
+
+    $.get("/show_data").done(
+      function (response) {
+        FIGURE_PATH = 'generated_plots/raw_data.png'
+        $("#raw_data_figure").attr("src",FIGURE_PATH); // Setting the source of the image element appropriately
+      }
+
+    ).fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
+      alert(errorThrown)
+      return // doesn't continue
+    })
+  }
+
   // Runs when the "Example isotherm" button is clicked.
   $('#example_isotherm').click(function () {
     clean_slate_partial()
@@ -472,12 +503,14 @@
     $.get("/copy_example").done( // Copy the example input's txt file into the user's folder.
       function (response) {
         console.log('Example prepared.')
+
+        show_data()
     })
 
   })
 
 
-  // Runs when the "Upload CSV" button is clicked.
+  // Runs when the "Upload CSV or AIF" button is clicked.
   $('#upload_button').on('click', function () { // button triggers upload
     clean_slate_partial()
     $('#file_input').trigger('click'); // OS file selection
@@ -523,13 +556,16 @@
                   this.value = null; // clear the bad CSV file
                   $('#upload_status').text('')
                   alert(response)
+                  return // doesn't continue
                 }
+
+                show_data()
+
               })
-
-
           })
           .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
             alert(errorThrown)
+            return // doesn't continue
           })
       })
     } else { // AIF case
@@ -545,11 +581,15 @@
               this.value = null; // clear the bad CSV file
               $('#upload_status').text('')
               alert(response)
+              return // doesn't continue
             }
+
+            show_data()
 
           })
           .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
             alert(errorThrown)
+            return // doesn't continue
           })
       })
     }
@@ -622,7 +662,7 @@
         $('#print_out').show()
         console.log('The plot number is ' + PLOT_NUMBER)
         FIGURE_PATH = 'generated_plots/multiplot_' + PLOT_NUMBER + '.png'
-        $("#plot_display").attr("src",FIGURE_PATH);
+        $("#plot_display").attr("src",FIGURE_PATH); // Setting the source of the image element appropriately
         OUTPUT_NAME = 'multiplot.png'
 
         $('#calculation_status').text('')
@@ -724,7 +764,7 @@
         break
     }
 
-    $("#plot_display").attr("src", FIGURE_PATH);
+    $("#plot_display").attr("src", FIGURE_PATH); // Setting the source of the image element appropriately
   }
 
 

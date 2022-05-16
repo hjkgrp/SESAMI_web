@@ -7,6 +7,7 @@ import time
 import stat
 import shutil
 import pandas as pd
+import matplotlib.pyplot as plt
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 from SESAMI.SESAMI_2.SESAMI_2 import calculation_v2_runner
 from datetime import datetime
@@ -522,6 +523,28 @@ def copy_example():
 
     return "0"  # The return value does not really matter here.
 
+
+@app.route("/show_data", methods=["GET"])
+def show_data():
+    # This function generates a plot of the user's isotherm data.
+
+    column_names = ["Pressure", "Loading"]
+    data = pd.read_table(
+        f'{MAIN_PATH}user_{session["ID"]}/input.txt', skiprows=1, sep="\t", names=column_names
+    )
+
+    plt.semilogx(data['Pressure'], data['Loading'], color="blue")
+    plt.xlabel('Pressure (Pa), log scale')
+    plt.ylabel('Loading (mol/kg)')
+    plt.title('Your isotherm')
+    plt.savefig(
+        f'{MAIN_PATH}user_{session["ID"]}/raw_data.png',
+        format="png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+
+    return "0"  # The return value does not really matter here.
 
 if __name__ == "__main__":
     print(MONGODB_URI)
