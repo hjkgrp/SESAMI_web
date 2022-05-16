@@ -824,9 +824,10 @@ class BETAn:
         bet_info,
         betesw_info,
         data,
+        plot_number,
         sumpath=os.path.join(os.curdir, "imgsummary"),
         saveindividual="No",
-        eswminima=None,
+        eswminima=None
     ):
         """
         This function creates a summary of the BET process and stores it as a collection in the specified outlet directory.
@@ -873,31 +874,31 @@ class BETAn:
             )  # TODO can set maketitle to "Yes" if you want the individual plots to have titles
             dpi = plotting_information["dpi"]
             fig.savefig(
-                os.path.join(sumpath, "isotherm.png"),
+                os.path.join(sumpath, f"isotherm_{plot_number}.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
             )
             fig2.savefig(
-                os.path.join(sumpath, "BETPlot.png"),
+                os.path.join(sumpath, f"BETPlot_{plot_number}.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
             )
             fig3.savefig(
-                os.path.join(sumpath, "BETPlotLinear.png"),
+                os.path.join(sumpath, f"BETPlotLinear_{plot_number}.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
             )
             fig4.savefig(
-                os.path.join(sumpath, "ESWPlot.png"),
+                os.path.join(sumpath, f"ESWPlot_{plot_number}.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
             )
             fig5.savefig(
-                os.path.join(sumpath, "BETESWPlot.png"),
+                os.path.join(sumpath, f"BETESWPlot_{plot_number}.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
@@ -944,7 +945,7 @@ class BETAn:
         blanksubplot.axis("off")
         figf.tight_layout()
         figf.savefig(
-            os.path.join(sumpath, "multiplot.png"),
+            os.path.join(sumpath, f"multiplot_{plot_number}.png"),
             format="png",
             dpi=dpi,
             bbox_inches="tight",
@@ -958,6 +959,7 @@ class BETAn:
         data,
         plotting_information,
         MAIN_PATH,
+        plot_number,
         filepath=os.curdir,
         filename="summary.txt",
         eswpoints=3,
@@ -1053,6 +1055,7 @@ class BETAn:
             bet_info,
             betesw_info,
             data,
+            plot_number,
             sumpath=sumpath,
             saveindividual=saveindividual,
             eswminima=eswminima,

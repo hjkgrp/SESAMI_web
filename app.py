@@ -264,8 +264,10 @@ def run_SESAMI():
 
     # Running the SESAMI 1 calculation. Makes plots.
     BET_dict, BET_ESW_dict = calculation_runner(
-        MAIN_PATH, plotting_information, session["ID"]
+        MAIN_PATH, plotting_information, session["ID"], session["plot_number"]
     )
+
+    session["plot_number"] += 1 # So that the next set of plots have different names
 
     # Packaging the diagnostics to be sent back to the frontend (index.html).
     if BET_dict is None or BET_ESW_dict is None:  # This is a problem.
@@ -315,10 +317,11 @@ def run_SESAMI():
         "ML_prediction": ML_prediction,
         "BET_analysis": BET_analysis,
         "BETESW_analysis": BETESW_analysis,
+        "plot_number": session["plot_number"] - 1
     }
 
     RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
-    return calculation_results  # Sends back SESAMI 1 and 2 diagnostics to be displayed.
+    return calculation_results  # Sends back SESAMI 1 and 2 diagnostics to be displayed, as well as the plot number so the appropriate plots are displayed.
 
 
 def file_age_in_seconds(pathname):
@@ -352,6 +355,8 @@ def set_ID():
     session[
         "permission"
     ] = True  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to Yes
+    session["plot_number"] = 0 # the number identifier for the SESAMI 1 figures
+        # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.
 

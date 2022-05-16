@@ -330,6 +330,7 @@
   // Global variables
   let FIGURE_PATH = null
   let OUTPUT_NAME = null
+  let PLOT_NUMBER = null
 
   // A helper function that clears text out, hides elements, and sets default values.
   function clean_slate() {
@@ -612,13 +613,15 @@
         ML_prediction = response['ML_prediction']
         BET_analysis = response['BET_analysis']
         BETESW_analysis = response['BETESW_analysis']
+        PLOT_NUMBER = response['plot_number']
         $('#ML_prediction').multiline(ML_prediction + ' m2sup/g') // The multiline function from earlier formats things nicely.
         $('#BET_readout').multiline(BET_analysis)
         $('#BETESW_readout').multiline(BETESW_analysis)
 
         $('#plot_div').show()
         $('#print_out').show()
-        FIGURE_PATH = 'generated_plots/multiplot.png'
+        console.log('The plot number is ' + PLOT_NUMBER)
+        FIGURE_PATH = 'generated_plots/multiplot_' + PLOT_NUMBER + '.png'
         $("#plot_display").attr("src",FIGURE_PATH);
         OUTPUT_NAME = 'multiplot.png'
 
@@ -696,27 +699,27 @@
 
     switch (plot_type){
       case 'Multiplot':
-        FIGURE_PATH = 'generated_plots/multiplot.png'
+        FIGURE_PATH = 'generated_plots/multiplot_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'multiplot.png'
         break
       case 'Isotherm':
-        FIGURE_PATH = 'generated_plots/isotherm.png'
+        FIGURE_PATH = 'generated_plots/isotherm_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'isotherm.png'
         break
       case 'BET':
-        FIGURE_PATH = 'generated_plots/BETPlot.png'
+        FIGURE_PATH = 'generated_plots/BETPlot_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'BET.png'
         break
       case 'ESW':
-        FIGURE_PATH = 'generated_plots/ESWPlot.png'
+        FIGURE_PATH = 'generated_plots/ESWPlot_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'ESW.png'
         break
       case 'BETLin':
-        FIGURE_PATH = 'generated_plots/BETPlotLinear.png'
+        FIGURE_PATH = 'generated_plots/BETPlotLinear_' + PLOT_NUMBER +  '.png'
         OUTPUT_NAME = 'BET_linear.png'
         break
       case 'BETESWLin':
-        FIGURE_PATH = 'generated_plots/BETESWPlot.png'
+        FIGURE_PATH = 'generated_plots/BETESWPlot_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'BET-ESW.png'
         break
     }

@@ -240,24 +240,11 @@ class ML:
         return tr_data
 
 
-# This function returns the ML prediction of the surface area for the new structure.
+# This function returns the ML prediction of the surface area for the new structure, uploaded to the website by the user.
 def calculation_v2_runner(MAIN_PATH, USER_ID):
-    """
-    TODO fix the docstring
-    Calculate the distance between two points.
+    # The function takes the main path to the SESAMI web folder and the user's unique ID so that the correct isotherm (input.txt) is read and 
+    # figures can be placed in the appropriate folder.
 
-    Parameters
-    ----------
-    rA, rB : np.ndarray
-        The coordinates of each point.
-
-    Returns
-    -------
-    distance: float
-        The distance between the two points.
-
-    """
-    
     my_ML = ML()  # This initiates the class.
 
     # This is the description for this particular type of run. All of the output files will have this in their name which can be used to identify them.
