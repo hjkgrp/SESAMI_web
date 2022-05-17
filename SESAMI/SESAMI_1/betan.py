@@ -547,23 +547,11 @@ class BETAn:
             # Only consider fit values that correspond to x values within our plotting range
             bet_fit_values = [bet_fit_values[i] for i, value in enumerate(load_bet) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
             betesw_fit_values = self.gen_phi(load_betesw, data["P_rel"].values)
-            betesw_fit_values = [betesw_fit_values[i] for i, value in enumerate(load_betesw) if ax.get_ylim()[0] <= value <= ax.get_ylim()[1]]
+            betesw_fit_values = [betesw_fit_values[i] for i, value in enumerate(load_betesw) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
             phi_values = [phi[i] for i, value in enumerate(loading) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
             
-            print(f'The x limits are {ax.get_xlim()[0]} and {ax.get_xlim()[1]}') # TODO remove 
-
-            print(f'The first x is {load_bet}') # TODO remove
-            print(f'The first set is {self.gen_phi(load_bet, data["P_rel"].values)}') # TODO remove
-            print(f'The second x is {load_betesw}') # TODO remove
-            print(f'The second set is {self.gen_phi(load_betesw, data["P_rel"].values)}') # TODO remove
-            print(f'loading is {loading}') # TODO remove later
-            print(f'phi is {phi}') # TODO remove later
-
-            print(f'quick check: {bet_fit_values + betesw_fit_values + phi_values}') # TODO remove
-            y_min = min(bet_fit_values + betesw_fit_values + phi_values) * 1.05 # TODO remove
-            y_max = max(bet_fit_values + betesw_fit_values + phi_values) # TODO remove
-            # print(f'y_min is {y_min}') # TODO remove
-            # print(f'y_max is {y_max}') # TODO remove
+            y_min = min(bet_fit_values + betesw_fit_values + phi_values) * 1.05 # Want the bottom of the graph to give the data some wiggle room, hence the 1.05.
+            y_max = max(bet_fit_values + betesw_fit_values + phi_values)
 
             ax.set_ylim(bottom=y_min, top=y_max)
 
