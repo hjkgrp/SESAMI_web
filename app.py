@@ -536,7 +536,7 @@ def show_data():
 
     plt.figure()
     ax = plt.gca()
-    ax.plot(data['Pressure'] ,data['Loading'], 'o', c='blue', markeredgecolor='none', label='Your data')
+    ax.plot(data['Pressure'], data['Loading'], 'o', c='blue', markeredgecolor='none', label='Your data')
     ax.set_xscale('log')
     ax.set_xlabel('Pressure (Pa), log scale')
     ax.set_ylabel('Loading (mol/kg)')

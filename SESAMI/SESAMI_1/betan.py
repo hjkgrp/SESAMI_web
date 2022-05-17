@@ -504,36 +504,6 @@ class BETAn:
         ax.set_xlim((0, ax.get_xlim()[1]))
         bbox_props = dict(boxstyle="square", ec="k", fc="w", lw=1.0)
 
-        if minima is not None:
-            ax.vlines(
-                data.at[minima, "Loading"],
-                ax.get_ylim()[0],
-                ax.get_ylim()[1],
-                colors=plt.cm.Greens(200),
-                linestyles="dashed",
-                label="ESW minimum",
-            )
-        else:
-            ax.text(
-                0.03,
-                0.90,
-                "Minima not found",
-                horizontalalignment="left",
-                verticalalignment="center",
-                transform=ax.transAxes,
-                bbox=bbox_props,
-            )
-
-        if self.con1limit is not None:
-            ax.vlines(
-                data.at[self.con1limit, "Loading"],
-                ax.get_ylim()[0],
-                ax.get_ylim()[1],
-                colors=plt.cm.Purples(230),
-                linestyles="dashed",
-                label="Consistency 1 maximum",
-            )
-
         if with_fit == "Yes":
             [bet_info, betesw_info] = fit_data
             [rbet, bet_params] = bet_info
@@ -571,6 +541,61 @@ class BETAn:
                     color=plt.cm.Greens(200),
                     label="BET-ESW fit",
                 )
+
+            # Setting the y-axis limits to include the fit
+            bet_fit_values = self.gen_phi(load_bet, data["P_rel"].values)
+            # Only consider fit values that correspond to x values within our plotting range
+            bet_fit_values = [bet_fit_values[i] for i, value in enumerate(load_bet) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
+            betesw_fit_values = self.gen_phi(load_betesw, data["P_rel"].values)
+            betesw_fit_values = [betesw_fit_values[i] for i, value in enumerate(load_betesw) if ax.get_ylim()[0] <= value <= ax.get_ylim()[1]]
+            phi_values = [phi[i] for i, value in enumerate(loading) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
+            
+            print(f'The x limits are {ax.get_xlim()[0]} and {ax.get_xlim()[1]}') # TODO remove 
+
+            print(f'The first x is {load_bet}') # TODO remove
+            print(f'The first set is {self.gen_phi(load_bet, data["P_rel"].values)}') # TODO remove
+            print(f'The second x is {load_betesw}') # TODO remove
+            print(f'The second set is {self.gen_phi(load_betesw, data["P_rel"].values)}') # TODO remove
+            print(f'loading is {loading}') # TODO remove later
+            print(f'phi is {phi}') # TODO remove later
+
+            print(f'quick check: {bet_fit_values + betesw_fit_values + phi_values}') # TODO remove
+            y_min = min(bet_fit_values + betesw_fit_values + phi_values) * 1.05 # TODO remove
+            y_max = max(bet_fit_values + betesw_fit_values + phi_values) # TODO remove
+            # print(f'y_min is {y_min}') # TODO remove
+            # print(f'y_max is {y_max}') # TODO remove
+
+            ax.set_ylim(bottom=y_min, top=y_max)
+
+        if minima is not None:
+            ax.vlines(
+                data.at[minima, "Loading"],
+                ax.get_ylim()[0],
+                ax.get_ylim()[1],
+                colors=plt.cm.Greens(200),
+                linestyles="dashed",
+                label="ESW minimum",
+            )
+        else:
+            ax.text(
+                0.03,
+                0.90,
+                "Minima not found",
+                horizontalalignment="left",
+                verticalalignment="center",
+                transform=ax.transAxes,
+                bbox=bbox_props,
+            )
+
+        if self.con1limit is not None:
+            ax.vlines(
+                data.at[self.con1limit, "Loading"],
+                ax.get_ylim()[0],
+                ax.get_ylim()[1],
+                colors=plt.cm.Purples(230),
+                linestyles="dashed",
+                label="Consistency 1 maximum",
+            )
 
         if plotting_information["legend"] == "Yes":  # Add a legend in this case.
             ax.legend(loc="upper center")

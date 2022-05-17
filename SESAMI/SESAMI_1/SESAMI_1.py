@@ -25,6 +25,7 @@ def calculation_runner(MAIN_PATH, plotting_information, USER_ID, plot_number):
     plotting_information["R2 min"] = float(plotting_information["R2 min"])
     plotting_information["dpi"] = float(plotting_information["dpi"])
 
+    print(f'The current gas is {gas}')
     b = BETAn(gas, temperature, minlinelength, plotting_information)
 
     column_names = ["Pressure", "Loading"]
