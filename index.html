@@ -110,20 +110,10 @@
     &#8226 Argon: T = 87 K <br><br>
   
   If you want to analyze BET isotherm from simulation, <a href="/example_csv" download>download the example CSV file</a> and format your simulation data accordingly.<br>
-  </div>
 
-  <!-- This div is a space for users to enter information about themselves so we can improve our services. -->
-  <div id='about_you_container' style='font-size:16px; padding-top: 30px; width:100%;' class="container">
-    Please consider providing the following information so that we can learn about usage patterns and make this website work better for you. <br><br>
-    <div style='text-align: center;'>
-          <button class='round_minibutton' id='about_you_button'>About you</button>
-    </div>
-
-    <div id='about_you_content'>
-      Name: <input type="text" id='user_name' class='form-control'><br>
-      Email: <input type="text" id='user_email' class='form-control'><br>
-      Institution: <input type="text" id='user_institution' class='form-control'><br>
-      Material type: <input type="text" id='user_material' class='form-control'><br>
+    <div style='width:100%; text-align:center; margin-top:0.25cm;'>
+      <input type="checkbox" id="permission_checkbox" onclick='handleCheckbox(this)'>
+      <label for="permission_checkbox">Share data with developers</label><br>
     </div>
   </div>
 
@@ -177,9 +167,6 @@
       </div>
     </div>
     <div style='width:100%; text-align:center; margin-top:0.25cm;'>
-      <p id='permission_line'>May we store information on your isotherms? &nbsp&nbsp<button style='color: green;' id='perm_yes' class='minibutton'>Yes.</button>&nbsp&nbsp&nbsp<button style='color: red;' id='perm_no' class='minibutton'>No.</button></p> <!-- &nbsp is a space gap -->
-    </div>
-    <div style='width:100%; text-align:center; margin-top:0.25cm;'>
       <p id='calculation_status'></p> <!-- Will indicate wheter a calculation is underway. -->
     </div>
     <div style='font-size:16px; margin-top:0.25cm;' id='upload_status'></div>
@@ -197,6 +184,21 @@
       <img style='margin-top: 0.25cm;' id='raw_data_figure' alt='Your raw data'>
     </div>
 
+  </div>
+
+
+  <!-- This div is a space for users to enter information about themselves so we can improve our services. -->
+  <div id='about_you_container' style='font-size:16px; padding-top: 30px; width:100%;' class="container">
+    <div style='text-align: center;'>
+          <button class='round_minibutton' id='about_you_button'>About you</button>
+    </div>
+
+    <div id='about_you_content'>
+      Name: <input type="text" id='user_name' class='form-control'><br>
+      Email: <input type="text" id='user_email' class='form-control'><br>
+      Institution: <input type="text" id='user_institution' class='form-control'><br>
+      Material type: <input type="text" id='user_material' class='form-control'><br>
+    </div>
   </div>
 
 
@@ -348,6 +350,8 @@
   // A helper function that clears text out, hides elements, and sets default values.
   function clean_slate() {
     clean_slate_partial()
+
+    $('#about_you_container').hide() 
 
     // setting default values
     $('#gas_dropdown').val('Nitrogen') 
@@ -768,21 +772,19 @@
   }
 
 
-
-  // Runs when the "Yes" button is clicked for storage permission line.
-  $("#perm_yes").click(function () {
-    $('#permission_line').hide()
-    $.post("/permission", JSON.stringify(true)).done(function (response) {
-    })
-  })
-
-  // Runs when the "No" button is clicked for storage permission line.
-  $("#perm_no").click(function () {
-    $('#permission_line').hide()
-    $('#about_you_container').hide() // Hide the entire section where the user can input their name, email, etc.
-    $.post("/permission", JSON.stringify(false)).done(function (response) {
-    })
-  })
+  // Runs when the user checks the "Share data with developers" checkbox
+  function handleCheckbox(cb) {
+    if (cb.checked) {
+      $('#about_you_container').show()
+      $.post("/permission", JSON.stringify(true)).done(function (response) {
+      })
+    }
+    else {
+      $('#about_you_container').hide()
+      $.post("/permission", JSON.stringify(false)).done(function (response) {
+      })
+    }
+  }
 
 
   // The code below runs when the site first loads up (i.e. is opened in a browser).

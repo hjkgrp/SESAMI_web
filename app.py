@@ -18,7 +18,7 @@ from pymongo import MongoClient
 app = flask.Flask(__name__)
 
 
-app.secret_key = "TODO make this actually secret later" # Necessary for sessions.
+app.secret_key = "TODO make this actually secret later"  # Necessary for sessions.
 
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False  # This variable keeps track of whether the function run_SESAMI is currently running.
@@ -268,7 +268,7 @@ def run_SESAMI():
         MAIN_PATH, plotting_information, session["ID"], session["plot_number"]
     )
 
-    session["plot_number"] += 1 # So that the next set of plots have different names
+    session["plot_number"] += 1  # So that the next set of plots have different names
 
     # Packaging the diagnostics to be sent back to the frontend (index.html).
     if BET_dict is None or BET_ESW_dict is None:  # This is a problem.
@@ -318,7 +318,7 @@ def run_SESAMI():
         "ML_prediction": ML_prediction,
         "BET_analysis": BET_analysis,
         "BETESW_analysis": BETESW_analysis,
-        "plot_number": session["plot_number"] - 1
+        "plot_number": session["plot_number"] - 1,
     }
 
     RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
@@ -355,10 +355,10 @@ def set_ID():
     session["ID"] = time.time()  # a unique ID for this session
     session[
         "permission"
-    ] = True  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to Yes
-    session["plot_number"] = 0 # the number identifier for the SESAMI 1 figures
-        # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures
-    session["raw_plot_number"] = 0 # the number identifier for the raw data figures
+    ] = False  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to False
+    session["plot_number"] = 0  # the number identifier for the SESAMI 1 figures
+    # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures
+    session["raw_plot_number"] = 0  # the number identifier for the raw data figures
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.
 
@@ -531,16 +531,26 @@ def show_data():
 
     column_names = ["Pressure", "Loading"]
     data = pd.read_table(
-        f'{MAIN_PATH}user_{session["ID"]}/input.txt', skiprows=1, sep="\t", names=column_names
+        f'{MAIN_PATH}user_{session["ID"]}/input.txt',
+        skiprows=1,
+        sep="\t",
+        names=column_names,
     )
 
     plt.figure()
     ax = plt.gca()
-    ax.plot(data['Pressure'], data['Loading'], 'o', c='blue', markeredgecolor='none', label='Your data')
-    ax.set_xscale('log')
-    ax.set_xlabel('Pressure (Pa), log scale')
-    ax.set_ylabel('Loading (mol/kg)')
-    ax.set_title('Your isotherm')
+    ax.plot(
+        data["Pressure"],
+        data["Loading"],
+        "o",
+        c="blue",
+        markeredgecolor="none",
+        label="Your data",
+    )
+    ax.set_xscale("log")
+    ax.set_xlabel("Pressure (Pa), log scale")
+    ax.set_ylabel("Loading (mol/kg)")
+    ax.set_title("Your isotherm")
     ax.legend()
     plt.savefig(
         f'{MAIN_PATH}user_{session["ID"]}/raw_data_{session["raw_plot_number"]}.png',
@@ -552,6 +562,7 @@ def show_data():
     session["raw_plot_number"] += 1
 
     return str(session["raw_plot_number"] - 1)
+
 
 if __name__ == "__main__":
     print(MONGODB_URI)

@@ -233,25 +233,6 @@ class BETAn:
 
         ax.set_ylim((0, ax.get_ylim()[1]))
 
-        if self.eswminima is not None:
-            ax.vlines(
-                data.at[self.eswminima, "P_rel"],
-                ax.get_ylim()[0],
-                ax.get_ylim()[1],
-                colors=plt.cm.Greens(200),
-                linestyles="dashed",
-                label="ESW minimum",
-            )
-        if self.con1limit is not None:
-            ax.vlines(
-                data.at[self.con1limit, "P_rel"],
-                ax.get_ylim()[0],
-                ax.get_ylim()[1],
-                linestyles="dashed",
-                color=plt.cm.Purples(230),
-                label="Consistency 1 maximum",
-            )
-
         if with_fit == "Yes":
             [bet_info, betesw_info] = fit_data
             [rbet, bet_params] = bet_info
@@ -287,6 +268,37 @@ class BETAn:
                     color=plt.cm.Greens(200),
                     label="BET-ESW fit",
                 )
+
+            # Setting the y-axis limits to include more of the fit
+            # Only consider bet values that correspond to x values within our plotting range
+            bet_values = [
+                data["Loading"].values[i]
+                for i, value in enumerate(data["P_rel"].values)
+                if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]
+            ]
+
+            y_max = max(bet_values) + 10
+
+            ax.set_ylim(top=y_max)
+
+        if self.eswminima is not None:
+            ax.vlines(
+                data.at[self.eswminima, "P_rel"],
+                ax.get_ylim()[0],
+                ax.get_ylim()[1],
+                colors=plt.cm.Greens(200),
+                linestyles="dashed",
+                label="ESW minimum",
+            )
+        if self.con1limit is not None:
+            ax.vlines(
+                data.at[self.con1limit, "P_rel"],
+                ax.get_ylim()[0],
+                ax.get_ylim()[1],
+                linestyles="dashed",
+                color=plt.cm.Purples(230),
+                label="Consistency 1 maximum",
+            )
 
         if maketitle == "Yes":
             titletext = "Isotherm Data"
@@ -542,16 +554,16 @@ class BETAn:
                     label="BET-ESW fit",
                 )
 
-            # Setting the y-axis limits to include the fit
-            bet_fit_values = self.gen_phi(load_bet, data["P_rel"].values)
-            # Only consider fit values that correspond to x values within our plotting range
-            bet_fit_values = [bet_fit_values[i] for i, value in enumerate(load_bet) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
-            betesw_fit_values = self.gen_phi(load_betesw, data["P_rel"].values)
-            betesw_fit_values = [betesw_fit_values[i] for i, value in enumerate(load_betesw) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
-            phi_values = [phi[i] for i, value in enumerate(loading) if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]]
-            
-            y_min = min(bet_fit_values + betesw_fit_values + phi_values) * 1.05 # Want the bottom of the graph to give the data some wiggle room, hence the 1.05.
-            y_max = max(bet_fit_values + betesw_fit_values + phi_values)
+            # Setting the y-axis limits to include more of the fit
+            # Only consider phi values that correspond to x values within our plotting range
+            phi_values = [
+                phi[i]
+                for i, value in enumerate(loading)
+                if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]
+            ]
+
+            y_min = min(phi_values) - 10
+            y_max = max(phi_values) + 10
 
             ax.set_ylim(bottom=y_min, top=y_max)
 
@@ -840,7 +852,7 @@ class BETAn:
         plot_number,
         sumpath=os.path.join(os.curdir, "imgsummary"),
         saveindividual="No",
-        eswminima=None
+        eswminima=None,
     ):
         """
         This function creates a summary of the BET process and stores it as a collection in the specified outlet directory.
