@@ -32,6 +32,9 @@ We computed the slope at each point and identified the point where the slope cha
 ## BET-ESW areas
 The BET + ESW areas are computed in the same way as the BET areas except that the algorithm is forced to include the ESW minimum in the selected region. Thus, the chosen region **must satisfy** the consistency criteria 1, 2 and have an R2>0.998, and include the relative pressure corresponding to the ESW minimum point. The correct calculation of the BET + ESW areas depends on the correct identification of the ESW minimum. If the ESW minimum is wrongly identified, the BET + ESW area will also be wrong. Thus, we recommend that users ensure that the first minimum is correctly identified. 
 
+## ML areas
+The machine learning areas are computed using a Lasso linear regression model that takes as input the mean loading values of seven logarithmically divided pressure subregions. For more information, see [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518).
+
 # Preparing Input files
 AIF file: use http://raw2aif.herokuapp.com/ 
 - Details of AIF file can be found in [this](https://github.com/AIF-development-team/adsorptioninformationformat) repository.
