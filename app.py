@@ -50,6 +50,11 @@ def serve_library_files(path):
     return flask.send_from_directory("libraries", path)
 
 
+@app.route("/ris_files/<path:path>")
+def serve_ris_files(path):
+    return flask.send_from_directory("ris_files", path)
+
+
 @app.route("/images/<path:path>")
 def serve_images(path):
     return flask.send_from_directory("images", path)
