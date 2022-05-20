@@ -46,7 +46,7 @@ CSV file: see [example](/example_input/example_loading_data.csv)
 # References
 - [Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116),
 J. Phys. Chem. C 2019, 123, 33, 20195 - 20209
-- [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518)
+- [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518),
 J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
 
 # Authors
