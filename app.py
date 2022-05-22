@@ -320,7 +320,7 @@ def run_SESAMI():
     )  # ML is machine learning.
 
     calculation_results = {
-        "ML_prediction": ML_prediction,
+        "ML_prediction": "%.1f" % float(ML_prediction), # One decimal precision
         "BET_analysis": BET_analysis,
         "BETESW_analysis": BETESW_analysis,
         "plot_number": session["plot_number"] - 1,
