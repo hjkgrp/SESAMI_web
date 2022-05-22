@@ -434,7 +434,7 @@ def check_csv():
     data = pd.read_table(input_location, skiprows=1, sep="\t", names=column_names)
     loading_data = list(data["Loading"])
     if loading_data[0] / loading_data[-1] >= 0.05:  # This is a problem.
-        return "Lacking data at low pressure region."
+        return "Lacking data at low pressure region. The ratio of the lowest loading to the highest loading is not less than 0.05."
 
     # If the code gets to this point, the CSV likely doesn't have any problems with it.
     return "All good!"
