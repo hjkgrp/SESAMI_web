@@ -22,6 +22,7 @@ app.secret_key = "TODO make this actually secret later"  # Necessary for session
 
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False  # This variable keeps track of whether the function run_SESAMI is currently running.
+RUN_SESAMI_RUNNING_SETTIME = time.time() # This variable keeps track of the last time RUN_SESAMI_RUNNING was changed to True; set it to time.time() on startup
 MONGODB_URI = "mongodb+srv://iast:Tuxe5F5TL0oQQjcM@cluster1.jadjk.mongodb.net/data_isotherm?retryWrites=true&w=majority"
 
 # Next two lines are for later use, when comparing any user uploaded isotherms to the example isotherm.
@@ -255,13 +256,17 @@ def run_SESAMI():
     # It generates diagnostics (SESAMI 1 and 2) and figures (SESAMI 1).
     # Assumes the user's input.txt has been made by the website already.
 
-    global RUN_SESAMI_RUNNING  # global variable
+    global RUN_SESAMI_RUNNING, RUN_SESAMI_RUNNING_SETTIME  # global variables
 
     # Only one user can run this function at a time.
     while RUN_SESAMI_RUNNING:
         time.sleep(5)  # Sleep for 5 seconds.
         print("Sleep 5 seconds")
+        if (time.time() - RUN_SESAMI_RUNNING_SETTIME) > 15: # more than fifteen seconds have passed since run_SESAMI was triggered by some user
+            RUN_SESAMI_RUNNING = False
+
     RUN_SESAMI_RUNNING = True
+    RUN_SESAMI_RUNNING_SETTIME = time.time()
 
     ### SESAMI 1
     plotting_information = json.loads(

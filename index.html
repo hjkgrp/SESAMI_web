@@ -527,6 +527,7 @@
   // Runs when the "Upload CSV or AIF" button is clicked.
   $('#upload_button').on('click', function () { // button triggers upload
     clean_slate_partial()
+    $('#file_input').val(null) // clears file_input
     $('#file_input').trigger('click'); // OS file selection
   });
   $("#file_input").change(function () {
@@ -569,7 +570,7 @@
                 if (response != 'All good!') {
                   this.value = null; // clear the bad CSV file
                   $('#upload_status').text('')
-                  alert(response)
+                  alert(response) // Gives the user the error message
                   return // doesn't continue
                 }
 

@@ -135,6 +135,8 @@ class ML:
                     "c_%d" % i
                 ] = val  # We are computing the mean values and assigning them to the cell.
                 # This dataframe is just one row, corresponding to the material described by the isotherm uploaded to the GUI.
+                print(f'i is {i} and val is {val}') # TODO remove later
+                print(f'pressure_bins[i][0] is {pressure_bins[i][0]} and pressure_bins[i][1] is {pressure_bins[i][1]}') # TODO remove later
             except Exception:
                 print("Feature issue in pressure_bin_features")
 
@@ -257,11 +259,16 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
         {"name": ["user_input"]}
     )  # This will hold the features of the new MOF/material that is input at the GUI.
 
+    from IPython.display import display # TODO remove later
+    print(f'Displaying the test_data 0') # TODO remove later
+    display(test_data) # TODO remove later
+
     # Actual pressure bins as features.
 
     # Here, we are creating the pressure bins which can be used for the ML model.
     n_bins = 7
     pressure_bins = my_ML.build_pressure_bins(5, 1e5, n_bins)
+    print(f'pressure_bins are {pressure_bins}') # TODO remove later
 
     # Here, we generate a string for the various columns in the regression which we will input to the formula.
     feature_list = ["c_%d" % i for i in range(len(pressure_bins))]
@@ -282,12 +289,21 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
         isotherm_data_path=isotherm_data_path,
     )
 
+    print(f'Displaying the test_data 1') # TODO remove later
+    display(test_data) # TODO remove later
+
     test_data = test_data.dropna(subset=col_list)
+    print(f'Displaying the test_data 2') # TODO remove later
+    display(test_data) # TODO remove later
 
     # Loading the LASSO model.
     lasso = pickle.load(open(f"{MAIN_PATH}/SESAMI/SESAMI_2/lasso_model.sav", "rb"))
         # The LASSO model was trained following the jupyter notebook code in the SESAMI 2 paper
         # It was saved using pickle.dump(lasso, open('lasso_model.sav', 'wb'))
+
+    print(f'col_list is {col_list}') # TODO remove later
+    print(f'Displaying the test_data 3') # TODO remove later
+    display(test_data[col_list]) # TODO remove later
 
     test_data["FittedValues"] = lasso.predict(test_data[col_list])
 
