@@ -276,28 +276,41 @@ def run_SESAMI():
     session["plot_number"] += 1  # So that the next set of plots have different names
 
     # Packaging the diagnostics to be sent back to the frontend (index.html).
-    if BET_dict is None or BET_ESW_dict is None:  # This is a problem.
+    if BET_dict == 'No eswminima': # This is a problem.
         RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
         return (
-            "Linear failure"  # Quits, does not proceed with the rest of the function.
+            "No eswminima"  # Quits, does not proceed with the rest of the function.
+        )        
+    if BET_dict == 'BET linear failure':  # This is a problem.
+        RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
+        return (
+            "BET linear failure"  # Quits, does not proceed with the rest of the function.
         )
-    else:
-        # reformatting
-        BET_dict["C"] = "%.4g" % BET_dict["C"]
-        BET_dict["qm"] = "%.2f" % BET_dict["qm"]
-        BET_dict["A_BET"] = "%.1f" % BET_dict["A_BET"]
-        BET_dict["R2"] = "%.4f" % BET_dict["R2"]
+    if BET_ESW_dict == 'BET+ESW linear failure': # This is a problem.
+        RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
+        return (
+            "BET+ESW linear failure"  # Quits, does not proceed with the rest of the function.
+        )        
+    
+    # reformatting
+    BET_dict["C"] = "%.4g" % BET_dict["C"]
+    BET_dict["qm"] = "%.2f" % BET_dict["qm"]
+    BET_dict["A_BET"] = "%.1f" % BET_dict["A_BET"]
+    BET_dict["R2"] = "%.4f" % BET_dict["R2"]
 
-        BET_analysis = f'C = {BET_dict["C"]}\n\
-            qmsub = {BET_dict["qm"]} mol/kg\n\
-            BET surface area = {BET_dict["A_BET"]} m2sup/g\n\
-            Consistency 1: Yes\n\
-            Consistency 2: Yes\n\
-            Consistency 3: {BET_dict["con3"]}\n\
-            Consistency 4: {BET_dict["con4"]}\n\
-            Length of region: {BET_dict["length"]}\n\
-            R2sup: {BET_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
+    BET_analysis = f'C = {BET_dict["C"]}\n\
+        qmsub = {BET_dict["qm"]} mol/kg\n\
+        BET surface area = {BET_dict["A_BET"]} m2sup/g\n\
+        Consistency 1: Yes\n\
+        Consistency 2: Yes\n\
+        Consistency 3: {BET_dict["con3"]}\n\
+        Consistency 4: {BET_dict["con4"]}\n\
+        Length of region: {BET_dict["length"]}\n\
+        R2sup: {BET_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
+    if plotting_information['scope'] == 'BET': # Exclude ESW analysis
+        BETESW_analysis = None
+    else: # Include ESW analysis
         # reformatting
         BET_ESW_dict["C"] = "%.4g" % BET_ESW_dict["C"]
         BET_ESW_dict["qm"] = "%.2f" % BET_ESW_dict["qm"]
@@ -317,7 +330,7 @@ def run_SESAMI():
     ### SESAMI 2
     ML_prediction = calculation_v2_runner(
         MAIN_PATH, session["ID"]
-    )  # ML is machine learning.
+    )  # ML stands for machine learning.
 
     calculation_results = {
         "ML_prediction": "%.1f" % float(ML_prediction), # One decimal precision

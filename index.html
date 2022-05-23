@@ -46,7 +46,7 @@
     background: none;
     border-radius: 25px;
     min-width: 130px;
-    width: 25%;
+    width: 33%;
   }
 </style>
 
@@ -128,14 +128,9 @@
         Figure type
       </div>
       <div class='col-lg-8'>
-        <input autocomplete="off" id='plottype_dropdown' style='font-size: 16px; width:100%' class='form-control' list='plottype_list' onmousedown="value = '';" onChange='switch_plot(this.value)'/>
+        <input autocomplete="off" id='plottype_dropdown' style='font-size: 16px; width:100%' class='form-control locksMetrics' list='plottype_list' onmousedown="value = '';" onChange='switch_plot(this.value)'/>
         <datalist id='plottype_list' style='font-size: 16px;'>
-          <option value="Multiplot">
-          <option value="Isotherm">
-          <option value="BET">
-          <option value="ESW">
-          <option value="BETLin">
-          <option value="BETESWLin">              
+          <!-- Set with option_generator function  -->
         </datalist>
       </div>
     </div>
@@ -149,11 +144,11 @@
 
   <!-- This div contains the print out of calculations run on the website. -->
   <div style='font-size:16px; padding-top: 30px' id='print_out' class="container">
-    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BET_readout_header'>BET results are:</p>
+    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BET_readout_header'>BET (SESAMI 1.0) results are:</p>
     <p style='font-size:16px; margin-top:0.25cm;' id='BET_readout'></p>
-    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BETESW_readout_header'>BET-ESW results are:</p>
+    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BETESW_readout_header'>BET-ESW (SESAMI 1.0) results are:</p>
     <p style='font-size:16px; margin-top:0.25cm;' id='BETESW_readout'></p>
-    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='ML_prediction_header'>ML (SESAMI 2) surface area prediction is:</p>
+    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='ML_prediction_header'>ML (SESAMI 2.0) surface area prediction is:</p>
     <p style='font-size:16px; margin-top:0.25cm;' id='ML_prediction'></p>
   </div>
 
@@ -206,7 +201,7 @@
 
   <!-- This div contains general options. -->
   <div style='font-size:16px; padding-top: 30px; text-align:center;' class="container">
-    <button class='round_minibutton' id='general_opt_button'>Show general options</button>
+    <button class='round_minibutton' id='general_opt_button'>Show general options (SESAMI 1.0)</button>
 
     <div id='general_options'>
 
@@ -216,8 +211,20 @@
         <div class='col-lg-8'>
           <input id='gas_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="Nitrogen" list='gas_list' onmousedown="value = '';" />
           <datalist id='gas_list' style='font-size: 16px;'>
-            <option value="Argon">
             <option value="Nitrogen">
+            <option value="Argon">
+          </datalist>
+        </div>
+      </div>
+
+      <!-- Scope -->
+      <div class='row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>Scope</div>
+        <div class='col-lg-8'>
+          <input id='scope_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="BET and BET+ESW" list='scope_list' onmousedown="value = '';" />
+          <datalist id='scope_list' style='font-size: 16px;'>
+            <option value="BET and BET+ESW">
+            <option value="BET">
           </datalist>
         </div>
       </div>
@@ -225,7 +232,7 @@
       <!-- R^2 cutoff -->
       <div class = 'row' style='margin-top: 0.25cm;'>
         <div class='col-lg-4'>
-          R<sup>2</sup> cutoff (SESAMI)
+          R<sup>2</sup> cutoff
         </div>
         <div class='col-lg-8'>
           <input type="text" id="r2cutoff_input" style='font-size: 16px; width:100%' class='form-control' placeholder="0.9995">
@@ -235,7 +242,7 @@
       <!-- R^2 min -->
       <div class = 'row' style='margin-top: 0.25cm;'>
         <div class='col-lg-4'>
-          R<sup>2</sup> min (SESAMI)
+          R<sup>2</sup> min
         </div>
         <div class='col-lg-8'>
           <input type="text" id="r2min_input" style='font-size: 16px; width:100%' class='form-control' placeholder="0.998">
@@ -248,7 +255,7 @@
 
   <!-- This div contains plotting options. -->
   <div style='font-size:16px; padding-top: 30px; text-align:center;' class="container">
-    <button class='round_minibutton' id='plotting_opt_button'>Show plotting options</button>
+    <button class='round_minibutton' id='plotting_opt_button'>Show plotting options (SESAMI 1.0)</button>
 
     <div id='plotting_options'>
 
@@ -357,6 +364,7 @@
 
     // setting default values
     $('#gas_dropdown').val('Nitrogen') 
+    $('#scope_dropdown').val('BET and BET+ESW')
     $('#r2cutoff_input').val('0.9995') 
     $('#r2min_input').val('0.998')
     $('#legend_dropdown').val('Yes')
@@ -375,9 +383,9 @@
     $('#plot_div').hide()
     $('#print_out').hide()
     $('#general_options').hide()    
-    $('#general_opt_button').text('Show general options')    
+    $('#general_opt_button').text('Show general options (SESAMI 1.0)')    
     $('#plotting_options').hide() 
-    $('#plotting_opt_button').text('Show plotting options') 
+    $('#plotting_opt_button').text('Show plotting options (SESAMI 1.0)') 
     $('#about_you_content').hide()
     $('#raw_data_display').hide()
 
@@ -612,6 +620,26 @@
       return this;
   }
 
+  // Function for populating the plot dropdown based on whether BET+ESW plots are made or not.
+  var option_generator = function(scope) {
+    console.log('Entered the option_generator')
+    if (scope == 'BET and BET+ESW') {
+      options_list = ["Multiplot", "Isotherm", "BET", "ESW", "BETLin", "BETESWLin"]  
+    } else if(scope == 'BET') {
+      console.log('BET hit in option_generator')
+      options_list = ["Multiplot", "Isotherm", "BET", "BETLin"]
+    }
+    else{
+      console.log("Error. Scope is " + scope)
+    }
+
+    var options = ''
+    for (var i = 0; i < options_list.length; i++) {
+      options += '<option value="' + options_list[i] + '" />';
+    }
+    return options
+  }
+
   // Runs when the "Run calculation" button is clicked.
   $('#run_button').click(function () {
     clean_slate_partial()
@@ -631,6 +659,7 @@
     R2cutoff = $('#r2cutoff_input').val()
     R2min = $('#r2min_input').val()
     gas = $('#gas_dropdown').val()
+    scope = $('#scope_dropdown').val()
 
     // Ensuring the user put in numbers for R2 cutoff and R2min
     if (isNaN(R2cutoff) || isNaN(R2min)) {
@@ -642,7 +671,10 @@
       return;
     }
 
-    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas} // Plotting information
+    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas, 'scope': scope} // Plotting information
+
+    // Setting the options of plottype_dropdown based on the scope
+    document.getElementById('plottype_list').innerHTML = option_generator(scope)
 
     $('#calculation_status').text('Calculating...') // Gives the user peace of mind that their button click actually did something :)
 
@@ -650,19 +682,35 @@
       function (response) {
 
         // Failure handling
-        if (response == 'Linear failure') {
-          alert("No suitable linear region has been found. Try lowering R2min.")
+        if (response == 'No eswminima') {
+          alert("No ESW minima was found. Change scope (general options) to BET.")
+          $('#calculation_status').text('')
+          return; // Does not continue if this failure occurs.
+        }
+        if (response == 'BET linear failure') {
+          alert("No suitable BET linear region has been found. Try lowering R2min.")
+          $('#calculation_status').text('')
+          return; // Does not continue if this failure occurs.
+        }
+        if (response == 'BET+ESW linear failure') {
+          alert("No suitable BET-ESW linear region has been found. Try lowering R2min, or change scope (general options) to BET.")
           $('#calculation_status').text('')
           return; // Does not continue if this failure occurs.
         }
 
         ML_prediction = response['ML_prediction']
         BET_analysis = response['BET_analysis']
-        BETESW_analysis = response['BETESW_analysis']
         PLOT_NUMBER = response['plot_number']
-        $('#ML_prediction').multiline(ML_prediction + ' m2sup/g') // The multiline function from earlier formats things nicely.
         $('#BET_readout').multiline(BET_analysis)
-        $('#BETESW_readout').multiline(BETESW_analysis)
+        if (scope == 'BET and BET+ESW') {
+          BETESW_analysis = response['BETESW_analysis']
+          $('#BETESW_readout_header').show()
+          $('#BETESW_readout').multiline(BETESW_analysis)          
+        } else {
+          $('#BETESW_readout_header').hide()
+        }
+
+        $('#ML_prediction').multiline(ML_prediction + ' m2sup/g') // The multiline function from earlier formats things nicely.
 
         $('#plot_div').show()
         $('#print_out').show()
@@ -705,28 +753,28 @@
     document.body.removeChild(a); // Downloads the currently displayed figure.
   })
 
-  // Runs when the "Show general options"/"Hide general options" button is clicked.
+  // Runs when the "Show general options (SESAMI 1.0)"/"Hide general options (SESAMI 1.0)" button is clicked.
   $('#general_opt_button').click(function () {
 
-    if ($('#general_opt_button').text() == 'Show general options') { // In this case, need to show the section.
+    if ($('#general_opt_button').text() == 'Show general options (SESAMI 1.0)') { // In this case, need to show the section.
       $('#general_options').show()
-      $('#general_opt_button').text('Hide general options')
+      $('#general_opt_button').text('Hide general options (SESAMI 1.0)')
     } else { // In this case, need to hide the section.
       $('#general_options').hide()
-      $('#general_opt_button').text('Show general options')      
+      $('#general_opt_button').text('Show general options (SESAMI 1.0)')      
     }
     
   })
 
-  // Runs when the "Show plotting options" button is clicked.
+  // Runs when the "Show plotting options (SESAMI 1.0)" button is clicked.
   $('#plotting_opt_button').click(function () {
 
-    if ($('#plotting_opt_button').text() == 'Show plotting options') { // In this case, need to show the section.
+    if ($('#plotting_opt_button').text() == 'Show plotting options (SESAMI 1.0)') { // In this case, need to show the section.
       $('#plotting_options').show()
-      $('#plotting_opt_button').text('Hide plotting options')
+      $('#plotting_opt_button').text('Hide plotting options (SESAMI 1.0)')
     } else { // In this case, need to hide the section.
       $('#plotting_options').hide()
-      $('#plotting_opt_button').text('Show plotting options')      
+      $('#plotting_opt_button').text('Show plotting options (SESAMI 1.0)')      
     }
     
   })

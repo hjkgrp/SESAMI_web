@@ -202,6 +202,8 @@ class BETAn:
         This function takes an axis as an input and makes an isotherm plot on it.
         If xscale='log' and tryminorticks='Yes', the xscale will be from 0 to 1. The user has no control over it.
         """
+        scope = plotting_information['scope']
+
         ax.errorbar(
             data["P_rel"],
             data["Loading"],
@@ -233,79 +235,131 @@ class BETAn:
 
         ax.set_ylim((0, ax.get_ylim()[1]))
 
-        if with_fit == "Yes":
-            [bet_info, betesw_info] = fit_data
-            [rbet, bet_params] = bet_info
-            [rbetesw, betesw_params] = betesw_info
+        if scope == 'BET and BET+ESW': # In this case, run the BET+ESW code
+            if with_fit == "Yes":
+                [bet_info, betesw_info] = fit_data
+                [rbet, bet_params] = bet_info
+                [rbetesw, betesw_params] = betesw_info
 
-            if rbet != (None, None):
-                ax.axvspan(
-                    data.at[rbet[0], "P_rel"],
-                    data.at[rbet[1], "P_rel"],
-                    facecolor=plt.cm.PuOr(70),
-                    edgecolor="none",
-                    alpha=0.6,
-                    label="BET region",
+                if rbet != (None, None):
+                    ax.axvspan(
+                        data.at[rbet[0], "P_rel"],
+                        data.at[rbet[1], "P_rel"],
+                        facecolor=plt.cm.PuOr(70),
+                        edgecolor="none",
+                        alpha=0.6,
+                        label="BET region",
+                    )
+                    ax.plot(
+                        data["P_rel"].values,
+                        self.th_loading(data["P_rel"].values, bet_params),
+                        color=plt.cm.PuOr(20),
+                        label="BET fit",
+                    )
+                if rbetesw != (None, None):
+                    ax.axvspan(
+                        data.at[rbetesw[0], "P_rel"],
+                        data.at[rbetesw[1], "P_rel"],
+                        facecolor=plt.cm.Greens(70),
+                        edgecolor="none",
+                        alpha=0.6,
+                        label="BET-ESW region",
+                    )
+                    ax.plot(
+                        data["P_rel"].values,
+                        self.th_loading(data["P_rel"].values, betesw_params),
+                        color=plt.cm.Greens(200),
+                        label="BET-ESW fit",
+                    )
+
+                # Setting the y-axis limits to include more of the fit
+                # Only consider bet values that correspond to x values within our plotting range
+                bet_values = [
+                    data["Loading"].values[i]
+                    for i, value in enumerate(data["P_rel"].values)
+                    if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]
+                ]
+
+                y_max = max(bet_values) + 10
+
+                ax.set_ylim(top=y_max)
+
+            if self.eswminima is not None:
+                ax.vlines(
+                    data.at[self.eswminima, "P_rel"],
+                    ax.get_ylim()[0],
+                    ax.get_ylim()[1],
+                    colors=plt.cm.Greens(200),
+                    linestyles="dashed",
+                    label="ESW minimum",
                 )
-                ax.plot(
-                    data["P_rel"].values,
-                    self.th_loading(data["P_rel"].values, bet_params),
-                    color=plt.cm.PuOr(20),
-                    label="BET fit",
-                )
-            if rbetesw != (None, None):
-                ax.axvspan(
-                    data.at[rbetesw[0], "P_rel"],
-                    data.at[rbetesw[1], "P_rel"],
-                    facecolor=plt.cm.Greens(70),
-                    edgecolor="none",
-                    alpha=0.6,
-                    label="BET-ESW region",
-                )
-                ax.plot(
-                    data["P_rel"].values,
-                    self.th_loading(data["P_rel"].values, betesw_params),
-                    color=plt.cm.Greens(200),
-                    label="BET-ESW fit",
+            if self.con1limit is not None:
+                ax.vlines(
+                    data.at[self.con1limit, "P_rel"],
+                    ax.get_ylim()[0],
+                    ax.get_ylim()[1],
+                    linestyles="dashed",
+                    color=plt.cm.Purples(230),
+                    label="Consistency 1 maximum",
                 )
 
-            # Setting the y-axis limits to include more of the fit
-            # Only consider bet values that correspond to x values within our plotting range
-            bet_values = [
-                data["Loading"].values[i]
-                for i, value in enumerate(data["P_rel"].values)
-                if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]
-            ]
+            if maketitle == "Yes":
+                titletext = "Isotherm Data"
+                ax.set_title(titletext)
 
-            y_max = max(bet_values) + 10
+            if plotting_information["legend"] == "Yes":  # Add a legend in this case.
+                ax.legend(loc="upper left")
 
-            ax.set_ylim(top=y_max)
+        else: # only run the BET related code
+            if with_fit == "Yes":
+                [bet_info, betesw_info] = fit_data
+                [rbet, bet_params] = bet_info
 
-        if self.eswminima is not None:
-            ax.vlines(
-                data.at[self.eswminima, "P_rel"],
-                ax.get_ylim()[0],
-                ax.get_ylim()[1],
-                colors=plt.cm.Greens(200),
-                linestyles="dashed",
-                label="ESW minimum",
-            )
-        if self.con1limit is not None:
-            ax.vlines(
-                data.at[self.con1limit, "P_rel"],
-                ax.get_ylim()[0],
-                ax.get_ylim()[1],
-                linestyles="dashed",
-                color=plt.cm.Purples(230),
-                label="Consistency 1 maximum",
-            )
+                if rbet != (None, None):
+                    ax.axvspan(
+                        data.at[rbet[0], "P_rel"],
+                        data.at[rbet[1], "P_rel"],
+                        facecolor=plt.cm.PuOr(70),
+                        edgecolor="none",
+                        alpha=0.6,
+                        label="BET region",
+                    )
+                    ax.plot(
+                        data["P_rel"].values,
+                        self.th_loading(data["P_rel"].values, bet_params),
+                        color=plt.cm.PuOr(20),
+                        label="BET fit",
+                    )
 
-        if maketitle == "Yes":
-            titletext = "Isotherm Data"
-            ax.set_title(titletext)
+                # Setting the y-axis limits to include more of the fit
+                # Only consider bet values that correspond to x values within our plotting range
+                bet_values = [
+                    data["Loading"].values[i]
+                    for i, value in enumerate(data["P_rel"].values)
+                    if ax.get_xlim()[0] <= value <= ax.get_xlim()[1]
+                ]
 
-        if plotting_information["legend"] == "Yes":  # Add a legend in this case.
-            ax.legend(loc="upper left")
+                y_max = max(bet_values) + 10
+
+                ax.set_ylim(top=y_max)
+
+            if self.con1limit is not None:
+                ax.vlines(
+                    data.at[self.con1limit, "P_rel"],
+                    ax.get_ylim()[0],
+                    ax.get_ylim()[1],
+                    linestyles="dashed",
+                    color=plt.cm.Purples(230),
+                    label="Consistency 1 maximum",
+                )
+
+            if maketitle == "Yes":
+                titletext = "Isotherm Data"
+                ax.set_title(titletext)
+
+            if plotting_information["legend"] == "Yes":  # Add a legend in this case.
+                ax.legend(loc="upper left")
+
 
     def makeconsistencyplot(
         self, plotting_information, ax3, data, maketitle="Yes", tryminorticks="Yes"
@@ -857,127 +911,207 @@ class BETAn:
         """
         This function creates a summary of the BET process and stores it as a collection in the specified outlet directory.
         """
-        rbet = bet_info[0]
-        rbetesw = betesw_info[0]
-        if saveindividual == "Yes":
-            fig, fig3, fig2, fig4, fig5 = (
-                plt.figure(),
-                plt.figure(),
-                plt.figure(),
-                plt.figure(),
-                plt.figure(),
-            )
-            ax, ax2, ax3, ax4, ax5 = (
-                fig.add_subplot(111),
-                fig3.add_subplot(111),
-                fig2.add_subplot(111),
-                fig4.add_subplot(111),
-                fig5.add_subplot(111),
+        scope = plotting_information['scope']
+
+        if scope == 'BET and BET+ESW': # In this case, run the BET+ESW code
+            rbet = bet_info[0]
+            rbetesw = betesw_info[0]
+            if saveindividual == "Yes":
+                fig, fig2, fig3, fig4, fig5 = (
+                    plt.figure(),
+                    plt.figure(),
+                    plt.figure(),
+                    plt.figure(),
+                    plt.figure(),
+                )
+                ax, ax2, ax3, ax4, ax5 = (
+                    fig.add_subplot(111),
+                    fig2.add_subplot(111),
+                    fig3.add_subplot(111),
+                    fig4.add_subplot(111),
+                    fig5.add_subplot(111),
+                )
+                self.makeisothermplot(
+                    plotting_information,
+                    ax,
+                    data,
+                    maketitle="No",
+                    with_fit="Yes",
+                    fit_data=[bet_info, betesw_info],
+                )
+                self.makelinregplot(
+                    plotting_information, ax2, rbet[0], rbet[1], data, maketitle="No"
+                )
+                self.makeconsistencyplot(plotting_information, ax3, data, maketitle="No")
+                self.makeeswplot(
+                    plotting_information,
+                    ax4,
+                    data,
+                    maketitle="No",
+                    with_fit="Yes",
+                    fit_data=[bet_info, betesw_info],
+                )
+                self.makelinregplot(
+                    plotting_information, ax5, rbetesw[0], rbetesw[1], data, maketitle="No"
+                )  # TODO can set maketitle to "Yes" if you want the individual plots to have titles
+                dpi = plotting_information["dpi"]
+                fig.savefig(
+                    os.path.join(sumpath, f"isotherm_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                fig2.savefig(
+                    os.path.join(sumpath, f"BETPlotLinear_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                fig3.savefig(
+                    os.path.join(sumpath, f"BETPlot_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                fig4.savefig(
+                    os.path.join(sumpath, f"ESWPlot_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                fig5.savefig(
+                    os.path.join(sumpath, f"BETESWPlot_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                plt.close(fig)
+                plt.close(fig2)
+                plt.close(fig3)
+                plt.close(fig4)
+                plt.close(fig5)
+
+            # Next, the multiplot.
+            figf = plt.figure(figsize=(3 * 7.0, 2 * 6.0))
+            [[axf, ax3f, ax4f], [ax2f, ax5f, blanksubplot]] = figf.subplots(
+                nrows=2, ncols=3
             )
             self.makeisothermplot(
                 plotting_information,
-                ax,
+                axf,
                 data,
-                maketitle="No",
                 with_fit="Yes",
                 fit_data=[bet_info, betesw_info],
             )
-            self.makeconsistencyplot(plotting_information, ax3, data, maketitle="No")
-            self.makelinregplot(
-                plotting_information, ax2, rbet[0], rbet[1], data, maketitle="No"
+            self.makeconsistencyplot(plotting_information, ax3f, data)
+
+            BET_dict = self.makelinregplot(
+                plotting_information, ax2f, rbet[0], rbet[1], data
             )
+
             self.makeeswplot(
                 plotting_information,
-                ax4,
+                ax4f,
                 data,
-                maketitle="No",
                 with_fit="Yes",
                 fit_data=[bet_info, betesw_info],
             )
-            self.makelinregplot(
-                plotting_information, ax5, rbetesw[0], rbetesw[1], data, maketitle="No"
-            )  # TODO can set maketitle to "Yes" if you want the individual plots to have titles
-            dpi = plotting_information["dpi"]
-            fig.savefig(
-                os.path.join(sumpath, f"isotherm_{plot_number}.png"),
+
+            BET_ESW_dict = None  # Set this to nothing to start. Will evaluate whether eswminima was None by whether the value changes from nothing.
+            if eswminima is None:
+                ax5f.axis("off")
+            else:
+                BET_ESW_dict = self.makelinregplot(
+                    plotting_information, ax5f, rbetesw[0], rbetesw[1], data, mode="BET-ESW"
+                )
+            blanksubplot.axis("off")
+            figf.tight_layout()
+            figf.savefig(
+                os.path.join(sumpath, f"multiplot_{plot_number}.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
             )
-            fig2.savefig(
-                os.path.join(sumpath, f"BETPlot_{plot_number}.png"),
+            plt.close(figf)
+
+            return BET_dict, BET_ESW_dict
+
+        else: # Only run the BET related code
+            rbet = bet_info[0]
+            if saveindividual == "Yes":
+                fig, fig2, fig3 = (
+                    plt.figure(),
+                    plt.figure(),
+                    plt.figure()
+                )
+                ax, ax2, ax3 = (
+                    fig.add_subplot(111),
+                    fig2.add_subplot(111),
+                    fig3.add_subplot(111)
+                )
+                self.makeisothermplot(
+                    plotting_information,
+                    ax,
+                    data,
+                    maketitle="No",
+                    with_fit="Yes",
+                    fit_data=[bet_info, betesw_info],
+                )
+                self.makelinregplot(
+                    plotting_information, ax2, rbet[0], rbet[1], data, maketitle="No"
+                )
+                self.makeconsistencyplot(plotting_information, ax3, data, maketitle="No")
+                dpi = plotting_information["dpi"]
+                fig.savefig(
+                    os.path.join(sumpath, f"isotherm_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                fig2.savefig(
+                    os.path.join(sumpath, f"BETPlotLinear_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                fig3.savefig(
+                    os.path.join(sumpath, f"BETPlot_{plot_number}.png"),
+                    format="png",
+                    dpi=dpi,
+                    bbox_inches="tight",
+                )
+                plt.close(fig)
+                plt.close(fig2)
+                plt.close(fig3)
+
+            # Next, the multiplot.
+            figf = plt.figure(figsize=(3 * 7.0, 1 * 6.0))
+            [axf, ax2f, ax3f] = figf.subplots( # Only have three plots, since not making the BET+ESW plots
+                nrows=1, ncols=3
+            )
+            self.makeisothermplot(
+                plotting_information,
+                axf,
+                data,
+                with_fit="Yes",
+                fit_data=[bet_info, betesw_info],
+            )
+            self.makeconsistencyplot(plotting_information, ax3f, data)
+
+            BET_dict = self.makelinregplot(
+                plotting_information, ax2f, rbet[0], rbet[1], data
+            )
+
+            figf.tight_layout()
+            figf.savefig(
+                os.path.join(sumpath, f"multiplot_{plot_number}.png"),
                 format="png",
                 dpi=dpi,
                 bbox_inches="tight",
             )
-            fig3.savefig(
-                os.path.join(sumpath, f"BETPlotLinear_{plot_number}.png"),
-                format="png",
-                dpi=dpi,
-                bbox_inches="tight",
-            )
-            fig4.savefig(
-                os.path.join(sumpath, f"ESWPlot_{plot_number}.png"),
-                format="png",
-                dpi=dpi,
-                bbox_inches="tight",
-            )
-            fig5.savefig(
-                os.path.join(sumpath, f"BETESWPlot_{plot_number}.png"),
-                format="png",
-                dpi=dpi,
-                bbox_inches="tight",
-            )
-            plt.close(fig)
-            plt.close(fig3)
-            plt.close(fig2)
-            plt.close(fig4)
-            plt.close(fig5)
+            plt.close(figf)         
 
-        # Next, the multiplot.
-        figf = plt.figure(figsize=(3 * 7.0, 2 * 6.0))
-        [[axf, ax3f, ax4f], [ax2f, ax5f, blanksubplot]] = figf.subplots(
-            nrows=2, ncols=3
-        )
-        self.makeisothermplot(
-            plotting_information,
-            axf,
-            data,
-            with_fit="Yes",
-            fit_data=[bet_info, betesw_info],
-        )
-        self.makeconsistencyplot(plotting_information, ax3f, data)
-
-        BET_dict = self.makelinregplot(
-            plotting_information, ax2f, rbet[0], rbet[1], data
-        )
-
-        self.makeeswplot(
-            plotting_information,
-            ax4f,
-            data,
-            with_fit="Yes",
-            fit_data=[bet_info, betesw_info],
-        )
-
-        BET_ESW_dict = None  # Set this to nothing to start. Will evaluate whether eswminima was None by whether the value changes from nothing.
-        if eswminima is None:
-            ax5f.axis("off")
-        else:
-            BET_ESW_dict = self.makelinregplot(
-                plotting_information, ax5f, rbetesw[0], rbetesw[1], data, mode="BET-ESW"
-            )
-        blanksubplot.axis("off")
-        figf.tight_layout()
-        figf.savefig(
-            os.path.join(sumpath, f"multiplot_{plot_number}.png"),
-            format="png",
-            dpi=dpi,
-            bbox_inches="tight",
-        )
-        plt.close(figf)
-
-        return BET_dict, BET_ESW_dict
+            return BET_dict, None # None is a placeholder, since two outputs are expected
 
     def generatesummary(
         self,
@@ -997,6 +1131,8 @@ class BETAn:
         Name BETLowerPressureLimit BETHigherPressureLimit BETArea Nm_BET C_BET Consistency 1 Consistency2 Consistency3 Consistency4 ESWq ESWpressure ESWSA BETESWLowerPressureLimit BETESWHigherPressureLimit BETESWArea Nm_BETESW C_BETESW Consistency 1 Consistency2 Consistency3 Consistency4
         """
 
+        scope = plotting_information['scope']
+
         stylepath = os.path.join(MAIN_PATH, "SESAMI", "SESAMI_1", "mplstyle")
         plt.style.use(stylepath)
 
@@ -1007,19 +1143,12 @@ class BETAn:
         (p, q) = self.picklen(data, method="BET")
         rbet = (p, q)
 
-        # We want to get the bet+esw data ONLY when the eswminima exists.
-        if eswminima is None:
-            rbetesw = (None, None)
-        else:
-            (p, q) = self.picklen(data, method="BET-ESW")
-            rbetesw = (p, q)
-
         if rbet == (None, None):
-            # This means that no suitable linear region has been found.
+            # This means that no suitable BET linear region has been found.
             return (
-                None,
-                None,
-            )  # Since SESAMI failed, return None, None to indicate that. Will report an error message to the website.
+                'BET linear failure',
+                'BET linear failure', # The second returned value is a placeholder, since the SESAMI_1.py call expects two values.
+            )  # Since SESAMI failed, return values to indicate that. Will report an error message to the website.
         else:
             # A BET region has been found.
             (p, q) = rbet
@@ -1040,35 +1169,46 @@ class BETAn:
             ] = self.linregauto(p, q, data)
             bet_params = (qm, C)
 
-        # Write BET+ESW
-        if rbetesw == (None, None):
-            # This means that no suitable linear region has been found.
-            return (
-                None,
-                None,
-            )  # Since SESAMI failed, return None, None to indicate that. Will report an error message to the website.
-        else:
-            # A BET region has been found.
-            (p, q) = rbetesw
-            [
-                linear,
-                stats,
-                C,
-                qm,
-                x_max,
-                x_BET3,
-                x_BET4,
-                con1,
-                con2,
-                con3,
-                con4,
-                A_BET,
-                makefig2,
-            ] = self.linregauto(p, q, data)
-            betesw_params = (qm, C)
+        betesw_info = None # placeholder, in case scope is 'BET'
+        if scope == 'BET and BET+ESW': # In this case, run the BET+ESW code
+            # We want to get the bet+esw data ONLY when the eswminima exists.
+            if eswminima is None:
+                rbetesw = (None, None)
+                return 'No eswminima', 'No eswminima' # The second returned value is a placeholder, since the SESAMI_1.py call expects two values.
+            else:
+                (p, q) = self.picklen(data, method="BET-ESW")
+                rbetesw = (p, q)
+
+            # Write BET+ESW
+            if rbetesw == (None, None):
+                # This means that no suitable BET+ESW linear region has been found.
+                return (
+                    'BET+ESW linear failure',
+                    'BET+ESW linear failure',
+                )  # Since SESAMI failed, return values to indicate that. Will report an error message to the website.
+            else:
+                # A BET region has been found.
+                (p, q) = rbetesw
+                [
+                    linear,
+                    stats,
+                    C,
+                    qm,
+                    x_max,
+                    x_BET3,
+                    x_BET4,
+                    con1,
+                    con2,
+                    con3,
+                    con4,
+                    A_BET,
+                    makefig2,
+                ] = self.linregauto(p, q, data)
+                betesw_params = (qm, C)
+
+            betesw_info = [rbetesw, betesw_params]
 
         bet_info = [rbet, bet_params]
-        betesw_info = [rbetesw, betesw_params]
         mpl.rcParams.update(
             {"font.size": plotting_information["font size"]}
         )  # changing the font size to be used in the figures
