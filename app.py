@@ -6,6 +6,7 @@ import os
 import time
 import stat
 import shutil
+import uuid
 import pandas as pd
 import matplotlib.pyplot as plt
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
@@ -375,7 +376,7 @@ def set_ID():
 
     print("Successfully entered the function set_ID")
 
-    session["ID"] = time.time()  # a unique ID for this session
+    session["ID"] = uuid.uuid4()  # a unique ID for this session
     session[
         "permission"
     ] = False  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to False
