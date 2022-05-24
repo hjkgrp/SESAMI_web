@@ -723,6 +723,10 @@
         $('#calculation_status').text('')
       })
       .fail(function(xhr, textStatus, errorThrown) { // for timeout error; triggers after 1 minute
+        console.log('run_SESAMI failed!')
+        console.log(xhr)
+        console.log(textStatus)
+        console.log(errorThrown)
         alert(errorThrown)
         $('#calculation_status').text('')
       })
