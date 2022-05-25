@@ -587,7 +587,9 @@
             // Check if the uploaded CSV is of the right format. If not, clear the file_input and upload_status elements.
             $.get("/check_csv").done(
               function (response) {
-                if (response != 'All good!') {
+                if (response.startsWith('Warning: Lacking data at low pressure region.')) {
+                  alert(response) // Gives the user the warning message
+                } else if (response != 'All good!') { // The all good message indicates no errors were found in the input.
                   this.value = null; // clear the bad CSV file
                   $('#upload_status').text('')
                   alert(response) // Gives the user the error message
