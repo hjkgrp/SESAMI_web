@@ -270,13 +270,13 @@ def run_SESAMI():
     RUN_SESAMI_RUNNING_SETTIME = time.time()
 
     ### SESAMI 1
-    plotting_information = json.loads(
+    user_options = json.loads(
         flask.request.get_data()
     )  # This is a dictionary. It is the information passed in from the frontend.
 
     # Running the SESAMI 1 calculation. Makes plots.
     BET_dict, BET_ESW_dict = calculation_runner(
-        MAIN_PATH, plotting_information, session["ID"], session["plot_number"]
+        MAIN_PATH, user_options, session["ID"], session["plot_number"]
     )
 
     session["plot_number"] += 1  # So that the next set of plots have different names
@@ -314,7 +314,7 @@ def run_SESAMI():
         Length of region: {BET_dict["length"]}\n\
         R2sup: {BET_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
-    if plotting_information['scope'] == 'BET': # Exclude ESW analysis
+    if user_options['scope'] == 'BET': # Exclude ESW analysis
         BETESW_analysis = None
     else: # Include ESW analysis
         # reformatting
@@ -333,13 +333,21 @@ def run_SESAMI():
             Length of region: {BET_ESW_dict["length"]}\n\
             R2sup: {BET_ESW_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
-    ### SESAMI 2
-    ML_prediction = calculation_v2_runner(
-        MAIN_PATH, session["ID"]
-    )  # ML stands for machine learning.
+    print(f'the user_options entry for ML is {user_options["ML"]}')
+
+    if user_options['ML'] == 'No': # Exclude ML prediction
+        ML_prediction = None # Placeholder        
+    else:
+        ### SESAMI 2
+        ML_prediction = calculation_v2_runner(
+            MAIN_PATH, session["ID"]
+        )  # ML stands for machine learning.
+
+        if not isinstance(ML_prediction, str): # If it is a string, it is the error message about a bin being empty. If it isn't a string, the ML calculation ran.
+            ML_prediction = "%.1f" % float(ML_prediction) # One decimal precision
 
     calculation_results = {
-        "ML_prediction": "%.1f" % float(ML_prediction), # One decimal precision
+        "ML_prediction": ML_prediction, 
         "BET_analysis": BET_analysis,
         "BETESW_analysis": BETESW_analysis,
         "plot_number": session["plot_number"] - 1,

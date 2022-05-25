@@ -201,9 +201,13 @@
 
   <!-- This div contains general options. -->
   <div style='font-size:16px; padding-top: 30px; text-align:center;' class="container">
-    <button class='round_minibutton' id='general_opt_button'>Show general options (SESAMI 1.0)</button>
+    <button class='round_minibutton' id='general_opt_button'>Show general options</button>
 
     <div id='general_options'>
+
+      <div class='row'>
+        <div class='col-lg-4'> <h5>SESAMI 1.0</h5> </div>
+      </div>
 
       <!-- Adsorbate -->
       <div class='row' style='margin-top: 0.25cm;'>
@@ -246,6 +250,22 @@
         </div>
         <div class='col-lg-8'>
           <input type="text" id="r2min_input" style='font-size: 16px; width:100%' class='form-control' placeholder="0.998">
+        </div>
+      </div>
+
+      <div class='row' style='margin-top: 1.5cm;'>
+        <div class='col-lg-4'> <h5>SESAMI 2.0</h5> </div>
+      </div>
+
+      <!-- ML -->
+      <div class='row' style='margin-top: 0.25cm;'>
+        <div class='col-lg-4'>Include ML prediction?</div>
+        <div class='col-lg-8'>
+          <input id='ML_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="Yes" list='ML_list' onmousedown="value = '';" />
+          <datalist id='ML_list' style='font-size: 16px;'>
+            <option value="Yes">
+            <option value="No">
+          </datalist>
         </div>
       </div>
 
@@ -367,6 +387,7 @@
     $('#scope_dropdown').val('BET and BET+ESW')
     $('#r2cutoff_input').val('0.9995') 
     $('#r2min_input').val('0.998')
+    $('#ML_dropdown').val('Yes')
     $('#legend_dropdown').val('Yes')
     $('#fontsize_dropdown').val('10') 
     $('#fonttype_dropdown').val('sans-serif') 
@@ -383,7 +404,7 @@
     $('#plot_div').hide()
     $('#print_out').hide()
     $('#general_options').hide()    
-    $('#general_opt_button').text('Show general options (SESAMI 1.0)')    
+    $('#general_opt_button').text('Show general options')    
     $('#plotting_options').hide() 
     $('#plotting_opt_button').text('Show plotting options (SESAMI 1.0)') 
     $('#about_you_content').hide()
@@ -661,6 +682,8 @@
     R2min = $('#r2min_input').val()
     gas = $('#gas_dropdown').val()
     scope = $('#scope_dropdown').val()
+    ML_boolean = $('#ML_dropdown').val()
+    console.log('ML_boolean is ' + ML_boolean)
 
     // Ensuring the user put in numbers for R2 cutoff and R2min
     if (isNaN(R2cutoff) || isNaN(R2min)) {
@@ -672,7 +695,7 @@
       return;
     }
 
-    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas, 'scope': scope} // Plotting information
+    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas, 'scope': scope, 'ML': ML_boolean} // User options
 
     // Setting the options of plottype_dropdown based on the scope
     document.getElementById('plottype_list').innerHTML = option_generator(scope)
@@ -699,7 +722,6 @@
           return; // Does not continue if this failure occurs.
         }
 
-        ML_prediction = response['ML_prediction']
         BET_analysis = response['BET_analysis']
         PLOT_NUMBER = response['plot_number']
         $('#BET_readout').multiline(BET_analysis)
@@ -708,10 +730,29 @@
           $('#BETESW_readout_header').show()
           $('#BETESW_readout').multiline(BETESW_analysis)          
         } else {
+          // The user asked for no BET-ESW. So no BET-ESW is shown.
           $('#BETESW_readout_header').hide()
         }
 
-        $('#ML_prediction').multiline(ML_prediction + ' m2sup/g') // The multiline function from earlier formats things nicely.
+        if (ML_boolean == 'Yes') {
+          // The user requested a ML (SESAMI 2.0) prediction.
+
+          ML_prediction = response['ML_prediction']
+          if (ML_prediction.startsWith("Missing data in a pressure bin")) {
+            // This means the ML code could not be run.
+            $('#ML_prediction_header').hide()
+            console.log('Missing data in a pressure bin')
+            alert(ML_prediction)
+          }
+          else { 
+            // The ML code ran. Display the ML prediction.
+            $('#ML_prediction_header').show()
+            $('#ML_prediction').multiline(ML_prediction + ' m2sup/g') // The multiline function from earlier formats things nicely.  
+          }        
+        } else {
+          // The user asked for no ML. So no ML is shown.
+          $('#ML_prediction_header').hide()
+        }
 
         $('#plot_div').show()
         $('#print_out').show()
@@ -758,15 +799,15 @@
     document.body.removeChild(a); // Downloads the currently displayed figure.
   })
 
-  // Runs when the "Show general options (SESAMI 1.0)"/"Hide general options (SESAMI 1.0)" button is clicked.
+  // Runs when the "Show general options"/"Hide general options" button is clicked.
   $('#general_opt_button').click(function () {
 
-    if ($('#general_opt_button').text() == 'Show general options (SESAMI 1.0)') { // In this case, need to show the section.
+    if ($('#general_opt_button').text() == 'Show general options') { // In this case, need to show the section.
       $('#general_options').show()
-      $('#general_opt_button').text('Hide general options (SESAMI 1.0)')
+      $('#general_opt_button').text('Hide general options')
     } else { // In this case, need to hide the section.
       $('#general_options').hide()
-      $('#general_opt_button').text('Show general options (SESAMI 1.0)')      
+      $('#general_opt_button').text('Show general options')      
     }
     
   })
