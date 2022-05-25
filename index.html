@@ -380,9 +380,8 @@
   function clean_slate() {
     clean_slate_partial()
 
-    $('#about_you_container').hide() 
-
     // setting default values
+    $('#permission_checkbox').prop('checked', true)
     $('#gas_dropdown').val('Nitrogen') 
     $('#scope_dropdown').val('BET and BET+ESW')
     $('#r2cutoff_input').val('0.9995') 

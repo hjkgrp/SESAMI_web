@@ -387,7 +387,7 @@ def set_ID():
     session["ID"] = uuid.uuid4()  # a unique ID for this session
     session[
         "permission"
-    ] = False  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to False
+    ] = True  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to True
     session["plot_number"] = 0  # the number identifier for the SESAMI 1 figures
     # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures
     session["raw_plot_number"] = 0  # the number identifier for the raw data figures
