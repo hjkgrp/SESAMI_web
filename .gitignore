@@ -1,3 +1,4 @@
 /user_*
 /generated_plots/user*
 **/__pycache__/
+**/*.ipynb_checkpoints

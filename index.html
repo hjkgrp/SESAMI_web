@@ -166,6 +166,9 @@
     <div style='width:100%; text-align:center; margin-top:0.25cm;'>
       <p id='calculation_status'></p> <!-- Will indicate wheter a calculation is underway. -->
     </div>
+    <div style='width:100%; text-align:center; margin-top:0.25cm;'>
+      <p id='calculation_hint'>Did you receive an empty error message? Try reloading the webpage and trying the calculation again.</p>
+    </div>
     <div style='font-size:16px; margin-top:0.25cm;' id='upload_status'></div>
 
     <!-- This div has links for the user to download the example input files. -->
@@ -408,7 +411,7 @@
     $('#plotting_opt_button').text('Show plotting options (SESAMI 1.0)') 
     $('#about_you_content').hide()
     $('#raw_data_display').hide()
-
+    $('#calculation_hint').hide()
   }
 
   // This next function is used to parse a CSV to an array.
@@ -702,6 +705,7 @@
     document.getElementById('plottype_list').innerHTML = option_generator(scope)
 
     $('#calculation_status').text('Calculating...') // Gives the user peace of mind that their button click actually did something :)
+    $('#calculation_hint').show()
 
     $.post("/run_SESAMI", JSON.stringify(myDict)).done( // Runs the SESAMI 1 and SESAMI 2 code
       function (response) {
