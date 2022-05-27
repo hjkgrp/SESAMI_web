@@ -511,7 +511,7 @@
   }
   function isAIF(filename) {
     var ext = getExtension(filename);
-    return ext == 'aif';
+    return (ext == 'aif' || ext == 'aiff');
   }
 
   // Helper function that displays the isotherm data the user has selected in a semilogx plot.
