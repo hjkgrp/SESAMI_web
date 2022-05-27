@@ -282,9 +282,16 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
         isotherm_data_path=isotherm_data_path,
     )
 
+    # Identifying if any bins are empty (NaN values)
+    empty_bins = []
+    for i in range(n_bins):
+        if np.isnan(test_data.iloc[0][i+1]): # The +1 is to skip the first column, which is the name
+            empty_bins.append(str(i+1)) # In order to have 1 indexing, we use +1
+
     # Check if any values in the dataframe are Null
     if test_data.isnull().values.any(): # This would prevent lasso.predict from running correctly.
-        return f"Missing data in a pressure bin, so the ML prediction could not be generated. The bins are, in Pa, {pressure_bins}" # Quits, does not proceed with the rest of the function.
+        return f"Missing data in a pressure bin, so the ML prediction could not be generated. The bins are, in Pa, {pressure_bins}. This isotherm is missing data in bins {', '.join(empty_bins)}" 
+            # Quits, does not proceed with the rest of the function.
 
     test_data = test_data.dropna(subset=col_list)
 

@@ -157,6 +157,8 @@ def aif_to_txt(content):
 
         line = content[start_idx + 4 + counter]
 
+        if len(line.strip()) == 0: # termination by an empty line
+            break
         if line[0] == "_":  # termination by a new data item
             break
         if line[:5] == "loop_":  # termination by a new data loop
@@ -175,16 +177,24 @@ def aif_to_txt(content):
     units_loading = None
     for line in content:
         if "_units_loading" in line:
-            units_loading = line.split()  # split on spaces
+            print(f'line is {line}') # TODO remove later
+            line_modified = line.replace("'", "") # Removing all single quotation marks
+            print(f'line_modified is {line_modified}') # TODO remove later
+            units_loading = line_modified.split()  # split on spaces
+            print(f'split line is {units_loading}') # TODO remove later
             units_loading = units_loading[1]
             break
+
+    print(f'units_loading is {units_loading}') # TODO remove later
 
     if units_loading is None:  # This means there is a problem.
         return "Incorrectly formatted AIF file. Did not include units of loading. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
     supported_units_loading = [
         "mol/kg",
         "mmol/g",
+        "cm³/g"
     ]  # TODO expand on allowed units in the future
+    print(units_loading in supported_units_loading) # TODO remove later
     if units_loading not in supported_units_loading:  # This means there is a problem.
         return f"Invalid/unsupported loading units in AIF file. Supported units are {supported_units_loading}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
@@ -194,14 +204,13 @@ def aif_to_txt(content):
     ]  # Get the third element of each row (after splitting on spaces)
 
     # Convert adsorption_data to mol/kg
-    if units_loading == "mmol/g":
-        # Currently the next two lines don't really do anything, since the multiplier is one.
-        conversion_multiplier = 1
-        adsorption_data = [
-            datum * conversion_multiplier for datum in adsorption_data
-        ]  # Results in a list with entries of the correct units
-    elif units_loading == "mol/kg":
-        pass  # No action needed.
+    if units_loading == "mmol/g" or units_loading == "mol/kg":
+        conversion_multiplier = 1 # No action needed
+    elif units_loading == "cm³/g":
+        conversion_multiplier = 0.044615 # conversion factor mol/kg -> cm^3 STP/g is 22.4139. So here, use its reciprocal
+    adsorption_data = [
+        str(float(datum) * conversion_multiplier) for datum in adsorption_data
+    ]  # Results in a list with entries of the correct units
 
     # Next, find the units of pressure
     units_pressure = None
@@ -216,6 +225,7 @@ def aif_to_txt(content):
         "Pa",
         "pascal",
         "bar",
+        "torr"
     ]  # TODO expand on allowed units in the future
     if units_pressure not in supported_units_pressure:  # This means there is a problem.
         return f"Invalid/unsupported pressure units in AIF file. Supported units are {supported_units_pressure}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
@@ -232,12 +242,17 @@ def aif_to_txt(content):
 
     # Convert pressure units
     if units_pressure in ["Pa", "pascal"]:
-        pass  # No action needed
-    else:  # bar
-        conversion_multiplier = 100000
-        pressure_data = [
-            datum * conversion_multiplier for datum in pressure_data
-        ]  # Results in a list with entries of the correct units
+        conversion_multiplier = 1 # No action needed
+    elif units_pressure == "bar":
+        conversion_multiplier = 100000 # bar to Pascal
+    elif units_pressure == "torr":
+        conversion_multiplier = 133.322 # torr to Pascal
+    print(f'pressure_data is {pressure_data}') # TODO remove later
+    print(type(pressure_data[0])) #TODO remove later
+    pressure_data = [
+        str(float(datum) * conversion_multiplier) for datum in pressure_data
+    ]  # Results in a list with entries of the correct units
+    print(type(pressure_data[0])) #TODO remove later
 
     with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "w") as f:
         f.write("\t".join(["Pressure", "Loading"]) + "\n")  # The column titles
