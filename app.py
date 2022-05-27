@@ -177,15 +177,10 @@ def aif_to_txt(content):
     units_loading = None
     for line in content:
         if "_units_loading" in line:
-            print(f'line is {line}') # TODO remove later
             line_modified = line.replace("'", "") # Removing all single quotation marks
-            print(f'line_modified is {line_modified}') # TODO remove later
             units_loading = line_modified.split()  # split on spaces
-            print(f'split line is {units_loading}') # TODO remove later
             units_loading = units_loading[1]
             break
-
-    print(f'units_loading is {units_loading}') # TODO remove later
 
     if units_loading is None:  # This means there is a problem.
         return "Incorrectly formatted AIF file. Did not include units of loading. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
@@ -194,7 +189,6 @@ def aif_to_txt(content):
         "mmol/g",
         "cm³/g"
     ]  # TODO expand on allowed units in the future
-    print(units_loading in supported_units_loading) # TODO remove later
     if units_loading not in supported_units_loading:  # This means there is a problem.
         return f"Invalid/unsupported loading units in AIF file. Supported units are {supported_units_loading}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
@@ -247,12 +241,9 @@ def aif_to_txt(content):
         conversion_multiplier = 100000 # bar to Pascal
     elif units_pressure == "torr":
         conversion_multiplier = 133.322 # torr to Pascal
-    print(f'pressure_data is {pressure_data}') # TODO remove later
-    print(type(pressure_data[0])) #TODO remove later
     pressure_data = [
         str(float(datum) * conversion_multiplier) for datum in pressure_data
     ]  # Results in a list with entries of the correct units
-    print(type(pressure_data[0])) #TODO remove later
 
     with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "w") as f:
         f.write("\t".join(["Pressure", "Loading"]) + "\n")  # The column titles
