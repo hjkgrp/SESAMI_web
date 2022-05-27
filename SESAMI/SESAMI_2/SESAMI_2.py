@@ -123,6 +123,10 @@ class ML:
         df = pd.read_table(
             isotherm_data_path, skiprows=1, sep="\t", names=column_names
         )  # That text file gets made by the app.py python script.
+        df.loc[df.shape[0]] = [0.0,0.0] #Here, we are adding the point 0,0 to the dataframe in order to start the fitting at (0,0).
+
+        from IPython.display import display # TODO remove
+        display(df) # TODO remove
 
         for i, p_bin in enumerate(pressure_bins):
             try:
