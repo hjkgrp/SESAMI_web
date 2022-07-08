@@ -31,6 +31,10 @@ def calculation_runner(MAIN_PATH, user_options, USER_ID, plot_number):
     data = pd.read_table(
         f"{MAIN_PATH}user_{USER_ID}/input.txt", skiprows=1, sep="\t", names=column_names
     )
+    # Preventing issues with zero pressure in the first row
+    if data["Pressure"].iloc[0] == 0: # Zero pressure in the first row
+        data.loc[0, 'Pressure'] = data["Pressure"].iloc[1] / 2 # Set the first row's entry to something non-zero (half of the second row's Pressure)
+
     data = b.prepdata(data, p0=p0)
 
     # This command generates BET and BET-ESW information and figures.
