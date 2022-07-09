@@ -36,8 +36,8 @@ The BET + ESW areas are computed in the same way as the BET areas except that th
 The machine learning areas are computed using a Lasso linear regression model that takes as input the mean loading values of seven logarithmically divided pressure subregions. For more information, see [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518).
 
 # Preparing Input files
-AIF file: use http://raw2aif.herokuapp.com/ 
-- Details of AIF file can be found in [this](https://github.com/AIF-development-team/adsorptioninformationformat) repository.
+AIF file: use https://clownfish-app-lzoex.ondigitalocean.app/
+- Details of AIF file can be found in [this](https://github.com/AIF-development-team/adsorptioninformationformat) repository. The website https://adsorptioninformationformat.com/ will reflect changes as they occur.
 
 CSV file: see [example](/example_input/example_loading_data.csv)
 # Using the Software
