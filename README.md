@@ -1,13 +1,13 @@
 # Introduction
-Forget about using old excel spreadsheet from your co-workers! **On-the-fly**, this website performs the Brauner-Emmett-Teller (BET), Excess Sorption Work (ESW), BET-ESW, and Machine Learning (ML) methods for surface area
-estimation in nanoporous materials. The web interface allows user to upload either [Adsorption Information File (AIF)](https://pubs.acs.org/doi/10.1021/acs.langmuir.1c00122) or Comma Separated-Values (CSV) file. 
+Forget about using old excel spreadsheet from your co-workers! **On-the-fly**, the SESAMI (Script to Estimate the Surface Area of Materials from their Isotherms) website performs the Brunauer-Emmett-Teller (BET), Excess Sorption Work (ESW), BET-ESW, and Machine Learning (ML) methods for surface area
+estimation in nanoporous materials. This website allows user to upload either [Adsorption Information File (AIF)](https://pubs.acs.org/doi/10.1021/acs.langmuir.1c00122) or Comma Separated-Values (CSV) file. 
 
 This website is based on [MOFSimplify](https://github.com/hjkgrp/MOFSimplify) website developed by [Kulik Group](http://hjkgrp.mit.edu/) at MIT.
 
 For additional support, feedback, and inquiry, contact support(at)sesami-web.org
 
 # Sample Output
-You will be able to change font type, font size, dot-per-inch (dpi) etc on the website for your publication.
+You will be able to change font type, font size, dot-per-inch (dpi) etc on this website for your publication.
 
 ![example_input](/example_input/sesami-output.png)
 
