@@ -699,6 +699,14 @@
       return;
     }
 
+    // If the user used the font size drop down but never clicked anything, need to prevent this error of an empty field.
+    if (font_size == '') {
+      font_size = '10'  
+    } 
+    if (dpi == '') {
+      dpi = '300'
+    }
+
     myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas, 'scope': scope, 'ML': ML_boolean} // User options
 
     // Setting the options of plottype_dropdown based on the scope

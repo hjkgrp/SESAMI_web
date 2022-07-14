@@ -12,6 +12,8 @@ import scipy.stats as ss
 Created on Mon Apr  9 11:29:12 2018
 
 @author: architdatar
+
+Integrated for use with the SESAMI website by Gianmarco Terrones.
 """
 
 mpl.use("agg")
@@ -46,11 +48,13 @@ class BETAn:
 
         self.R2cutoff = plotting_information[
             "R2 cutoff"
-        ]  # 0.9995 #The way this works is if a region satisfies this criterion while satisfying other conditions,
+        ]  # Website default is 0.9995
+
+        # This is the minimum R2 value required for a region to be considered a line.
         self.R2min = plotting_information[
             "R2 min"
-        ]  # 0.998 #This is the minimum R2 value required for a region to be considered a line.
-        # self.method = "BET-ESW" #This is the method. Either BET or BET-ESW
+        ]  # Website default is 0.998 
+
         # Setting these variables to none allows users to set them externally later on.
         self.eswminimamanual = "No"
         self.eswminima = None
@@ -58,13 +62,29 @@ class BETAn:
         self.con1limit = None
 
     def prepdata(
-        self, data, loading_col="Loading", conv_to_molperkg=1, p0=1e5, full="Yes"
+        self, data, loading_col="Loading", conv_to_molperkg=1, p0=1e5, full=True
     ):
         """
-        This function prepares data for BET analysis. We create the columns P_rel, BETy, BET_y2 and slopes. Needs arguments data and weight of box to calculate the required columns.
-        In future, we will also adapt this for different units.
-        conv_to_molperkg: Specify the conversion to convert from the current units to mol/kg.
-        p0: saturation pressure. We assume that we want to plot from 0 to this pressure.
+        This function prepares data for BET analysis. We create the columns P_rel, BETy, BET_y2 and phi. Needs arguments data and weight of box to calculate the required columns.
+
+        Parameters 
+        ----------
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure" and "Loading".
+        loading_col : str
+            The name of the column in data that contains the loading data.
+        conv_to_molperkg : int
+            Specify the conversion to convert from the current units to mol/kg. For SESAMI 1.0 integrated with the SESAMI website, this is taken care of before betan.py.
+        p0 : float
+            Saturation pressure. We assume that we want to plot from 0 to this pressure.
+        full : bool
+            Indicates whether or not to calculate Consistency 1 maximum and ESW minimum. 
+
+        Returns
+        -------
+        data: pandas.core.frame.DataFrame
+            The augmented data representing an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+
         """
         # Next, we will prepare the data for analysis by assigning the appropriate column numbers and names.
         data = data.copy(deep=True)
@@ -81,9 +101,9 @@ class BETAn:
 
         # We will also add a line here that calculates the consistency 1 limit. This will ensure that the we need to compute the upper limit of consistency1 only once.
         if (
-            full == "Yes"
+            full
         ):  # In some applications, we dont want the ESW limits and stuff, we only want the values.
-            # In those cases, we can simply change this paramter to something else.
+            # In those cases, we can simply change this parameter to something else.
             if self.con1limitmanual == "No":
                 self.con1limit = self.getoptimum(
                     data, column="BET_y2", x="P_rel", how="Maxima", which=0, points=3
@@ -93,6 +113,7 @@ class BETAn:
                 self.eswminima = self.getoptimum(
                     data, column="phi", x="P_rel", how="Minima", which=0, points=3
                 )[0]
+
         return data
 
     def getoptimum(self, data, column=None, x=None, how="Minima", which=0, points=3):
@@ -104,6 +125,31 @@ class BETAn:
         before and after the chosen point and ensure that it is greater than the value at the chosen point (suggested by Li-Chiang).
 
         This code may not be very efficient since it involves a lot of regression, but it works for a small quantum of data.
+
+        Parameters 
+        ----------
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+        column : str
+            The name of the feature for which to get the optimum.            
+        x : str
+            The name of the dependent variable. Always "P_rel" for this script.
+        how : str
+            "Minima" or "Maxima", depending if it is desired to minimize or maximize the feature in `column`.
+        which : int
+            Which of the good minimas (good meaning that it is not just a minima due to noise) to choose from.
+        points : int
+            How many points before and after a point to use in computing slope. Also used in computing the mean of the points before and after a point.
+
+        Returns
+        -------
+        minima : numpy.int64
+            Index of minima of the feature represented by `column`.
+        targetvalue : numpy.float64
+            Minima of the feature represented by `column`.
+        data[["x", "target", "slopes"]] : pandas.core.frame.DataFrame
+            Contains information of interest for the independent and dependent variable, as well as the slopes at each data point for target vs x.
+
         """
         data = data.copy(deep=True)
         start = data.index.values[0]
@@ -170,21 +216,55 @@ class BETAn:
         else:
             minima = None
             targetvalue = None
-        return [minima, targetvalue, data[["x", "target", "slopes"]]]
+
+        return minima, targetvalue, data[["x", "target", "slopes"]]
 
     def th_loading(self, x, params):
         """
         Calculates the BET loading given relative pressures and BET parameters.
+        See equation 3 of Fagerlund, G. (1973). Determination of specific surface by the BET method.
+
+        Parameters 
+        ----------
+        x : numpy.ndarray
+            Array of p/p0 values. p is vapor pressure, and p0 is saturation vapor pressure.
+        params : tuple
+            The variables needed for the BET equations. Xm and C, from Fagerlund, G. (1973). Determination of specific surface by the BET method.        
+
+        Returns
+        -------
+        bet_loading: numpy.ndarray
+            The mass adsorbed at each relative vapor pressure in x.
+
         """
         [qm, C] = params
         bet_y = (C - 1) / (qm * C) * x + 1 / (qm * C)
-        return x / (bet_y * (1 - x))
+        bet_loading = x / (bet_y * (1 - x)) # See equation 3 of the original BET paper.
+        return bet_loading
 
     def gen_phi(self, load, p_rel, T=87.0):
         """
-        This function will generate a phi plot given the x points.
+        This function will generate phi values given the x points.
+
+        Parameters 
+        ----------
+        load : numpy.ndarray
+            The adsorption loadings of the isotherm data.
+        p_rel : numpy.ndarray
+            The relative pressures of the isotherm data.
+        T : float
+            The temperature.
+
+        Returns
+        -------
+        phi: numpy.ndarray
+            Excess sorption work.
+
         """
-        return load / 1000 * 8.314 * T * scipy.log(p_rel)
+        # See equation 1 of 10.1021/acs.jpcc.9b02116. The SESAMI 1 paper.
+        phi = load / 1000 * 8.314 * T * scipy.log(p_rel)
+
+        return phi
 
     def makeisothermplot(
         self,
@@ -200,8 +280,33 @@ class BETAn:
     ):
         """
         This function takes an axis as an input and makes an isotherm plot on it.
-        If xscale='log' and tryminorticks='Yes', the xscale will be from 0 to 1. The user has no control over it.
-        """
+
+        Parameters 
+        ----------
+        plotting_information : dict
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+        ax : matplotlib.axes._subplots.AxesSubplot
+            The axes on which to plot.
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+        yerr : float or array-like
+            The errorbar sizes.
+        maketitle : str
+            If set to "Yes", the plot will be titled; otherwise, not.        
+        tryminorticks : str
+            If xscale='log' and tryminorticks='Yes', the xscale will be from 0 to 1. The user has no control over it.
+        xscale : str
+            Either 'log' or 'linear'. Affects the x-axis. If xscale='log' and tryminorticks='Yes', the xscale will be from 0 to 1. The user has no control over it.
+        with_fit : str
+            If set to "Yes", the plot will include the BET fit, the BET-ESW fit, the BET region, and the BET-ESW region; otherwise, not.            
+        fit_data : list
+            Information for BET and BET-ESW. In particular (for BET and for BET-ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.
+
+        Returns
+        -------
+        None
+
+        """     
         scope = plotting_information['scope']
 
         ax.errorbar(
@@ -367,7 +472,25 @@ class BETAn:
         """
         This function takes an axis as an input and makes the plot to see the limits of the region
         to be chosen to satisfy the first consistency criteria.
-        """
+
+        Parameters 
+        ----------
+        plotting_information : dict
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+        ax3 : matplotlib.axes._subplots.AxesSubplot
+            The axes on which to plot.
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+        maketitle : str
+            If set to "Yes", the plot will be titled; otherwise, not.
+        tryminorticks : str
+            If tryminorticks='Yes', the xscale will be from 0 to 1. The user has no control over it.
+
+        Returns
+        -------
+        None
+
+        """       
         ax3.xaxis.label.set_text("$p/p_0$")
         ax3.yaxis.label.set_text("$q(1-p/p_{0})$" + " / " + "$%s$" % self.loadunits)
         ax3.set_xscale("log")
@@ -426,6 +549,29 @@ class BETAn:
         """
         This function takes an axis as an input to make a plot summarizing information about a
         chosen linear region.
+
+        Parameters 
+        ----------
+        plotting_information : dict
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+        ax2 : matplotlib.axes._subplots.AxesSubplot
+            The axes on which to plot.
+        p : numpy.int64
+            The index of the data point that is chosen as the start of the linear region.
+        q : numpy.int64
+            The index of the data point that is chosen as the end of the linear region.
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+        maketitle : str
+            If set to "Yes", the plot will be titled; otherwise, not.
+        mode : str
+            Either "BET" or "BET-ESW". This affects the title of the plot if one is made.
+
+        Returns
+        -------
+        my_dict: dict
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+
         """
         bbox_props = dict(boxstyle="square", ec="k", fc="w", lw=1.0)
 
@@ -453,7 +599,6 @@ class BETAn:
                 con3,
                 con4,
                 A_BET,
-                makefig2,
             ] = self.linregauto(p, q, data)
             [ftest, ttest, outlierdata, shaptest, r2, r2adj, results] = stats
             intercept, slope = results.params
@@ -506,16 +651,14 @@ class BETAn:
         This function computes the ESW area and ESW minima.
         Inputs:
             data: The dataframe containing columns 'Pressure'in Pa and 'Loading' in mol/kg framework.
-            eswpoints (optional): Helps calculate the slope at a point. The number of points around the point at which slope is to be
+            eswpoints (optional): int. Helps calculate the slope at a point. The number of points around the point at which slope is to be
             computed.
         Outputs:
             data['Loading']: Pandas Series object containng 'Loading' data in mol/kg framework
             data['phi']: Pandas series object containing 'phi' values in J/g
                 phi: qxNaxAcs where q: Loading in mol/kg=framework, Na: Avogradro number, Acs: Cross-sectional area of Ar atom.
-            minima: The 'Loading' value corresponding to a minima of 'phi' values.
-            eswarea: The surface area in m2/g corresponding to the 'Loading' at which 'phi' is minimum.
-            index: Index of the minima of phi in the dataframe.
-            infolist: List of additional information such as slopes of all points on the ESW plot and minimas.
+            minima: numpy.int64. The 'Loading' value corresponding to a minima of 'phi' values.
+            eswarea: numpy.float64. The surface area in m2/g corresponding to the 'Loading' at which 'phi' is minimum.
         """
         data = data.copy(deep=True)
 
@@ -557,6 +700,28 @@ class BETAn:
         Inputs:
             ax: Axes to be modified to make a figure upon
             data: The dataframe from which the graph is to be constructucted.
+
+        Parameters 
+        ----------
+        plotting_information : dict
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+        ax : matplotlib.axes._subplots.AxesSubplot
+            The axes on which to plot.
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+        eswpoints : int
+            Helps calculate the slope at a point. The number of points around the point at which slope is to be computed.
+        maketitle : str
+            If set to "Yes", the plot will be titled; otherwise, not.
+        with_fit : str
+            If set to "Yes", the plot will include the BET fit, the BET-ESW fit, the BET region, and the BET-ESW region; otherwise, not.             
+        fit_data : list
+            Information for BET and BET-ESW. In particular (for BET and for BET-ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.           
+
+        Returns
+        -------
+        None
+
         """
         [loading, phi, minima, eswarea, infolist] = self.eswdata(data, eswpoints)
 
@@ -658,7 +823,45 @@ class BETAn:
     def linregauto(self, p, q, data):
         """
         This function comptes all the statistical parameters associated with the fitting of a line. It also checks which consistency criteria that range satisfies and which ones it doesn't.
-        """
+
+        Parameters 
+        ----------
+        p : numpy.int64
+            The index of the data point that is chosen as the start of the linear region..
+        q : numpy.int64
+            The index of the data point that is chosen as the end of the linear region..
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+
+
+        Returns
+        -------
+        linear : pandas.core.frame.DataFrame
+            The initial data, but only the rows of the linear region.
+        stats : list
+            The results of various statistical tests.
+        C : float
+            See equation 6 of Fagerlund, G. (1973). Determination of specific surface by the BET method. Heat of adsorption in the first layer.
+        qm : float
+            See equation 5 of Fagerlund, G. (1973). Determination of specific surface by the BET method. Mass of adsorbate forming a monolayer on unit mass of adsorbent.
+        x_max : numpy.float64
+            The relative pressure at which BET_y2 is maximized. BET_y2 is defined in prepdata.
+        x_BET3 : numpy.float64
+            Value of relative pressure that corresponds to monolayer loading capacity.
+        x_BET4 : numpy.float64
+            Value used in the evaluation of the fourth Rouquerol consistency criterion.
+        con1 : str
+            "Yes" or "No", depending on whether the first consistency criterion is satisfied.
+        con2 : str
+            "Yes" or "No", depending on whether the second consistency criterion is satisfied.
+        con3 : str
+            "Yes" or "No", depending on whether the third consistency criterion is satisfied.
+        con4 : str
+            "Yes" or "No", depending on whether the fourth consistency criterion is satisfied.
+        A_BET : float
+            The predicted BET surface area.           
+
+        """        
         data = data.copy(deep=True)
         linear = data[p:q]
         results = smf.ols("BETy ~ P_rel", linear).fit()
@@ -725,7 +928,7 @@ class BETAn:
         upper_limit_x = data["P_rel"][data["Loading"] > qm].min()
 
         # Now i will do a linear interpolation to figure out x
-        m = (upper_limit_y - lower_limit_y) / (upper_limit_x - lower_limit_x)
+        m = (upper_limit_y - lower_limit_y) / (upper_limit_x - lower_limit_x) # slope
         x_BET3 = upper_limit_x - (upper_limit_y - qm) / m
         if linear["P_rel"].min() <= x_BET3 <= linear["P_rel"].max():
             con3 = "Yes"
@@ -739,14 +942,10 @@ class BETAn:
         else:
             con4 = "No"
 
+        # I think this is from equation 1 of Fagerlund, G. (1973). Determination of specific surface by the BET method.
         # Valid when units of loading is in mlSTP/g
         A_BET = qm * self.N_A * self.selected_gas_cs / 1000  # m2/g
 
-        # vol_loading = volume/weight_of_box #mlSTP/g
-        if np.isnan(slope):
-            makefig2 = "No"
-        else:
-            makefig2 = "Yes"
         return [
             linear,
             stats,
@@ -760,7 +959,6 @@ class BETAn:
             con3,
             con4,
             A_BET,
-            makefig2,
         ]
 
     def picklen(self, data, method="BET-ESW"):
@@ -775,14 +973,29 @@ class BETAn:
             1. No. of consistency criteria fulfilled (among the 3rd and 4th)
             2. Length of the region.
             3. R2 value (we will keep that as a lower limit)
-        """
+
+        Parameters 
+        ----------
+        data : pandas.core.frame.DataFrame
+            Contains the data of the isotherm being analyzed. Keys are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", "phi".
+        method : str
+            Either "BET" or "BET-ESW". Indicates whether the Excess Sorption Work method will be used in choosing the linear monolayer loading region or not.
+
+        Returns
+        -------
+        fp : numpy.int64
+            The index of the data point that is chosen as the start of the linear region.
+        fq : numpy.int64
+            The index of the data point that is chosen as the end of the linear region.
+
+        """  
         data_og = data.copy(deep=True)
         # We want to make sure that we always satisfy first consistency criterion, so we take the upper limit from the maxima funciton
         # we have defined.
         iddatamax = self.con1limit
         if iddatamax is None:
             iddatamax = data["BET_y2"].idxmax()
-        # Considering data points up to iddatamax+2 makes sense because that way, we can consider linear regions right uptil the point
+        # Considering data points up to iddatamax+2 makes sense because that way, we can consider linear regions right up until the point
         # where BET_y2 is max.
         data = data_og[: (iddatamax + 2)].copy(deep=True)
 
@@ -818,7 +1031,9 @@ class BETAn:
                     minima - 1
                 )  # So that the ESW minima is contained exactly within the chosen range.
 
-        (fp, fq) = (None, None)
+        (fp, fq) = (None, None) # These values are set to None to start with, but will likely be overwritten in the following for loop.
+
+        # Looping through all possibilities of consecutive data points. 
         for i in np.arange(end, endlowlimit, -1):
             for j in np.arange(start, i - minlength, 1):
                 p, q = j, i
@@ -847,7 +1062,6 @@ class BETAn:
                     con3,
                     con4,
                     A_BET,
-                    makefig2,
                 ] = self.linregauto(p, q, data)
                 [ftest, ttest, outlierdata, shaptest, r2, r2adj, results] = stats
                 # first, lets see if we can satisfy the first two consistency criteria, statistical significance and min R2 value of the line.
@@ -875,7 +1089,7 @@ class BETAn:
                         satisflag = 1
                         break
                     # These lines are to initiate the process of overwriting the data for the linear region.
-                    if curbest[2] == -1:
+                    if curbest[2] == -1: # Initially set to -1 near the beginning of this function.
                         curbest = [p, q, conscore, length, R2]
                     if conscore > curbest[2]:
                         curbest = [p, q, conscore, length, R2]
@@ -895,7 +1109,8 @@ class BETAn:
             if satisflag == 1:
                 break
         fp, fq, fconscore, flength, fR2 = curbest
-        return (fp, fq)
+
+        return fp, fq
 
     def saveimgsummary(
         self,
@@ -910,6 +1125,33 @@ class BETAn:
     ):
         """
         This function creates a summary of the BET process and stores it as a collection in the specified outlet directory.
+
+        Parameters 
+        ----------
+        plotting_information : dict
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+        bet_info : list
+            [rbet, bet_params]. The first entry contains the indices of the data points that start and end the chosen linear region (rbet). The second entry contains Xm (called qm here) and C.
+        betesw_info : list
+            [rbet, bet_params]. The first entry contains the indices of the data points that start and end the chosen linear region (rbet). The second entry contains Xm (called qm here) and C.
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+        plot_number : int
+            A number identifier for which round of plots this is, for the current website user. Prevents issues with plot downloads.
+        sumpath : str
+            Path at which the figures will be saved.
+        saveindividual : str
+            If "Yes", saves the plots from the multiplot individually as well.
+        eswminima : numpy.int64
+            The 'Loading' value corresponding to a minima of 'phi' values.
+
+        Returns
+        -------
+        BET_dict: dict
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+        BET_ESW_dict: dict
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used and ESW helps pick the linear region. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+
         """
         scope = plotting_information['scope']
 
@@ -1119,8 +1361,6 @@ class BETAn:
         plotting_information,
         MAIN_PATH,
         plot_number,
-        filepath=os.curdir,
-        filename="summary.txt",
         eswpoints=3,
         sumpath=os.path.join(os.curdir, "imgsummary"),
         saveindividual="Yes",
@@ -1129,8 +1369,34 @@ class BETAn:
         This function will call the required functions to compute BET, ESW and BET + ESW areas and write the output into the files.
         Format:
         Name BETLowerPressureLimit BETHigherPressureLimit BETArea Nm_BET C_BET Consistency 1 Consistency2 Consistency3 Consistency4 ESWq ESWpressure ESWSA BETESWLowerPressureLimit BETESWHigherPressureLimit BETESWArea Nm_BETESW C_BETESW Consistency 1 Consistency2 Consistency3 Consistency4
-        """
 
+        Parameters 
+        ----------
+        data : pandas.core.frame.DataFrame
+            Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
+        plotting_information : dict
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+        MAIN_PATH : str
+            The main directory of the SESAMI website code.
+        plot_number : int
+            A number identifier for which round of plots this is, for the current website user. Prevents issues with plot downloads.
+        eswpoints : int
+            Helps calculate the slope at a point. The number of points around the point at which slope is to be computed.
+        sumpath : str
+            Path at which the figures will be saved.
+        saveindividual : str
+            If "Yes", saves the plots from the multiplot individually as well.
+
+        Returns
+        -------
+        BET_dict: dict
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+            None is returned if the calculation fails.
+        BET_ESW_dict: dict
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used and ESW helps pick the linear region. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+            None is returned if the calculation fails.
+
+        """ 
         scope = plotting_information['scope']
 
         stylepath = os.path.join(MAIN_PATH, "SESAMI", "SESAMI_1", "mplstyle")
@@ -1140,7 +1406,7 @@ class BETAn:
         [loading, phi, eswminima, eswarea] = self.eswdata(data, eswpoints)[:4]
         # will get the linear region from using the BET criteria only.
 
-        (p, q) = self.picklen(data, method="BET")
+        p, q = self.picklen(data, method="BET")
         rbet = (p, q)
 
         if rbet == (None, None):
@@ -1165,7 +1431,6 @@ class BETAn:
                 con3,
                 con4,
                 A_BET,
-                makefig2,
             ] = self.linregauto(p, q, data)
             bet_params = (qm, C)
 
@@ -1176,7 +1441,7 @@ class BETAn:
                 rbetesw = (None, None)
                 return 'No eswminima', 'No eswminima' # The second returned value is a placeholder, since the SESAMI_1.py call expects two values.
             else:
-                (p, q) = self.picklen(data, method="BET-ESW")
+                p, q = self.picklen(data, method="BET-ESW")
                 rbetesw = (p, q)
 
             # Write BET+ESW
@@ -1202,7 +1467,6 @@ class BETAn:
                     con3,
                     con4,
                     A_BET,
-                    makefig2,
                 ] = self.linregauto(p, q, data)
                 betesw_params = (qm, C)
 
