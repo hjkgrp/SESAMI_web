@@ -516,7 +516,6 @@
 
   // Helper function that displays the isotherm data the user has selected in a semilogx plot.
   function show_data(){
-    console.log('showing data')
     $('#raw_data_display').show()
 
     $.get("/show_data").done(
@@ -539,8 +538,6 @@
 
     $.get("/copy_example").done( // Copy the example input's txt file into the user's folder.
       function (response) {
-        console.log('Example prepared.')
-
         show_data()
     })
 
@@ -648,11 +645,9 @@
 
   // Function for populating the plot dropdown based on whether BET+ESW plots are made or not.
   var option_generator = function(scope) {
-    console.log('Entered the option_generator')
     if (scope == 'BET and BET+ESW') {
       options_list = ["Multiplot", "Isotherm", "BET", "ESW", "BETLin", "BETESWLin"]  
     } else if(scope == 'BET') {
-      console.log('BET hit in option_generator')
       options_list = ["Multiplot", "Isotherm", "BET", "BETLin"]
     }
     else{
@@ -687,7 +682,6 @@
     gas = $('#gas_dropdown').val()
     scope = $('#scope_dropdown').val()
     ML_boolean = $('#ML_dropdown').val()
-    console.log('ML_boolean is ' + ML_boolean)
 
     // Ensuring the user put in numbers for R2 cutoff and R2min
     if (isNaN(R2cutoff) || isNaN(R2min)) {
@@ -754,7 +748,6 @@
           if (ML_prediction.startsWith("Missing data in a pressure bin")) {
             // This means the ML code could not be run.
             $('#ML_prediction_header').hide()
-            console.log('Missing data in a pressure bin')
             alert(ML_prediction)
           }
           else { 
@@ -769,7 +762,6 @@
 
         $('#plot_div').show()
         $('#print_out').show()
-        console.log('The plot number is ' + PLOT_NUMBER)
         FIGURE_PATH = 'generated_plots/multiplot_' + PLOT_NUMBER + '.png'
         $("#plot_display").attr("src",FIGURE_PATH); // Setting the source of the image element appropriately
         OUTPUT_NAME = 'multiplot.png'
@@ -900,7 +892,6 @@
 
   clean_slate()
 
-  console.log('Getting user ID')
   $.get("/new_user").done(
     function (response) {
       // Purpose of this is to make a user ID for the new browser that has accessed the site.

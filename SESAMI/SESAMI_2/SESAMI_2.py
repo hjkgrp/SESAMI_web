@@ -135,21 +135,19 @@ class ML:
                 data[
                     "c_%d" % i
                 ] = val  # We are computing the mean values and assigning them to the cell.
-                # This dataframe is just one row, corresponding to the material described by the isotherm uploaded to the GUI.
+                # This dataframe is just one row, corresponding to the material described by the isotherm uploaded to the web interface.
             except Exception:
                 print("Feature issue in pressure_bin_features")
 
         return data
 
-    def normalize_df(self, df, col_list, set_="Training", reset_norm_vals="No"):
+    def normalize_df(self, df, col_list):
         """
         This function seeks to normalize the feature columns in the dataframe by the maximum and minimum values of the data.
         One needs to be careful while applying this function, especially to the test set. It is important to ensure that we are using the same
         normalization values as the corresponding training set.
         df: The dataframe whose columns are to be normlized.
         col_list: The list of columns which need to be normalized.
-        set_ : The set (Training or Test) to which the data belongs.
-        reset_norm_vals: If this is set to "Yes", the normalization values will be reset even if they have already been set before.
         """
         df[col_list] = (df[col_list] - self.norm_vals[0, :]) / (
             self.norm_vals[1, :] - self.norm_vals[0, :]
@@ -170,7 +168,7 @@ class ML:
                 out_feature_list.append(el1 + "-" + el2)
         return out_feature_list
 
-    def combine_features(self, data, feature_list, degree=2, normalize="No"):
+    def combine_features(self, data, feature_list, degree=2):
         """
         This function combines the given features to the required degree.
         data: The dataframe containing the features.
@@ -211,31 +209,22 @@ class ML:
         pressure_bins,
         feature_list,
         col_list,
-        method="actual",
-        set_="Training",
-        reset_norm_vals="No",
         isotherm_data_path="isotherm_data",
     ):
         """
-            This function adds the necessary features for the machine learning model.
-            tr_data : The data for which we want to add the features.
-            pressure_bins: list of tuples giving the start and end points of the pressure ranges we want to use. The interval is half open with equality on
-                the greater than side.
+        This function adds the necessary features for the machine learning model.
+        tr_data : The data for which we want to add the features.
+        pressure_bins: list of tuples giving the start and end points of the pressure ranges we want to use. The interval is half open with equality on
+            the greater than side.
         feature_list: The list of features. Will look something like ['c_0', 'c_1', 'c_2', 'c_3', 'c_4', 'c_5', 'c_6']
         col_list: An expanded list of features that includes cross effect terms. Will look something like ['c_0', 'c_1', 'c_2', 'c_3', 'c_4', 'c_5', 'c_6', 'c_0-c_0', 'c_0-c_1', 'c_0-c_2', 'c_0-c_3', 'c_0-c_4', 'c_0-c_5', 'c_0-c_6', 'c_1-c_1', 'c_1-c_2', 'c_1-c_3', 'c_1-c_4', 'c_1-c_5', 'c_1-c_6', 'c_2-c_2', 'c_2-c_3', 'c_2-c_4', 'c_2-c_5', 'c_2-c_6', 'c_3-c_3', 'c_3-c_4', 'c_3-c_5', 'c_3-c_6', 'c_4-c_4', 'c_4-c_5', 'c_4-c_6', 'c_5-c_5', 'c_5-c_6', 'c_6-c_6']
-            method : The method we want to use for ML.
-            set_: The set (Training or Test) for which we want to add the features.
-            reset_norm_vals: If this is set to "Yes", the normalization values will be reset even if they have already been set before.
-            The variables set_ and reseet_norm_vals are only required for normalizing the feature set and details are provided in the
-            function "normalize_df".
         """
-        # if method=="actual": #This means we are using ML model to compute true monolayer areas.
         tr_data = self.pressure_bin_features(
             tr_data, pressure_bins, isotherm_data_path=isotherm_data_path
         )
         tr_data = self.combine_features(tr_data, feature_list)
         tr_data = self.normalize_df(
-            tr_data, col_list, set_=set_, reset_norm_vals=reset_norm_vals
+            tr_data, col_list
         )
 
         return tr_data
@@ -256,7 +245,7 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
 
     test_data = pd.DataFrame(
         {"name": ["user_input"]}
-    )  # This will hold the features of the new MOF/material that is input at the GUI.
+    )  # This will hold the features of the new MOF/material that is input at the web interface.
 
     # Actual pressure bins as features.
 
@@ -278,8 +267,6 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
         pressure_bins,
         feature_list,
         col_list,
-        method="actual",
-        set_="Test",
         isotherm_data_path=isotherm_data_path,
     )
 

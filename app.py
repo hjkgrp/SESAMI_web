@@ -339,8 +339,6 @@ def run_SESAMI():
             Length of region: {BET_ESW_dict["length"]}\n\
             R2sup: {BET_ESW_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
-    print(f'the user_options entry for ML is {user_options["ML"]}')
-
     if user_options['ML'] == 'No': # Exclude ML prediction
         ML_prediction = None # Placeholder        
     else:
@@ -388,8 +386,6 @@ def set_ID():
     :return: string, The session ID for this user.
     """
 
-    print("Successfully entered the function set_ID")
-
     session["ID"] = uuid.uuid4()  # a unique ID for this session
     session[
         "permission"
@@ -400,11 +396,9 @@ def set_ID():
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.
 
-    print("Just made directory")
-
     target_str = "user_"
 
-    # Delete all user folders that haven't been used for a while, to prevent folder accumulation.
+    # Delete all old user folders that haven't been used for a while, to prevent folder accumulation.
     for root, dirs, files in os.walk(MAIN_PATH):
         for dir in dirs:
             # Note: the way this is set up, don't name folders with the phrase "user_" in them if you want them to be permanent.
@@ -413,8 +407,6 @@ def set_ID():
             ):  # 7200s is two hours
                 # target_str in dir to find all folders with user_ in them
                 shutil.rmtree(dir)
-
-    print("Just deleted old directories")
 
     return str(session["ID"])
 
@@ -529,7 +521,6 @@ def process_info():
     final_dict["ip"] = request.remote_addr
     final_dict["timestamp"] = datetime.now().isoformat()
 
-    print(final_dict)
     # insert the dictionary into the mongodb collection
     collection.insert_one(final_dict)
     return ("", 204)  # 204 no content response
@@ -546,8 +537,7 @@ def change_permission():
     # Grab data
     permission = json.loads(flask.request.get_data())
     session["permission"] = permission
-    print("Permission check")
-    print(permission)
+
     return str(permission)
 
 

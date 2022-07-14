@@ -1406,7 +1406,7 @@ class BETAn:
         [loading, phi, eswminima, eswarea] = self.eswdata(data, eswpoints)[:4]
         # will get the linear region from using the BET criteria only.
 
-        p, q = self.picklen(data, method="BET")
+        p, q = self.picklen(data, method="BET") # Indices of the data points that start and end the chosen linear region.
         rbet = (p, q)
 
         if rbet == (None, None):
@@ -1441,7 +1441,7 @@ class BETAn:
                 rbetesw = (None, None)
                 return 'No eswminima', 'No eswminima' # The second returned value is a placeholder, since the SESAMI_1.py call expects two values.
             else:
-                p, q = self.picklen(data, method="BET-ESW")
+                p, q = self.picklen(data, method="BET-ESW") # Indices of the data points that start and end the chosen linear region.
                 rbetesw = (p, q)
 
             # Write BET+ESW
