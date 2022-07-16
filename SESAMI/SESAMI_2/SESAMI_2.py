@@ -97,8 +97,8 @@ class ML:
         """
         In pandas, we cannot initialize multiple columns together with a single value, although we can do that for a single column. So,
         this function helps us do that.
-        data : The dataframe for which we need inititalization.
-        col_list : The list of columns which we need intialized.
+        data : The dataframe for which we need initialization.
+        col_list : The list of columns which we need initialized.
         default_value : The default value we want in those columns.
         """
         for col in col_list:
@@ -146,7 +146,7 @@ class ML:
         This function seeks to normalize the feature columns in the dataframe by the maximum and minimum values of the data.
         One needs to be careful while applying this function, especially to the test set. It is important to ensure that we are using the same
         normalization values as the corresponding training set.
-        df: The dataframe whose columns are to be normlized.
+        df: The dataframe whose columns are to be normalized.
         col_list: The list of columns which need to be normalized.
         """
         df[col_list] = (df[col_list] - self.norm_vals[0, :]) / (

@@ -1,4 +1,4 @@
-<!-- Import libaries-->
+<!-- Import libraries-->
 <script src="libraries/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="libraries/ngl.js"></script>
 <script type="text/javascript" src="libraries/webGavrog/runtime.js"></script>
@@ -164,7 +164,7 @@
       </div>
     </div>
     <div style='width:100%; text-align:center; margin-top:0.25cm;'>
-      <p id='calculation_status'></p> <!-- Will indicate wheter a calculation is underway. -->
+      <p id='calculation_status'></p> <!-- Will indicate whether a calculation is underway. -->
     </div>
     <div style='width:100%; text-align:center; margin-top:0.25cm;'>
       <p id='calculation_hint'>Did you receive an empty error message? Try reloading the webpage and trying the calculation again.</p>
@@ -418,7 +418,7 @@
   // ref: http://stackoverflow.com/a/1293163/2343
   // This will parse a delimited string into an array of
   // arrays. The default delimiter is the comma, but this
-  // can be overriden in the second argument.
+  // can be overridden in the second argument.
   function CSVToArray( strData, strDelimiter ){
       // Check to see if the delimiter is defined. If not,
       // then default to comma.
@@ -457,7 +457,7 @@
 
           // Check to see if the given delimiter has a length
           // (is not the start of string) and if it matches
-          // field delimiter. If id does not, then we know
+          // field delimiter. If it does not, then we know
           // that this delimiter is a row delimiter.
           if (
               strMatchedDelimiter.length &&
@@ -610,7 +610,7 @@
 
         myDict = {'my_content': my_content}
 
-        $.post("/save_aif_txt", JSON.stringify(myDict)).done( // Saves the uploaded AIF as a AIF and TXT file in the user's folder.
+        $.post("/save_aif_txt", JSON.stringify(myDict)).done( // Saves the uploaded AIF as an AIF and TXT file in the user's folder.
           function (response) {
 
             // Check if the uploaded AIF is of the right format. If not, clear the file_input and upload_status elements.

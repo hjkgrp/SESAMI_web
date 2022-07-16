@@ -133,7 +133,7 @@ def aif_to_txt(content):
     content = content.splitlines()  # split into an array based on new line characters
 
     # Find the adsorption data, in order to convert to an isotherm data file.
-    start_idx = None  # Will instatiate in the loop below.
+    start_idx = None  # Will instantiate in the loop below.
     for idx, line in enumerate(content):
         if (
             line[:5] == "loop_"
