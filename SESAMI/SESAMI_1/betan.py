@@ -102,7 +102,7 @@ class BETAn:
         # We will also add a line here that calculates the consistency 1 limit. This will ensure that the we need to compute the upper limit of consistency1 only once.
         if (
             full
-        ):  # In some applications, we dont want the ESW limits and stuff, we only want the values.
+        ):  # In some applications, we don't want the ESW limits and stuff, we only want the values.
             # In those cases, we can simply change this parameter to something else.
             if self.con1limitmanual == "No":
                 self.con1limit = self.getoptimum(
@@ -650,13 +650,13 @@ class BETAn:
         """
         This function computes the ESW area and ESW minima.
         Inputs:
-            data: The dataframe containing columns 'Pressure'in Pa and 'Loading' in mol/kg framework.
+            data: The DataFrame containing columns 'Pressure' in Pa and 'Loading' in mol/kg framework.
             eswpoints (optional): int. Helps calculate the slope at a point. The number of points around the point at which slope is to be
             computed.
         Outputs:
-            data['Loading']: Pandas Series object containng 'Loading' data in mol/kg framework
+            data['Loading']: Pandas Series object containing 'Loading' data in mol/kg framework
             data['phi']: Pandas series object containing 'phi' values in J/g
-                phi: qxNaxAcs where q: Loading in mol/kg=framework, Na: Avogradro number, Acs: Cross-sectional area of Ar atom.
+                phi: qxNaxAcs where q: Loading in mol/kg=framework, Na: Avogadro number, Acs: Cross-sectional area of Ar atom.
             minima: numpy.int64. The 'Loading' value corresponding to a minima of 'phi' values.
             eswarea: numpy.float64. The surface area in m2/g corresponding to the 'Loading' at which 'phi' is minimum.
         """
@@ -699,7 +699,7 @@ class BETAn:
         This function modifies the axes parsed as input to make an ESW figure.
         Inputs:
             ax: Axes to be modified to make a figure upon
-            data: The dataframe from which the graph is to be constructucted.
+            data: The DataFrame from which the graph is to be constructed.
 
         Parameters 
         ----------
@@ -822,14 +822,14 @@ class BETAn:
     # include ANOVA, t-tests, shapiro wilk test, outliers, generate graphs of residuals.
     def linregauto(self, p, q, data):
         """
-        This function comptes all the statistical parameters associated with the fitting of a line. It also checks which consistency criteria that range satisfies and which ones it doesn't.
+        This function computes all the statistical parameters associated with the fitting of a line. It also checks which consistency criteria that range satisfies and which ones it doesn't.
 
         Parameters 
         ----------
         p : numpy.int64
-            The index of the data point that is chosen as the start of the linear region..
+            The index of the data point that is chosen as the start of the linear region.
         q : numpy.int64
-            The index of the data point that is chosen as the end of the linear region..
+            The index of the data point that is chosen as the end of the linear region.
         data : pandas.core.frame.DataFrame
             Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
 
@@ -863,7 +863,7 @@ class BETAn:
 
         """        
         data = data.copy(deep=True)
-        linear = data[p:q]
+        linear = data[p:q] # Grab the rows of the DataFrame that correspond to the data points in the chosen linear region
         results = smf.ols("BETy ~ P_rel", linear).fit()
         intercept, slope = results.params
 
@@ -877,7 +877,7 @@ class BETAn:
         influence = results.get_influence()
         # We are using externally studentized residuals.
         resid_stud = influence.get_resid_studentized_external()
-        # If any studentized resiudal is above 3, we will flag this as an outlier. Different softwares have
+        # If any studentized residual is above 3, we will flag this as an outlier. Different softwares have
         # different ways of flagging outliers, but we will use 3.0 (https://tinyurl.com/ycomecvg)
         prel = linear["P_rel"].values
         bety = linear["BETy"].values
@@ -903,7 +903,7 @@ class BETAn:
         if intercept == 0.0:
             intercept += 1e23
         C = slope / intercept + 1
-        qm = 1 / (slope + intercept)  # 1/(mol/kgframework)
+        qm = 1 / (slope + intercept)  # 1/(mol/kg framework)
         # To check for 1st consistency criterion
 
         ind_max = self.con1limit
@@ -942,8 +942,12 @@ class BETAn:
         else:
             con4 = "No"
 
-        # I think this is from equation 1 of Fagerlund, G. (1973). Determination of specific surface by the BET method.
-        # Valid when units of loading is in mlSTP/g
+        # This is related to equation 1 of Fagerlund, G. (1973). Determination of specific surface by the BET method.
+        # qm[=]mmol/g[=]mol/kg
+        # self.N_A[=]atoms/mol
+        # self.selected_gas_cs[=]m2/atom
+        # Factor of 1000 to convert from mmol to mol.
+        # A_BET[=]m2/g
         A_BET = qm * self.N_A * self.selected_gas_cs / 1000  # m2/g
 
         return [
@@ -969,7 +973,7 @@ class BETAn:
         THE RESULT OF THIS FUNCTION AS FINAL. HUMAN INTERFERENCE IS HIGHLY RECOMMENDED FOR THIS STEP.
         -------------------------------------------------------------------------------------------------------------------------------------
         We are trying to make this process objective. The way we will go about this is that we will start choosing linear regions from the largest
-        to the smallest. We will asign priority in the following order:
+        to the smallest. We will assign priority in the following order:
             1. No. of consistency criteria fulfilled (among the 3rd and 4th)
             2. Length of the region.
             3. R2 value (we will keep that as a lower limit)
@@ -990,7 +994,7 @@ class BETAn:
 
         """  
         data_og = data.copy(deep=True)
-        # We want to make sure that we always satisfy first consistency criterion, so we take the upper limit from the maxima funciton
+        # We want to make sure that we always satisfy first consistency criterion, so we take the upper limit from the maxima function
         # we have defined.
         iddatamax = self.con1limit
         if iddatamax is None:
@@ -1018,7 +1022,7 @@ class BETAn:
         satisflag = (
             0  # Will be set to 1 if a region satisfying all our demands is found.
         )
-        # We will incorportate the ESW conditon here.
+        # We will incorporate the ESW condition here.
         endlowlimit = start + minlength
         starthighlimit = end - minlength
         if method == "BET-ESW":
@@ -1064,9 +1068,9 @@ class BETAn:
                     A_BET,
                 ] = self.linregauto(p, q, data)
                 [ftest, ttest, outlierdata, shaptest, r2, r2adj, results] = stats
-                # first, lets see if we can satisfy the first two consistency criteria, statistical significance and min R2 value of the line.
+                # first, let's see if we can satisfy the first two consistency criteria, statistical significance and min R2 value of the line.
                 # As of 05/25/2018, we are doing away with all these wonderful statistical criteria to ensure consistency with the current practices in the field.
-                # So, we will replace 0.05 by 0.90 such that these consistency crieria essentially become absent.
+                # So, we will replace 0.05 by 0.90 such that these consistency criteria essentially become absent.
                 if (
                     con1 == "Yes"
                     and con2 == "Yes"
