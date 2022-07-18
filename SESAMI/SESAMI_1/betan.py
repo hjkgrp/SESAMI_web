@@ -340,7 +340,7 @@ class BETAn:
 
         ax.set_ylim((0, ax.get_ylim()[1]))
 
-        if scope == 'BET and BET+ESW': # In this case, run the BET+ESW code
+        if scope == 'BET and BET+ESW': # In this case, run the BET+ESW code and the BET code.
             if with_fit == "Yes":
                 [bet_info, betesw_info] = fit_data
                 [rbet, bet_params] = bet_info
@@ -378,7 +378,7 @@ class BETAn:
                     )
 
                 # Setting the y-axis limits to include more of the fit
-                # Only consider bet values that correspond to x values within our plotting range
+                # Only consider BET values that correspond to x values within our plotting range
                 bet_values = [
                     data["Loading"].values[i]
                     for i, value in enumerate(data["P_rel"].values)
@@ -415,7 +415,7 @@ class BETAn:
             if plotting_information["legend"] == "Yes":  # Add a legend in this case.
                 ax.legend(loc="upper left")
 
-        else: # only run the BET related code
+        else: # This indicates the scope is 'BET'. Only run the BET related code. No BET-ESW region nor BET-ESW fit nor ESW minimum vertical line.
             if with_fit == "Yes":
                 [bet_info, betesw_info] = fit_data
                 [rbet, bet_params] = bet_info
@@ -437,7 +437,7 @@ class BETAn:
                     )
 
                 # Setting the y-axis limits to include more of the fit
-                # Only consider bet values that correspond to x values within our plotting range
+                # Only consider BET values that correspond to x values within our plotting range
                 bet_values = [
                     data["Loading"].values[i]
                     for i, value in enumerate(data["P_rel"].values)
