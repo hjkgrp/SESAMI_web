@@ -1012,13 +1012,17 @@ class BETAn:
 
         start = data.index.values[0]
         end = data.index.values[-1]
-        curbest = [
-            None,
-            None,
-            -1,
-            1,
-            0.0,
-        ]  # This is just a variable to initialize the list so that it gets replaced.
+
+        # Current best linear region
+        # This is just a variable to initialize the list. It will likely get replaced.
+        curbest = [ 
+            None, # fp
+            None, # fq
+            -1, # fconscore
+            1, # flength
+            0.0, # fR2
+        ]  
+
         satisflag = (
             0  # Will be set to 1 if a region satisfying all our demands is found.
         )
@@ -1034,8 +1038,6 @@ class BETAn:
                 starthighlimit = (
                     minima - 1
                 )  # So that the ESW minima is contained exactly within the chosen range.
-
-        (fp, fq) = (None, None) # These values are set to None to start with, but will likely be overwritten in the following for loop.
 
         # Looping through all possibilities of consecutive data points. 
         for i in np.arange(end, endlowlimit, -1):
@@ -1091,11 +1093,12 @@ class BETAn:
                     if conscore == int(2) and length > minlength and R2 > R2cutoff:
                         curbest = [p, q, conscore, length, R2]
                         satisflag = 1
-                        break
+                        break # Select this region and look no further. See bottom left of Figure S2 of the SI of the SESAMI 1 paper: https://pubs.acs.org/doi/full/10.1021/acs.jpcc.9b02116
+
                     # These lines are to initiate the process of overwriting the data for the linear region.
                     if curbest[2] == -1: # Initially set to -1 near the beginning of this function.
                         curbest = [p, q, conscore, length, R2]
-                    if conscore > curbest[2]:
+                    if conscore > curbest[2]: # More consistency criteria are fulfilled than the previous best linear region
                         curbest = [p, q, conscore, length, R2]
                     """
                     #We have commented this section out because in some cases, where no region was
