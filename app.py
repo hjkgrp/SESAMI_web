@@ -312,7 +312,7 @@ def run_SESAMI():
 
     BET_analysis = f'C = {BET_dict["C"]}\n\
         qmsub = {BET_dict["qm"]} mol/kg\n\
-        BET surface area = {BET_dict["A_BET"]} m2sup/g\n\
+        BET area = {BET_dict["A_BET"]} m2sup/g\n\
         Consistency 1: Yes\n\
         Consistency 2: Yes\n\
         Consistency 3: {BET_dict["con3"]}\n\
@@ -331,7 +331,7 @@ def run_SESAMI():
 
         BETESW_analysis = f'C = {BET_ESW_dict["C"]}\n\
             qmsub = {BET_ESW_dict["qm"]} mol/kg\n\
-            BET surface area = {BET_ESW_dict["A_BET"]}m2sup/g\n\
+            BET area = {BET_ESW_dict["A_BET"]}m2sup/g\n\
             Consistency 1: Yes\n\
             Consistency 2: Yes\n\
             Consistency 3: {BET_ESW_dict["con3"]}\n\
