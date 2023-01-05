@@ -40,7 +40,7 @@ AIF file: use https://clownfish-app-lzoex.ondigitalocean.app/
 - Details of AIF file can be found in [this](https://github.com/AIF-development-team/adsorptioninformationformat) repository. The website https://adsorptioninformationformat.com/ will reflect changes as they occur.
 
 CSV file: see [example](/example_input/example_loading_data.csv)
-# Using the Software
+# Using the Software (Host Site on Your Computer)
 1. Use the following command in the terminal to run:
 `python app.py`
 2. Upload `AIF` or `CSV` formatted data.
@@ -58,4 +58,4 @@ J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
 - Prof. Yongchul G. Chung (project supervision, Mongo DB Atlas and Google Cloud integration)
 
 # Funding Acknowledgement
-- to do
+- Gianmarco Terrones was partially supported by an Alfred P. Sloan Foundation Scholarship (Grant Number G-2020-14067)
