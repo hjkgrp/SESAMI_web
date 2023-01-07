@@ -41,10 +41,11 @@ AIF file: use https://clownfish-app-lzoex.ondigitalocean.app/
 
 CSV file: see [example](/example_input/example_loading_data.csv)
 # Using the Software (Host Site on Your Computer)
-1. Use the following command in the terminal to run:
+1. Make and activate a Conda environment using [environment.yml](environment.yml). 
+2. Use the following command in the terminal to run:
 `python app.py`
-2. Upload `AIF` or `CSV` formatted data.
-3. Click `Run Calculation` and wait.
+3. Upload `AIF` or `CSV` formatted data.
+4. Click `Run Calculation` and wait a few seconds.
 
 # References
 - [Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116),
