@@ -1401,7 +1401,7 @@ class BETAn:
             None is returned if the calculation fails.
         BET_ESW_dict: dict
             Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used and ESW helps pick the linear region. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
-            None is returned if the calculation fails.
+            None is returned if the calculation fails, or if the BET+ESW calculation is not asked for in 'scope' in plotting_information.
 
         """ 
         scope = plotting_information['scope']

@@ -230,7 +230,7 @@ class ML:
         return tr_data
 
 
-# This function returns the ML prediction of the surface area for the new structure, uploaded to the website by the user.
+# This function returns the ML prediction of the surface area for the new structure, uploaded to the website by the user. Return value is a string.
 def calculation_v2_runner(MAIN_PATH, USER_ID):
     # The function takes the main path to the SESAMI web folder and the user's unique ID so that the correct isotherm (input.txt) is read and 
     # figures can be placed in the appropriate folder.
