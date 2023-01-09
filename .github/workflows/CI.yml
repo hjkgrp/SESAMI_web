@@ -72,6 +72,9 @@ jobs:
     #     pip install -e .
     #     pip install pytest-cov codecov
     #     conda list
+
+    - name: Add SESAMI folder to path
+      run: conda develop SESAMI
     
     - name: Run tests
       run: |
