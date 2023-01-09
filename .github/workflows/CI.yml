@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu-latest"]
-        python-version: ["3.7"]
+        python-version: ["3.8"]
 #         include:
 #           - os: ubuntu-latest
 #             python-version: 3.7
@@ -40,7 +40,7 @@ jobs:
       uses: conda-incubator/setup-miniconda@v2
       id: conda-setup
       with:
-        conda-build-version: "*"
+        mamba-version: "*"
         channels: conda-forge,defaults
         activate-environment: SESAMI_web_git
     # Get date for the cache key
@@ -64,17 +64,19 @@ jobs:
           env.CACHE_NUMBER }}
     # Install environment from yaml file if cache-hit == false
     - name: Update conda env
-      run: conda env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
+      run: mamba env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
       if: steps.cache.outputs.cache-hit != 'true'
+
+    - name: Debugging
+      run: |
+        pwd
+        ls
 
     # - name: Install package
     #   run: |
     #     pip install -e .
     #     pip install pytest-cov codecov
     #     conda list
-
-    - name: Add SESAMI folder to path
-      run: conda develop SESAMI
     
     - name: Run tests
       run: |
