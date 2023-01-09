@@ -42,7 +42,7 @@ jobs:
       with:
         mamba-version: "*"
         channels: conda-forge,defaults
-        activate-environment: SESAMI_web
+        activate-environment: SESAMI_web_git
     # Get date for the cache key
     - name: Get current time
       uses: josStorer/get-current-time@v2.0.2
@@ -56,7 +56,7 @@ jobs:
         CACHE_NUMBER: 0
       with:
         # TODO: Figure out how to avoid this hard coded path. For some reason $CONDA does not work.
-        path: /usr/share/miniconda/envs/SESAMI_web
+        path: /usr/share/miniconda/envs/SESAMI_web_git
         key:
           # Key contains current year and month to ensure it is updated once a month
           ${{ runner.os }}-${{ runner.arch }}-conda-${{ steps.current-time.outputs.year }}-${{
@@ -64,7 +64,7 @@ jobs:
           env.CACHE_NUMBER }}
     # Install environment from yaml file if cache-hit == false
     - name: Update conda env
-      run: mamba env update -n SESAMI_web -f environment.yml
+      run: mamba env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
       if: steps.cache.outputs.cache-hit != 'true'
 
     # - name: Install package
