@@ -67,10 +67,10 @@ jobs:
       run: mamba env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
       if: steps.cache.outputs.cache-hit != 'true'
 
-    - name: Debugging
-      run: |
-        pwd
-        ls
+    # - name: Debugging
+    #   run: |
+    #     pwd
+    #     ls
 
     # - name: Install package
     #   run: |
@@ -80,4 +80,4 @@ jobs:
     
     - name: Run tests
       run: |
-        pytest
+        python -m pytest
