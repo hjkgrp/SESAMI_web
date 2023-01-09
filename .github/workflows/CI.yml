@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  # GitHub has started calling new repo's first branch "main" https://github.com/github/renaming
+  # Existing codes likely still have "master" as the primary branch
+  # Both are tracked here to keep legacy and new codes working
+  push:
+    branches:
+      - "master"
+      - "main"
+  pull_request:
+    branches:
+      - "master"
+      - "main"
+
+jobs:
+  CI:
+    name: Test on ${{ matrix.os }}, Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-latest"]
+        python-version: ["3.7"]
+#         include:
+#           - os: ubuntu-latest
+#             python-version: 3.7
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Additional info about the build
+      run: |
+        uname -a
+        df -h
+        ulimit -a
+    # More info on the whole conda setup: https://github.com/conda-incubator/setup-miniconda
+    - name: Setup Conda
+      uses: conda-incubator/setup-miniconda@v2
+      id: conda-setup
+      with:
+        mamba-version: "*"
+        channels: conda-forge,defaults
+        activate-environment: SESAMI_web
+    # Get date for the cache key
+    - name: Get current time
+      uses: josStorer/get-current-time@v2.0.2
+      id: current-time
+    # Actual caching
+    - name: Cache conda env
+      uses: actions/cache@v3
+      id: cache
+      env:
+        # Increase this value to reset cache if mols.yml has not changed
+        CACHE_NUMBER: 0
+      with:
+        # TODO: Figure out how to avoid this hard coded path. For some reason $CONDA does not work.
+        path: /usr/share/miniconda/envs/SESAMI_web
+        key:
+          # Key contains current year and month to ensure it is updated once a month
+          ${{ runner.os }}-${{ runner.arch }}-conda-${{ steps.current-time.outputs.year }}-${{
+          steps.current-time.outputs.month }}-${{ hashFiles('devtools/conda-envs/mols.yml') }}-${{
+          env.CACHE_NUMBER }}
+    # Install environment from yaml file if cache-hit == false
+    - name: Update conda env
+      run: mamba env update -n SESAMI_web -f environment.yml
+      if: steps.cache.outputs.cache-hit != 'true'
+
+    # - name: Install package
+    #   run: |
+    #     pip install -e .
+    #     pip install pytest-cov codecov
+    #     conda list
+    
+    - name: Run tests
+      run: |
+        pytest
