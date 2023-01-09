@@ -40,7 +40,7 @@ jobs:
       uses: conda-incubator/setup-miniconda@v2
       id: conda-setup
       with:
-        mamba-version: "*"
+        conda-build-version: "*"
         channels: conda-forge,defaults
         activate-environment: SESAMI_web_git
     # Get date for the cache key
@@ -64,7 +64,7 @@ jobs:
           env.CACHE_NUMBER }}
     # Install environment from yaml file if cache-hit == false
     - name: Update conda env
-      run: mamba env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
+      run: conda env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
       if: steps.cache.outputs.cache-hit != 'true'
 
     # - name: Install package
