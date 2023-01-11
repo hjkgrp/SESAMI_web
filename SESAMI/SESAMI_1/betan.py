@@ -94,10 +94,10 @@ class BETAn:
         data["Loading"] = data[loading_col] * conv_to_molperkg
         # data['VolLoad'] = vol_loading
         data["BETy"] = data["P_rel"] / (data["Loading"] * (1 - data["P_rel"]))
-        data["BET_y2"] = data["Loading"] * (1 - data["P_rel"])
+        data["BET_y2"] = data["Loading"] * (1 - data["P_rel"]) # Used for first Rouquerol consistency criterion. See SESAMI 1 paper.
         data["phi"] = (
             data["Loading"] / 1000 * self.R * self.T * scipy.log(data["P_rel"])
-        )  # J/g
+        )  # J/g ; equation 1 of https://doi.org/10.1021/acs.jpcc.9b02116. Factor of 1000 to convert from 1/kg to 1/g
 
         # We will also add a line here that calculates the consistency 1 limit. This will ensure that the we need to compute the upper limit of consistency1 only once.
         if (
