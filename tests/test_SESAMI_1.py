@@ -69,10 +69,17 @@ def test_SESAMI_1(MAIN_PATH, user_options, session_ID, session_plot_num, benchma
     for key in BET_dict:
         if type(BET_dict[key]) == int or type(BET_dict[key]) == float: # Comparing numbers (e.g. for qm)
             assert math.isclose(BET_dict[key], benchmark_values[0][key])
-            assert math.isclose(BET_ESW_dict[key], benchmark_values[1][key])
         else: # Comparing strings (e.g. for con3)
             assert BET_dict[key] == benchmark_values[0][key]
-            assert BET_ESW_dict[key] == benchmark_values[1][key]
+
+    if benchmark_values[1] is None:
+        assert BET_ESW_dict is None
+    else:
+        for key in BET_ESW_dict:
+            if type(BET_ESW_dict[key]) == int or type(BET_ESW_dict[key]) == float: # Comparing numbers (e.g. for qm)
+                assert math.isclose(BET_ESW_dict[key], benchmark_values[1][key])
+            else: # Comparing strings (e.g. for con3)
+                assert BET_ESW_dict[key] == benchmark_values[1][key]        
 
     # assert BET_dict == benchmark_values[0]    
     # assert BET_ESW_dict == benchmark_values[1]
