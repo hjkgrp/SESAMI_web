@@ -683,7 +683,7 @@ class BETAn:
         else:
             eswarea = None
 
-        return [data["Loading"], data["phi"], minima, eswarea, []]
+        return [data["Loading"], data["phi"], minima, eswarea]
 
     def makeeswplot(
         self,
