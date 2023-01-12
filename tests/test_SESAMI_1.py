@@ -1,6 +1,7 @@
 import os
 import pytest
 import shutil
+import math
 import pandas as pd
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
 
@@ -13,6 +14,7 @@ R2_mins = ['0.998', '0.99', '0.99', '0.97', '0.998'] * 2
 gases = ['Argon'] * 5 + ['Nitrogen'] * 5
 scopes = (['BET and BET+ESW'] * 4 + ['BET'] * 1) * 2
 
+# List of length ten where each entry is a tuple of (BET dictionary, BET+ESW dictionary)
 benchmark_values_list = [({'C': 201.07820437891343, 'qm': 28.42284930790741, 'A_BET': 2430.9096636176737, 'con3': 'Yes', 'con4': 'Yes', 'length': 9, 'R2': 0.9996471530103053},
         {'C': 248.13040372760412, 'qm': 27.438654967829116, 'A_BET': 2346.7348679715333, 'con3': 'No', 'con4': 'Yes', 'length': 9, 'R2': 0.9984668760492631}),
     ({'C': 201.07820437891343, 'qm': 28.42284930790741, 'A_BET': 2430.9096636176737, 'con3': 'Yes', 'con4': 'Yes', 'length': 9, 'R2': 0.9996471530103053},
@@ -64,5 +66,9 @@ def test_SESAMI_1(MAIN_PATH, user_options, session_ID, session_plot_num, benchma
     #     f.write('BET_ESW_dict\n')
     #     f.write(str(BET_ESW_dict))
 
-    assert BET_dict == benchmark_values[0]    
-    assert BET_ESW_dict == benchmark_values[1]
+    for key in BET_dict:
+        assert math.isclose(BET_dict[key], benchmark_values[0][key])
+        assert math.isclose(BET_ESW_dict[key], benchmark_values[1][key])
+
+    # assert BET_dict == benchmark_values[0]    
+    # assert BET_ESW_dict == benchmark_values[1]
