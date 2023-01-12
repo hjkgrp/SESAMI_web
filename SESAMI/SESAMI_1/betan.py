@@ -664,7 +664,7 @@ class BETAn:
 
         data["phi"] = (
             data["Loading"] / 1000 * self.R * self.T * scipy.log(data["P_rel"])
-        )  # J/g
+        )  # J/g ; equation 1 of https://doi.org/10.1021/acs.jpcc.9b02116. Factor of 1000 to convert from 1/kg to 1/g
 
         # Now, we will use our function to get minima.
         if self.eswminima is None:
@@ -723,7 +723,7 @@ class BETAn:
         None
 
         """
-        [loading, phi, minima, eswarea, infolist] = self.eswdata(data, eswpoints)
+        [loading, phi, minima, eswarea] = self.eswdata(data, eswpoints)
 
         ax.plot(loading, phi, "o")
         ax.set_ylim(ax.get_ylim())
@@ -1410,7 +1410,7 @@ class BETAn:
         plt.style.use(stylepath)
 
         # We are calling the eswdata function once from this function to get the variable minima.
-        [loading, phi, eswminima, eswarea] = self.eswdata(data, eswpoints)[:4]
+        [loading, phi, eswminima, eswarea] = self.eswdata(data, eswpoints)
         # will get the linear region from using the BET criteria only.
 
         p, q = self.picklen(data, method="BET") # Indices of the data points that start and end the chosen linear region.
