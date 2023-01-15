@@ -657,7 +657,7 @@ class BETAn:
             data['Loading']: Pandas Series object containing 'Loading' data in mol/kg framework
             data['phi']: Pandas series object containing 'phi' values in J/g
                 phi: qxNaxAcs where q: Loading in mol/kg=framework, Na: Avogadro number, Acs: Cross-sectional area of Ar atom.
-            minima: numpy.int64. The 'Loading' value corresponding to a minima of 'phi' values.
+            minima: numpy.int64. The index of 'Loading' value corresponding to a minima of 'phi' values.
             eswarea: numpy.float64. The surface area in m2/g corresponding to the 'Loading' at which 'phi' is minimum.
         """
         data = data.copy(deep=True)
