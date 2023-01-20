@@ -347,8 +347,15 @@ def run_SESAMI():
             MAIN_PATH, session["ID"]
         )  # ML stands for machine learning.
 
-        if not isinstance(ML_prediction, str): # If it is a string, it is the error message about a bin being empty. If it isn't a string, the ML calculation ran.
-            ML_prediction = "%.1f" % float(ML_prediction) # One decimal precision
+        if is_number(ML_prediction): # If ML_prediction is not a number, it is the error message about a bin being empty. If it is a number, the ML calculation ran, and we want to run some code on the number.
+            ML_prediction = float(ML_prediction
+                ) # Casting to float.
+
+            # Multiply by 1.148 if Nitrogen gas used instead of Argon, to account for difference in cross-sectional areas.
+            if user_options['gas'] == 'Nitrogen':
+                ML_prediction *= 1.148
+
+            ML_prediction = "%.1f" % ML_prediction # One decimal precision. Casting back to string.
 
     calculation_results = {
         "ML_prediction": ML_prediction, 
@@ -359,6 +366,20 @@ def run_SESAMI():
 
     RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
     return calculation_results  # Sends back SESAMI 1 and 2 diagnostics to be displayed, as well as the plot number so the appropriate plots are displayed.
+
+
+def is_number(s):
+    """
+    is_number assesses whether the inputted string is a number; that it an be cast to a float.
+    It is used as a helper function in the run_SESAMI function.
+
+    :return: Boolean indicating whether the input string can be cast to a float.
+    """
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
 
 
 def file_age_in_seconds(pathname):
