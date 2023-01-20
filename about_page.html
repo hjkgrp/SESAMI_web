@@ -71,7 +71,7 @@
     The BET + ESW areas are computed in the same way as the BET areas except that the algorithm is forced to include the ESW minimum in the selected region. Thus, the chosen region must satisfy the consistency criteria 1, 2 and have an R2>0.998, and include the relative pressure corresponding to the ESW minimum point. The correct calculation of the BET + ESW areas depends on the correct identification of the ESW minimum. If the ESW minimum is wrongly identified, the BET + ESW area will also be wrong. Thus, we recommend that users ensure that the first minimum is correctly identified. <br><br>
 
     <h3>ML approach</h3>
-    The machine learning areas are computed using a Lasso linear regression model that takes as input the mean loading values of seven logarithmically divided pressure subregions. For more information, see <a href="https://pubs.acs.org/doi/full/10.1021/acs.jpclett.0c01518">Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method</a>. <br><br> 
+    The machine learning areas are computed using a Lasso linear regression model that takes as input the mean loading values of seven logarithmically divided pressure subregions. The model is trained on GCMC-calculated argon isotherms at 87 K. For more information, see <a href="https://pubs.acs.org/doi/full/10.1021/acs.jpclett.0c01518">Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method</a>. <br><br> 
 
     <h2>References</h2> 
       <ul>
