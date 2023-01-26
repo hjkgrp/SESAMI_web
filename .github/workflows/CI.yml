@@ -40,8 +40,8 @@ jobs:
       uses: conda-incubator/setup-miniconda@v2
       id: conda-setup
       with:
-        mamba-version: "*"
-        channels: conda-forge,defaults
+        miniforge-variant: Mambaforge
+        miniforge-version: latest
         activate-environment: SESAMI_web_git
     # Get date for the cache key
     - name: Get current time
