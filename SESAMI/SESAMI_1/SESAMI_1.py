@@ -12,7 +12,7 @@ def calculation_runner(MAIN_PATH, user_options, USER_ID, plot_number):
 
     minlinelength = 4 # Minimum number of points required for a group of points to be considered a line
 
-    p0 = 1e5  # Note that this is fixed 
+    p0 = 1e5  # Note that this is fixed. For both argon at 87 K and nitrogen at 77 K, the saturation pressure is 1e5 Pa.
     gas = user_options["gas"]
     if gas == 'Argon':
         temperature = 87 # K
