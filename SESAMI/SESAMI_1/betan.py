@@ -1132,6 +1132,7 @@ class BETAn:
     ):
         """
         This function creates a summary of the BET process and stores it as a collection in the specified outlet directory.
+        This function also generates plots.
 
         Parameters 
         ----------
@@ -1376,6 +1377,7 @@ class BETAn:
         This function will call the required functions to compute BET, ESW and BET + ESW areas and write the output into the files.
         Format:
         Name BETLowerPressureLimit BETHigherPressureLimit BETArea Nm_BET C_BET Consistency 1 Consistency2 Consistency3 Consistency4 ESWq ESWpressure ESWSA BETESWLowerPressureLimit BETESWHigherPressureLimit BETESWArea Nm_BETESW C_BETESW Consistency 1 Consistency2 Consistency3 Consistency4
+        This function calls saveimgsummary for plot generation.
 
         Parameters 
         ----------
