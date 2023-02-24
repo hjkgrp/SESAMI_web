@@ -1,5 +1,5 @@
 # Most of the code in this file is from SESAMI_2.0.ipynb, which was released with the paper at https://doi.org/10.1021/acs.jpclett.0c01518
-# The structure uploaded to the website is called the test_data in this script.
+# The isotherm uploaded to the website is called the test_data in this script.
 
 import numpy as np
 import pandas as pd
