@@ -570,7 +570,7 @@ class BETAn:
         Returns
         -------
         my_dict: dict
-            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET. The keys are "C", "qm", "A_BET", "con3", "con4", "length_linear_region", "R2_linear_region", "low_P_linear_region", and "high_P_linear_region".
 
         """
         bbox_props = dict(boxstyle="square", ec="k", fc="w", lw=1.0)
@@ -602,6 +602,9 @@ class BETAn:
             ] = self.linregauto(p, q, data)
             [ftest, ttest, outlierdata, shaptest, r2, r2adj, results] = stats
             intercept, slope = results.params
+
+            low_p = data.iloc[p]["Pressure"]
+            high_p = data.iloc[q]["Pressure"]
 
             ax2.xaxis.label.set_text("$p/p_0$")
             ax2.yaxis.label.set_text(r"$\frac{p/p_0}{q(1-p/p_0)}$" + " / " + "kg/mol")
@@ -641,8 +644,10 @@ class BETAn:
             "A_BET": A_BET,
             "con3": con3,
             "con4": con4,
-            "length": q - p,
-            "R2": results.rsquared,
+            "length_linear_region": q - p,
+            "R2_linear_region": results.rsquared,
+            "low_P_linear_region": low_p,
+            "high_P_linear_region": high_p
         }  # This will be BET_dict or BET_ESW_dict
         return my_dict
 
@@ -1156,9 +1161,9 @@ class BETAn:
         Returns
         -------
         BET_dict: dict
-            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used. The keys are "C", "qm", "A_BET", "con3", "con4", "length_linear_region", "R2_linear_region", "low_P_linear_region", and "high_P_linear_region".
         BET_ESW_dict: dict
-            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used and ESW helps pick the linear region. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used and ESW helps pick the linear region. The keys are "C", "qm", "A_BET", "con3", "con4", "length_linear_region", "R2_linear_region", "low_P_linear_region", and "high_P_linear_region".
 
         """
         scope = plotting_information['scope']
@@ -1399,10 +1404,10 @@ class BETAn:
         Returns
         -------
         BET_dict: dict
-            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used. The keys are "C", "qm", "A_BET", "con3", "con4", "length_linear_region", "R2_linear_region", "low_P_linear_region", and "high_P_linear_region".
             None is returned if the calculation fails.
         BET_ESW_dict: dict
-            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used and ESW helps pick the linear region. The keys are "C", "qm", "A_BET", "con3", "con4", "length", and "R2".
+            Contains SESAMI 1.0 intermediate calculation results, and the predicted area A_BET, when BET is used and ESW helps pick the linear region. The keys are "C", "qm", "A_BET", "con3", "con4", "length_linear_region", "R2_linear_region", "low_P_linear_region", and "high_P_linear_region".
             None is returned if the calculation fails, or if the BET+ESW calculation is not asked for in 'scope' in plotting_information.
 
         """ 

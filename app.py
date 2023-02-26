@@ -7,6 +7,7 @@ import time
 import stat
 import shutil
 import uuid
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from SESAMI.SESAMI_1.SESAMI_1 import calculation_runner
@@ -308,17 +309,19 @@ def run_SESAMI():
     BET_dict["C"] = "%.4g" % BET_dict["C"]
     BET_dict["qm"] = "%.2f" % BET_dict["qm"]
     BET_dict["A_BET"] = "%.1f" % BET_dict["A_BET"]
-    BET_dict["R2"] = "%.4f" % BET_dict["R2"]
+    BET_dict["R2_linear_region"] = "%.4f" % BET_dict["R2_linear_region"]
 
-    BET_analysis = f'C = {BET_dict["C"]}\n\
+    BET_analysis = f'BET area = {BET_dict["A_BET"]} m2sup/g\n\
+        C = {BET_dict["C"]}\n\
         qmsub = {BET_dict["qm"]} mol/kg\n\
-        BET area = {BET_dict["A_BET"]} m2sup/g\n\
-        Consistency 1: Yes\n\
-        Consistency 2: Yes\n\
-        Consistency 3: {BET_dict["con3"]}\n\
-        Consistency 4: {BET_dict["con4"]}\n\
-        Length of region: {BET_dict["length"]}\n\
-        R2sup: {BET_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
+        Consistency criteria 1 and 2: Yes\n\
+        Consistency criteria 3: {BET_dict["con3"]}\n\
+        Consistency criteria 4: {BET_dict["con4"]}\n\
+        Number of points in linear region: {BET_dict["length_linear_region"]}\n\
+        Lowest pressure of linear region: {int(np.rint(BET_dict["low_P_linear_region"]))} Pa\n\
+        Highest pressure of linear region: {int(np.rint(BET_dict["high_P_linear_region"]))} Pa\n\
+        R2sup of linear region: {BET_dict["R2_linear_region"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
+    # np.rint rounds to the nearest integer
 
     if user_options['scope'] == 'BET': # Exclude ESW analysis
         BETESW_analysis = None
@@ -327,17 +330,18 @@ def run_SESAMI():
         BET_ESW_dict["C"] = "%.4g" % BET_ESW_dict["C"]
         BET_ESW_dict["qm"] = "%.2f" % BET_ESW_dict["qm"]
         BET_ESW_dict["A_BET"] = "%.1f" % BET_ESW_dict["A_BET"]
-        BET_ESW_dict["R2"] = "%.4f" % BET_ESW_dict["R2"]
+        BET_ESW_dict["R2_linear_region"] = "%.4f" % BET_ESW_dict["R2_linear_region"]
 
-        BETESW_analysis = f'C = {BET_ESW_dict["C"]}\n\
+        BETESW_analysis = f'BET area = {BET_ESW_dict["A_BET"]} m2sup/g\n\
+            C = {BET_ESW_dict["C"]}\n\
             qmsub = {BET_ESW_dict["qm"]} mol/kg\n\
-            BET area = {BET_ESW_dict["A_BET"]} m2sup/g\n\
-            Consistency 1: Yes\n\
-            Consistency 2: Yes\n\
-            Consistency 3: {BET_ESW_dict["con3"]}\n\
-            Consistency 4: {BET_ESW_dict["con4"]}\n\
-            Length of region: {BET_ESW_dict["length"]}\n\
-            R2sup: {BET_ESW_dict["R2"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
+            Consistency criteria 1 and 2: Yes\n\
+            Consistency criteria 3: {BET_ESW_dict["con3"]}\n\
+            Consistency criteria 4: {BET_ESW_dict["con4"]}\n\
+            Number of points in linear region: {BET_ESW_dict["length_linear_region"]}\n\
+            Lowest pressure of linear region: {int(np.rint(BET_ESW_dict["low_P_linear_region"]))} Pa\n\
+            Highest pressure of linear region: {int(np.rint(BET_ESW_dict["high_P_linear_region"]))} Pa\n\
+            R2sup of linear region: {BET_ESW_dict["R2_linear_region"]}'  # If a linear region is selected, it satisfies criteria 1 and 2. See SI for https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116
 
     if user_options['ML'] == 'No': # Exclude ML prediction
         ML_prediction = None # Placeholder        

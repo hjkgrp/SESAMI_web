@@ -27,7 +27,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 100%;
   }
 
   #raw_data_figure { 
@@ -650,9 +650,9 @@
   // Function for populating the plot dropdown based on whether BET+ESW plots are made or not.
   var option_generator = function(scope) {
     if (scope == 'BET and BET+ESW') {
-      options_list = ["Multiplot", "Isotherm", "BET", "ESW", "BETLin", "BETESWLin"]  
+      options_list = ["Multiplot", "Isotherm", "BET", "ESW", "BET Linear Region", "BET-ESW Linear Region"]  
     } else if(scope == 'BET') {
-      options_list = ["Multiplot", "Isotherm", "BET", "BETLin"]
+      options_list = ["Multiplot", "Isotherm", "BET", "BET Linear Region"]
     }
     else{
       console.log("Error. Scope is " + scope)
@@ -767,7 +767,8 @@
         $('#plot_div').show()
         $('#print_out').show()
         FIGURE_PATH = 'generated_plots/multiplot_' + PLOT_NUMBER + '.png'
-        $("#plot_display").attr("src",FIGURE_PATH); // Setting the source of the image element appropriately
+        document.getElementById("plot_display").style.width = '100%' // Allow for larger figure for multiplot.
+        $("#plot_display").attr("src",FIGURE_PATH); // Setting the source of the image element appropriately.
         OUTPUT_NAME = 'multiplot.png'
 
         $('#calculation_status').text('')
@@ -846,10 +847,13 @@
 
   function switch_plot(plot_type) {
 
+    document.getElementById("plot_display").style.width = '50%' // For most cases, enforce a smaller figure.
+
     switch (plot_type){
       case 'Multiplot':
         FIGURE_PATH = 'generated_plots/multiplot_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'multiplot.png'
+        document.getElementById("plot_display").style.width = '100%' // Allow for larger figure for multiplot.
         break
       case 'Isotherm':
         FIGURE_PATH = 'generated_plots/isotherm_' + PLOT_NUMBER + '.png'
@@ -863,11 +867,11 @@
         FIGURE_PATH = 'generated_plots/ESWPlot_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'ESW.png'
         break
-      case 'BETLin':
+      case 'BET Linear Region':
         FIGURE_PATH = 'generated_plots/BETPlotLinear_' + PLOT_NUMBER +  '.png'
         OUTPUT_NAME = 'BET_linear.png'
         break
-      case 'BETESWLin':
+      case 'BET-ESW Linear Region':
         FIGURE_PATH = 'generated_plots/BETESWPlot_' + PLOT_NUMBER + '.png'
         OUTPUT_NAME = 'BET-ESW.png'
         break
