@@ -314,9 +314,9 @@ def run_SESAMI():
     BET_analysis = f'BET area = {BET_dict["A_BET"]} m2sup/g\n\
         C = {BET_dict["C"]}\n\
         qmsub = {BET_dict["qm"]} mol/kg\n\
-        Consistency criteria 1 and 2: Yes\n\
-        Consistency criteria 3: {BET_dict["con3"]}\n\
-        Consistency criteria 4: {BET_dict["con4"]}\n\
+        Rouquerol consistency criteria 1 and 2: Yes\n\
+        Rouquerol consistency criterion 3: {BET_dict["con3"]}\n\
+        Rouquerol consistency criterion 4: {BET_dict["con4"]}\n\
         Number of points in linear region: {BET_dict["length_linear_region"]}\n\
         Lowest pressure of linear region: {int(np.rint(BET_dict["low_P_linear_region"]))} Pa\n\
         Highest pressure of linear region: {int(np.rint(BET_dict["high_P_linear_region"]))} Pa\n\
@@ -335,9 +335,9 @@ def run_SESAMI():
         BETESW_analysis = f'BET area = {BET_ESW_dict["A_BET"]} m2sup/g\n\
             C = {BET_ESW_dict["C"]}\n\
             qmsub = {BET_ESW_dict["qm"]} mol/kg\n\
-            Consistency criteria 1 and 2: Yes\n\
-            Consistency criteria 3: {BET_ESW_dict["con3"]}\n\
-            Consistency criteria 4: {BET_ESW_dict["con4"]}\n\
+            Rouquerol consistency criteria 1 and 2: Yes\n\
+            Rouquerol consistency criterion 3: {BET_ESW_dict["con3"]}\n\
+            Rouquerol consistency criterion 4: {BET_ESW_dict["con4"]}\n\
             Number of points in linear region: {BET_ESW_dict["length_linear_region"]}\n\
             Lowest pressure of linear region: {int(np.rint(BET_ESW_dict["low_P_linear_region"]))} Pa\n\
             Highest pressure of linear region: {int(np.rint(BET_ESW_dict["high_P_linear_region"]))} Pa\n\

@@ -1047,7 +1047,7 @@ class BETAn:
         # Looping through all possibilities of consecutive data points. 
         for i in np.arange(end, endlowlimit, -1):
             for j in np.arange(start, i - minlength, 1):
-                p, q = j, i
+                p, q = j, i # p is the starting point (data index) of the current region. q is the ending point of the current region.
                 if p > starthighlimit:
                     """
                     This means that the starting point is higher than the starting point is allowed to be.
