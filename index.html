@@ -751,7 +751,7 @@
 
           ML_prediction = response['ML_prediction']
           if (ML_prediction.startsWith("Missing data in a pressure bin")) {
-            // This means the ML code could not be run.
+            // This means the ML code could not be run. See SESAMI_2.py.
             $('#ML_prediction_header').hide()
             alert(ML_prediction)
           }
