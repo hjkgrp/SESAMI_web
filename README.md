@@ -55,8 +55,8 @@ J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
 
 # Authors
 - Archit Datar (SESAMI python code development)
-- Gianmarco Terrones (SESAMI web interface development)
+- Gianmarco G. Terrones (SESAMI web interface development)
 - Yongchul G. Chung (project supervision, Mongo DB Atlas and Google Cloud integration)
 
 # Funding Acknowledgement
-- Gianmarco Terrones was partially supported by an Alfred P. Sloan Foundation Scholarship (Grant Number G-2020-14067)
+- Gianmarco G. Terrones was supported by the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and through the MIT Portugal Program. Algorithm and website development was supported by the Office of Naval Research under grant number N00014-20-1-2150. Gianmarco G. Terrones was partially supported by an Alfred P. Sloan Foundation Scholarship (Grant Number G-2020-14067). 
