@@ -298,9 +298,9 @@ class BETAn:
         xscale : str
             Either 'log' or 'linear'. Affects the x-axis. If xscale='log' and tryminorticks='Yes', the xscale will be from 0 to 1. The user has no control over it.
         with_fit : str
-            If set to "Yes", the plot will include the BET fit, the BET-ESW fit, the BET region, and the BET-ESW region; otherwise, not.            
+            If set to "Yes", the plot will include the BET fit, the BET+ESW fit, the BET region, and the BET+ESW region; otherwise, not.            
         fit_data : list
-            Information for BET and BET-ESW. In particular (for BET and for BET-ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.
+            Information for BET and BET+ESW. In particular (for BET and for BET+ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.
 
         Returns
         -------
@@ -368,13 +368,13 @@ class BETAn:
                         facecolor=plt.cm.Greens(70),
                         edgecolor="none",
                         alpha=0.6,
-                        label="BET-ESW region",
+                        label="BET+ESW region",
                     )
                     ax.plot(
                         data["P_rel"].values,
                         self.th_loading(data["P_rel"].values, betesw_params),
                         color=plt.cm.Greens(200),
-                        label="BET-ESW fit",
+                        label="BET+ESW fit",
                     )
 
                 # Setting the y-axis limits to include more of the fit
@@ -415,7 +415,7 @@ class BETAn:
             if plotting_information["legend"] == "Yes":  # Add a legend in this case.
                 ax.legend(loc="upper left")
 
-        else: # This indicates the scope is 'BET'. Only run the BET related code. No BET-ESW region nor BET-ESW fit nor ESW minimum vertical line.
+        else: # This indicates the scope is 'BET'. Only run the BET related code. No BET+ESW region nor BET+ESW fit nor ESW minimum vertical line.
             if with_fit == "Yes":
                 [bet_info, betesw_info] = fit_data
                 [rbet, bet_params] = bet_info
@@ -565,7 +565,7 @@ class BETAn:
         maketitle : str
             If set to "Yes", the plot will be titled; otherwise, not.
         mode : str
-            Either "BET" or "BET-ESW". This affects the title of the plot if one is made.
+            Either "BET" or "BET+ESW". This affects the title of the plot if one is made.
 
         Returns
         -------
@@ -611,8 +611,8 @@ class BETAn:
             if maketitle == "Yes":
                 if mode == "BET":
                     titletext = "BET Linear Region Plot"
-                elif mode == "BET-ESW":
-                    titletext = "BET-ESW Linear Region Plot"
+                elif mode == "BET+ESW":
+                    titletext = "BET+ESW Linear Region Plot"
                 ax2.set_title(titletext)
             ax2.errorbar(
                 linear["P_rel"], linear["BETy"], fmt="o", label="BET Data points"
@@ -719,9 +719,9 @@ class BETAn:
         maketitle : str
             If set to "Yes", the plot will be titled; otherwise, not.
         with_fit : str
-            If set to "Yes", the plot will include the BET fit, the BET-ESW fit, the BET region, and the BET-ESW region; otherwise, not.             
+            If set to "Yes", the plot will include the BET fit, the BET+ESW fit, the BET region, and the BET+ESW region; otherwise, not.             
         fit_data : list
-            Information for BET and BET-ESW. In particular (for BET and for BET-ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.           
+            Information for BET and BET+ESW. In particular (for BET and for BET+ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.           
 
         Returns
         -------
@@ -768,14 +768,14 @@ class BETAn:
                     facecolor=plt.cm.Greens(70),
                     edgecolor="none",
                     alpha=0.6,
-                    label="BET-ESW region",
+                    label="BET+ESW region",
                 )
                 load_betesw = self.th_loading(data["P_rel"].values, betesw_params)
                 ax.plot(
                     load_betesw,
                     self.gen_phi(load_betesw, data["P_rel"].values),
                     color=plt.cm.Greens(200),
-                    label="BET-ESW fit",
+                    label="BET+ESW fit",
                 )
 
             # Setting the y-axis limits to include more of the fit
@@ -970,7 +970,7 @@ class BETAn:
             A_BET,
         ]
 
-    def picklen(self, data, method="BET-ESW"):
+    def picklen(self, data, method="BET+ESW"):
         """
         The objective of this function is to choose a linear region.
         -------------------------------------------------------------------------------------------------------------------------------------
@@ -988,7 +988,7 @@ class BETAn:
         data : pandas.core.frame.DataFrame
             Contains the data of the isotherm being analyzed. Keys are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", "phi".
         method : str
-            Either "BET" or "BET-ESW". Indicates whether the Excess Sorption Work method will be used in choosing the linear monolayer loading region or not.
+            Either "BET" or "BET+ESW". Indicates whether the Excess Sorption Work method will be used in choosing the linear monolayer loading region or not.
 
         Returns
         -------
@@ -1034,7 +1034,7 @@ class BETAn:
         # We will incorporate the ESW condition here.
         endlowlimit = start + minlength
         starthighlimit = end - minlength
-        if method == "BET-ESW":
+        if method == "BET+ESW":
             # We are ensuring that the ESW consistency criterion is always satisfied.
             eswminima = self.eswminima
             minima = eswminima
@@ -1051,7 +1051,7 @@ class BETAn:
                 if p > starthighlimit:
                     """
                     This means that the starting point is higher than the starting point is allowed to be.
-                    In the case of BET-ESW, this means that the ESW condition will be violated.
+                    In the case of BET+ESW, this means that the ESW condition will be violated.
                     """
                     continue
                 if q - p > 10:
@@ -1277,7 +1277,7 @@ class BETAn:
                 ax5f.axis("off")
             else:
                 BET_ESW_dict = self.makelinregplot(
-                    plotting_information, ax5f, rbetesw[0], rbetesw[1], data, mode="BET-ESW"
+                    plotting_information, ax5f, rbetesw[0], rbetesw[1], data, mode="BET+ESW"
                 )
             blanksubplot.axis("off")
             figf.tight_layout()
@@ -1379,7 +1379,7 @@ class BETAn:
         saveindividual="Yes",
     ):
         """
-        This function will call the required functions to compute BET, ESW and BET + ESW areas and write the output into the files.
+        This function will call the required functions to compute BET, ESW and BET+ESW areas and write the output into the files.
         Format:
         Name BETLowerPressureLimit BETHigherPressureLimit BETArea Nm_BET C_BET Consistency 1 Consistency2 Consistency3 Consistency4 ESWq ESWpressure ESWSA BETESWLowerPressureLimit BETESWHigherPressureLimit BETESWArea Nm_BETESW C_BETESW Consistency 1 Consistency2 Consistency3 Consistency4
         This function calls saveimgsummary for plot generation.
@@ -1455,7 +1455,7 @@ class BETAn:
                 rbetesw = (None, None)
                 return 'No eswminima', 'No eswminima' # The second returned value is a placeholder, since the SESAMI_1.py call expects two values.
             else:
-                p, q = self.picklen(data, method="BET-ESW") # Indices of the data points that start and end the chosen linear region.
+                p, q = self.picklen(data, method="BET+ESW") # Indices of the data points that start and end the chosen linear region.
                 rbetesw = (p, q)
 
             # Write BET+ESW

@@ -93,7 +93,7 @@
   <!-- This div contains general information. -->
   <div style='font-size:18px;' class="container">
   <p>Tired of using an old excel spreadsheet from your co-workers?</p> 
-  <p><b>On-the-fly</b>, this website performs the <b>Brunauer-Emmett-Teller (BET)</b>, <b>Excess Sorption Work (ESW)</b>, <b>BET-ESW</b>, and <b>Machine Learning (ML)</b> analysis
+  <p><b>On-the-fly</b>, this website performs the <b>Brunauer-Emmett-Teller (BET)</b>, <b>Excess Sorption Work (ESW)</b>, <b>BET+ESW</b>, and <b>Machine Learning (ML)</b> analysis
   to accurately estimate the surface area in nanoporous materials. You can upload your data by using either the <b>Adsorption Information File (AIF)</b> or <b>Comma Separated-Values (CSV)</b> file format.</p>
   
     <p><b>Step 1: </b>Convert RAW output files from commercial equipment to AIF format using <a href="http://adsorptioninformationformat.com/raw2aif" target="_blank">this link.</a></p>
@@ -145,11 +145,11 @@
   <!-- This div contains the print out of calculations run on the website. -->
   <div style='font-size:16px; padding-top: 30px' id='print_out' class="container">
     <p style='font-size:16px; margin-top:0.25cm;'>Any linear region selected by SESAMI 1.0 will fulfill Rouquerol criteria 1 and 2.</p>
-    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BET_readout_header'>BET (SESAMI 1.0) results are:</p>
+    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BET_readout_header'>SESAMI 1.0 (BET) results are:</p>
     <p style='font-size:16px; margin-top:0.25cm;' id='BET_readout'></p>
-    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BETESW_readout_header'>BET-ESW (SESAMI 1.0) results are:</p>
+    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='BETESW_readout_header'>SESAMI 1.0 (BET+ESW) results are:</p>
     <p style='font-size:16px; margin-top:0.25cm;' id='BETESW_readout'></p>
-    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='ML_prediction_header'>ML (SESAMI 2.0) surface area prediction is:</p>
+    <p style='font-size:16px; margin-top:0.25cm; font-weight:Bold' id='ML_prediction_header'>SESAMI 2.0 (LASSO) surface area prediction is:</p>
     <p style='font-size:16px; margin-top:0.25cm;' id='ML_prediction'></p>
   </div>
 
@@ -651,7 +651,7 @@
   // Function for populating the plot dropdown based on whether BET+ESW plots are made or not.
   var option_generator = function(scope) {
     if (scope == 'BET and BET+ESW') {
-      options_list = ["Multiplot", "Isotherm", "BET", "ESW", "BET Linear Region", "BET-ESW Linear Region"]  
+      options_list = ["Multiplot", "Isotherm", "BET", "ESW", "BET Linear Region", "BET+ESW Linear Region"]  
     } else if(scope == 'BET') {
       options_list = ["Multiplot", "Isotherm", "BET", "BET Linear Region"]
     }
@@ -729,7 +729,7 @@
           return; // Does not continue if this failure occurs.
         }
         if (response == 'BET+ESW linear failure') {
-          alert("No suitable BET-ESW linear region has been found. Try lowering R2min, or change scope (general options) to BET.")
+          alert("No suitable BET+ESW linear region has been found. Try lowering R2min, or change scope (general options) to BET.")
           $('#calculation_status').text('')
           return; // Does not continue if this failure occurs.
         }
@@ -742,7 +742,7 @@
           $('#BETESW_readout_header').show()
           $('#BETESW_readout').multiline(BETESW_analysis)          
         } else {
-          // The user asked for no BET-ESW. So no BET-ESW is shown.
+          // The user asked for no BET+ESW. So no BET+ESW is shown.
           $('#BETESW_readout_header').hide()
         }
 
@@ -872,9 +872,9 @@
         FIGURE_PATH = 'generated_plots/BETPlotLinear_' + PLOT_NUMBER +  '.png'
         OUTPUT_NAME = 'BET_linear.png'
         break
-      case 'BET-ESW Linear Region':
+      case 'BET+ESW Linear Region':
         FIGURE_PATH = 'generated_plots/BETESWPlot_' + PLOT_NUMBER + '.png'
-        OUTPUT_NAME = 'BET-ESW.png'
+        OUTPUT_NAME = 'BET+ESW.png'
         break
     }
 
