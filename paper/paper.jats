@@ -18,57 +18,83 @@
 <article-id pub-id-type="publisher-id">0</article-id>
 <article-id pub-id-type="doi">N/A</article-id>
 <title-group>
-<article-title>Gala: A Python package for galactic
-dynamics</article-title>
+<article-title>SESAMI web: an accessible interface for surface area
+prediction from adsorption isotherms</article-title>
 </title-group>
 <contrib-group>
-<contrib contrib-type="author" equal-contrib="yes">
+<contrib contrib-type="author">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0001-5360-165X</contrib-id>
 <name>
-<surname>Price-Whelan</surname>
-<given-names>Adrian M.</given-names>
+<surname>Terrones</surname>
+<given-names>Gianmarco G.</given-names>
 </name>
 <xref ref-type="aff" rid="aff-1"/>
-<xref ref-type="aff" rid="aff-2"/>
 </contrib>
-<contrib contrib-type="author" equal-contrib="yes">
+<contrib contrib-type="author">
 <name>
-<surname>ORCID</surname>
-<given-names>Author Without</given-names>
+<surname>Chen</surname>
+<given-names>Yu</given-names>
 </name>
 <xref ref-type="aff" rid="aff-2"/>
 </contrib>
-<contrib contrib-type="author" corresp="yes">
+<contrib contrib-type="author">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-2821-9501</contrib-id>
 <name>
-<surname>with no affiliation</surname>
-<given-names>Author</given-names>
+<surname>Lin</surname>
+<given-names>Li-Chiang</given-names>
 </name>
 <xref ref-type="aff" rid="aff-3"/>
+</contrib>
+<contrib contrib-type="author">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0001-9342-0191</contrib-id>
+<name>
+<surname>Kulik</surname>
+<given-names>Heather J.</given-names>
+</name>
+<xref ref-type="aff" rid="aff-1"/>
+<xref ref-type="aff" rid="aff-4"/>
+</contrib>
+<contrib contrib-type="author" corresp="yes">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-7756-0589</contrib-id>
+<name>
+<surname>Chung</surname>
+<given-names>Yongchul G.</given-names>
+</name>
+<xref ref-type="aff" rid="aff-1"/>
 <xref ref-type="corresp" rid="cor-1"><sup>*</sup></xref>
 </contrib>
 <aff id="aff-1">
 <institution-wrap>
-<institution>Lyman Spitzer, Jr. Fellow, Princeton University,
-USA</institution>
+<institution>Department of Chemical Engineering, Massachusetts Institute
+of Technology, USA</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-2">
 <institution-wrap>
-<institution>Institution Name, Country</institution>
+<institution>School of Chemical and Biomolecular Engineering, Pusan
+National University, South Korea</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-3">
 <institution-wrap>
-<institution>Independent Researcher, Country</institution>
+<institution>William G. Lowrie Department of Chemical and Biomolecular
+Engineering, The Ohio State University, USA</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-4">
+<institution-wrap>
+<institution>Department of Chemistry, Massachusetts Institute of
+Technology, USA</institution>
 </institution-wrap>
 </aff>
 </contrib-group>
 <author-notes>
 <corresp id="cor-1">* E-mail: <email></email></corresp>
 </author-notes>
-<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2017-08-13">
-<day>13</day>
-<month>8</month>
-<year>2017</year>
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2023-03-17">
+<day>17</day>
+<month>3</month>
+<year>2023</year>
 </pub-date>
 <volume>¿VOL?</volume>
 <issue>¿ISSUE?</issue>
@@ -86,179 +112,723 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </license>
 </permissions>
 <kwd-group kwd-group-type="author">
-<kwd>Python</kwd>
-<kwd>astronomy</kwd>
-<kwd>dynamics</kwd>
-<kwd>galactic dynamics</kwd>
-<kwd>milky way</kwd>
+<kwd>SESAMI</kwd>
+<kwd>surface area</kwd>
+<kwd>isotherm</kwd>
+<kwd>BET</kwd>
+<kwd>BET+ESW</kwd>
+<kwd>machine learning</kwd>
 </kwd-group>
 </article-meta>
 </front>
 <body>
-<sec id="summary">
-  <title>Summary</title>
-  <p>The forces on stars, galaxies, and dark matter under external
-  gravitational fields lead to the dynamical evolution of structures in
-  the universe. The orbits of these bodies are therefore key to
-  understanding the formation, history, and future state of galaxies.
-  The field of “galactic dynamics,” which aims to model the gravitating
-  components of galaxies to study their structure and evolution, is now
-  well-established, commonly taught, and frequently used in astronomy.
-  Aside from toy problems and demonstrations, the majority of problems
-  require efficient numerical tools, many of which require the same base
-  code (e.g., for performing numerical orbit integration).</p>
-</sec>
 <sec id="statement-of-need">
   <title>Statement of need</title>
-  <p><monospace>Gala</monospace> is an Astropy-affiliated Python package
-  for galactic dynamics. Python enables wrapping low-level languages
-  (e.g., C) for speed without losing flexibility or ease-of-use in the
-  user-interface. The API for <monospace>Gala</monospace> was designed
-  to provide a class-based and user-friendly interface to fast (C or
-  Cython-optimized) implementations of common operations such as
-  gravitational potential and force evaluation, orbit integration,
-  dynamical transformations, and chaos indicators for nonlinear
-  dynamics. <monospace>Gala</monospace> also relies heavily on and
-  interfaces well with the implementations of physical units and
-  astronomical coordinate systems in the <monospace>Astropy</monospace>
-  package
-  (<xref alt="Astropy Collaboration, 2013" rid="ref-astropy" ref-type="bibr">Astropy
-  Collaboration, 2013</xref>) (<monospace>astropy.units</monospace> and
-  <monospace>astropy.coordinates</monospace>).</p>
-  <p><monospace>Gala</monospace> was designed to be used by both
-  astronomical researchers and by students in courses on gravitational
-  dynamics or astronomy. It has already been used in a number of
-  scientific publications
-  (<xref alt="Pearson et al., 2017" rid="ref-PearsonU003A2017" ref-type="bibr">Pearson
-  et al., 2017</xref>) and has also been used in graduate courses on
-  Galactic dynamics to, e.g., provide interactive visualizations of
-  textbook material
-  (<xref alt="Binney &amp; Tremaine, 2008" rid="ref-BinneyU003A2008" ref-type="bibr">Binney
-  &amp; Tremaine, 2008</xref>). The combination of speed, design, and
-  support for Astropy functionality in <monospace>Gala</monospace> will
-  enable exciting scientific explorations of forthcoming data releases
-  from the <italic>Gaia</italic> mission
-  (<xref alt="Gaia Collaboration, 2016" rid="ref-gaia" ref-type="bibr">Gaia
-  Collaboration, 2016</xref>) by students and experts alike.</p>
+  <p>Surface area determination is important for the evaluation of a
+  porous material’s viability in applications ranging from catalysis to
+  separations to gas storage. The most widely used approach for the
+  evaluation of a material’s specific surface area, i.e. surface area
+  per unit mass, is Brunauer-Emmett-Teller (BET) theory
+  (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
+  et al., 1938</xref>). Given the adsorption isotherm of a gas in an
+  adsorbent, one can use BET theory to determine the specific surface
+  area of the adsorbent upon identification of an appropriate linear
+  region in the isotherm. This procedure is sometimes automatically
+  performed by the software program that comes with the commercial
+  adsorption apparatus that measures the adsorption isotherm.
+  Unfortunately, the linear region selection is a large source of
+  variability in BET-calculated areas. In addition, for certain types of
+  isotherms, automatic selection of the linear region by the commercial
+  software sometimes fails. As a result, many researchers perform the
+  analyses manually on a spreadsheet, which can become time-consuming
+  and nearly impossible for some types of isotherms
+  (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
+  et al., 2022</xref>). These challenges have motivated the development
+  of programs for the automated determination of BET areas
+  (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
+  et al., 2020</xref>;
+  <xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
+  &amp; Llewellyn, 2019</xref>;
+  <xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
+  et al., 2022</xref>;
+  <xref alt="Sadeghi et al., 2020" rid="ref-beatmap" ref-type="bibr">Sadeghi
+  et al., 2020</xref>;
+  <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
+  et al., 2019</xref>). Furthermore, shortcomings of BET as a tool for
+  surface area calculation, such as its relatively poor performance in
+  treating high surface area materials with multimodal pore sizes
+  (<xref alt="Gómez-Gualdrón et al., 2016" rid="ref-gomez2016application" ref-type="bibr">Gómez-Gualdrón
+  et al., 2016</xref>;
+  <xref alt="Wang et al., 2015" rid="ref-wang2015ultrahigh" ref-type="bibr">Wang
+  et al., 2015</xref>), have led to the development of alternate methods
+  for surface area calculation from isotherms
+  (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
+  et al., 2020</xref>;
+  <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
+  et al., 2019</xref>).</p>
 </sec>
-<sec id="mathematics">
-  <title>Mathematics</title>
-  <p>Single dollars ($) are required for inline mathematics
-  e.g. <inline-formula><alternatives>
-  <tex-math><![CDATA[f(x) = e^{\pi/x}]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>f</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msup><mml:mi>e</mml:mi><mml:mrow><mml:mi>π</mml:mi><mml:mi>/</mml:mi><mml:mi>x</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula></p>
-  <p>Double dollars make self-standing equations:</p>
-  <p><disp-formula><tex-math><![CDATA[\Theta(x) = \left\{\begin{array}{l}
-  0\textrm{ if } x < 0\cr
-  1\textrm{ else}
-  \end{array}\right.]]></tex-math></disp-formula></p>
-  <p>You can also use plain LaTeXfor equations
-  <named-content id="eqU003Afourier" content-type="equation"><disp-formula><alternatives>
-  <tex-math><![CDATA[
-  \hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx]]></tex-math>
-  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mover><mml:mi>f</mml:mi><mml:mo accent="true">̂</mml:mo></mml:mover><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>ω</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msubsup><mml:mo>∫</mml:mo><mml:mrow><mml:mo>−</mml:mo><mml:mi>∞</mml:mi></mml:mrow><mml:mi>∞</mml:mi></mml:msubsup><mml:mi>f</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msup><mml:mi>e</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>ω</mml:mi><mml:mi>x</mml:mi></mml:mrow></mml:msup><mml:mi>d</mml:mi><mml:mi>x</mml:mi></mml:mrow></mml:math></alternatives></disp-formula></named-content>
-  and refer to
-  <xref alt="Equation 1" rid="eqU003Afourier">Equation 1</xref> from
-  text.</p>
+<sec id="summary">
+  <title>Summary</title>
+  <p>In contrast to previously developed programs which require use of
+  the command line
+  (<xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
+  &amp; Llewellyn, 2019</xref>;
+  <xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
+  et al., 2022</xref>) and familiarity with Python
+  (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
+  et al., 2020</xref>;
+  <xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
+  &amp; Llewellyn, 2019</xref>;
+  <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
+  et al., 2019</xref>), the SESAMI web interface allows a user to
+  generate surface area predictions on their web browser by uploading
+  isotherm data. The website facilitates access to the previously
+  developed SESAMI models (SESAMI 1 and 2) for porous material surface
+  area prediction
+  (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
+  et al., 2020</xref>;
+  <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
+  et al., 2019</xref>) and has been tested by experimental groups. The
+  motivation for this interface is to lower the barrier of entry for
+  research groups seeking to use SESAMI code, which was previously
+  packaged in Python and Jupyter Notebook scripts.</p>
+  <p>SESAMI 1 applies computational routines to identify suitable linear
+  regions of adsorption isotherms for Brunauer-Emmett-Teller surface
+  area prediction
+  (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
+  1973</xref>). The automated workflow includes consideration of
+  Rouquerol criteria
+  (<xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
+  Rouquerol et al., 2007</xref>;
+  <xref alt="Jean Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">Jean
+  Rouquerol et al., 2013</xref>) and the use of coefficients of
+  determination as a measure of linearity. Furthermore, SESAMI 1
+  supports a combined BET+ESW (excess sorption work) approach for linear
+  region selection; this combined approach has been shown to outperform
+  the BET approach in some cases
+  (<xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
+  et al., 2019</xref>). A user can specify a cutoff R<sup>2</sup> and a
+  minimum R<sup>2</sup>, such that a candidate linear region is favored
+  to be selected if it has an R<sup>2</sup> above the cutoff, and a
+  candidate linear region is only considered if it has an R<sup>2</sup>
+  above the minimum. On the other hand, SESAMI 2 applies a machine
+  learning (specifically, regularized linear regression with LASSO)
+  model for the accurate surface area prediction of high surface area
+  materials, improving on BET performance for these materials
+  (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
+  et al., 2020</xref>). The LASSO model uses as input the average
+  loading in seven isotherm pressure regions as well as pairwise
+  products of these loadings. The SESAMI routines support isotherms with
+  N<sub>2</sub> and argon adsorbate at 77 K or 87 K, respectively.</p>
+  <p>The SESAMI web interface has extensive error handling and clearly
+  alerts users of issues with their adsorption isotherm data. For
+  example, it alerts the user if no ESW minima is found by SESAMI 1 or
+  if the data is incompatible with SESAMI 2 code due to data sparsity in
+  certain pressure regions. As shown in
+  <xref alt="[fig:interface]" rid="figU003Ainterface">[fig:interface]</xref>,
+  the interface displays SESAMI 1 calculation results including
+  information on the chosen linear region, namely the satisfied
+  Rouquerol criteria
+  (<xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
+  Rouquerol et al., 2007</xref>;
+  <xref alt="Jean Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">Jean
+  Rouquerol et al., 2013</xref>), the pressure range and number of data
+  points in the region, and the coefficient of determination. The
+  interface also displays intermediate SESAMI 1 values for surface area
+  calculation, namely the BET constant, C, and the monolayer adsorption
+  loading, q<sub>m</sub>. Furthermore, the SESAMI web interface allows
+  the user to download figures generated by SESAMI 1 that indicate,
+  among other things, the chosen linear monolayer loading regions by the
+  BET and BET+ESW approaches as well as the excess sorption work plot
+  (<xref alt="[fig:interface]" rid="figU003Ainterface">[fig:interface]</xref>).
+  The user can convert output from commercial equipment to AIF format
+  and upload the converted data to the interface for analysis. The
+  SESAMI web interface is publicly available at
+  <ext-link ext-link-type="uri" xlink:href="https://sesami-web.org/">https://sesami-web.org/</ext-link>,
+  and source code is available at
+  <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
+  <fig>
+    <caption><p>Information displayed by the SESAMI web interface after
+    a calculation has been run. a) Interface printout of information on
+    the SESAMI 1 chosen linear regions, and SESAMI 1 and 2 calculation
+    results. b) Figure download functionality for figures detailing
+    SESAMI 1
+    calculation.<styled-content id="figU003Ainterface"></styled-content></p></caption>
+    <graphic mimetype="image" mime-subtype="tiff" xlink:href="media/figures/web_interface.tif" />
+  </fig>
 </sec>
-<sec id="citations">
-  <title>Citations</title>
-  <p>Citations to entries in paper.bib should be in
-  <ext-link ext-link-type="uri" xlink:href="http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">rMarkdown</ext-link>
-  format.</p>
-  <p>If you want to cite a software repository URL (e.g. something on
-  GitHub without a preferred citation) then you can do it with the
-  example BibTeX entry below for Smith et al.
-  (<xref alt="2020" rid="ref-fidgit" ref-type="bibr">2020</xref>).</p>
-  <p>For a quick reference, the following citation commands can be used:
-  - <monospace>@author:2001</monospace> -&gt; “Author et al. (2001)” -
-  <monospace>[@author:2001]</monospace> -&gt; “(Author et al., 2001)” -
-  <monospace>[@author1:2001; @author2:2001]</monospace> -&gt; “(Author1
-  et al., 2001; Author2 et al., 2002)”</p>
-</sec>
-<sec id="figures">
-  <title>Figures</title>
-  <p>Figures can be included like this:
-  <named-content content-type="image">Caption for example
-  figure.<styled-content id="figU003Aexample"></styled-content></named-content>
-  and referenced from text using
-  <xref alt="[fig:example]" rid="figU003Aexample">[fig:example]</xref>.</p>
-  <p>Figure sizes can be customized by adding an optional second
-  parameter: <named-content content-type="image">Caption for example
-  figure.</named-content></p>
+<sec id="benchmarking">
+  <title>Benchmarking</title>
+  <p>To assess the performance of SESAMI code in predicting surface
+  areas from isotherms, we benchmarked the SESAMI routines against other
+  similar programs for 13 simulated and 9 experimental N<sub>2</sub>
+  isotherms obtained at 77 K for 14 metal-organic frameworks, some of
+  which are shown in
+  <xref alt="[fig:isotherms]" rid="figU003Aisotherms">[fig:isotherms]</xref>.
+  Simulated isotherms were obtained from Grand Canonical Monte Carlo
+  (GCMC) simulations using RASPA open-source software
+  (<xref alt="Dubbeldam et al., 2016" rid="ref-dubbeldam2016raspa" ref-type="bibr">Dubbeldam
+  et al., 2016</xref>), and experimental adsorption isotherms were
+  obtained from the experimental data reported by Islamogu and coworkers
+  (<xref alt="Islamoglu et al., 2022" rid="ref-islamoglu2022you" ref-type="bibr">Islamoglu
+  et al., 2022</xref>). The data were then used to calculate the surface
+  areas from the SESAMI website, BETSI
+  (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
+  et al., 2022</xref>;
+  <xref alt="Rampersad et al., 2020" rid="ref-betsi_github" ref-type="bibr">Rampersad
+  et al., 2020</xref>), pyGAPS
+  (<xref alt="Iacomi, 2019" rid="ref-pygaps_docs" ref-type="bibr">Iacomi,
+  2019</xref>;
+  <xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
+  &amp; Llewellyn, 2019</xref>), and BEaTmap
+  (<xref alt="Sadeghi et al., 2020" rid="ref-beatmap" ref-type="bibr">Sadeghi
+  et al., 2020</xref>).</p>
+  <fig>
+    <caption><p>The crystal structures and isotherms of 3 of the 14
+    metal-organic frameworks used to benchmark different isotherm to
+    surface area
+    codes.<styled-content id="figU003Aisotherms"></styled-content></p></caption>
+    <graphic mimetype="image" mime-subtype="tiff" xlink:href="media/figures/crystal_structs_and_isotherms.tif" />
+  </fig>
+  <p>We find that over the set of 13 GCMC isotherms, the SESAMI machine
+  learning model and BEaTmap have the best correlation with Zeo++
+  surface areas
+  (<xref alt="Willems et al., 2012" rid="ref-willems2012algorithms" ref-type="bibr">Willems
+  et al., 2012</xref>) calculated with a 1.67 Å probe N<sub>2</sub>
+  molecule (Tables <xref alt="1" rid="corr_table">1</xref> and
+  <xref alt="2" rid="area_table">2</xref>). Nevertheless, all software
+  are in generally good agreement, underscoring the benefit of a
+  computational approach to surface area calculation. The agreement
+  between software is also not surprising due to the similar approach
+  taken by most of the codes of considering multiple subsets of
+  consecutive data points and applying checks like the Rouquerol
+  criteria to select a linear region for BET analysis. The benchmark
+  isotherms, CSV files of surface area predictions across different
+  software tools for both GCMC and experimental isotherms, details about
+  settings used for each software, and employed analysis scripts are
+  available at
+  <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
+  <table-wrap>
+    <caption>
+      <p>Comparison between surface area predictions from Zeo++ with a
+      1.67 Å probe N<sub>2</sub> molecule, and software for isotherm to
+      surface area calculation. Zeo++ calculations were conducted with
+      the same CIF files used to generate GCMC isotherms, and the high
+      accuracy flag and 2,000 samples were used. The surface area
+      calculation software took as input the GCMC isotherms. The number
+      of successful isotherm to surface area calculations for each
+      software are indicated as well.
+      <styled-content id="corr_table"></styled-content></p>
+    </caption>
+    <table>
+      <colgroup>
+        <col width="44%" />
+        <col width="19%" />
+        <col width="19%" />
+        <col width="19%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Surface area calculation software</th>
+          <th>Mean Absolute Percent Error (MAPE)</th>
+          <th>Pearson correlation coefficient</th>
+          <th>Successful calculations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SESAMI 1 (BET)</td>
+          <td>19.4</td>
+          <td>0.85</td>
+          <td>13</td>
+        </tr>
+        <tr>
+          <td>SESAM1 1 (BET+ESW)</td>
+          <td>17.9</td>
+          <td>0.72</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>SESAMI 2 (LASSO)</td>
+          <td>12.4</td>
+          <td>0.95</td>
+          <td>13</td>
+        </tr>
+        <tr>
+          <td>BETSI</td>
+          <td>17.0</td>
+          <td>0.92</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>pyGAPS</td>
+          <td>23.0</td>
+          <td>0.75</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>BEaTmap</td>
+          <td>12.6</td>
+          <td>0.93</td>
+          <td>12</td>
+        </tr>
+      </tbody>
+    </table>
+  </table-wrap>
+  <table-wrap>
+    <caption>
+      <p>Calculated surface areas (m<sup>2</sup>/g) for the 13 MOFs with
+      GCMC isotherms. Cases where a software does not find a surface
+      area are denoted by N/A.
+      <styled-content id="area_table"></styled-content></p>
+    </caption>
+    <table>
+      <colgroup>
+        <col width="14%" />
+        <col width="14%" />
+        <col width="17%" />
+        <col width="14%" />
+        <col width="10%" />
+        <col width="10%" />
+        <col width="12%" />
+        <col width="10%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th></th>
+          <th>SESAMI 1 (BET)</th>
+          <th>SESAMI 1 (BET+ESW)</th>
+          <th>SESAMI 2 (LASSO)</th>
+          <th>BETSI</th>
+          <th>pyGAPS</th>
+          <th>BEaTmap</th>
+          <th>Zeo++</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>HKUST-1</td>
+          <td>2001</td>
+          <td>1933</td>
+          <td>2089</td>
+          <td>1962</td>
+          <td>1902</td>
+          <td>1980</td>
+          <td>2397</td>
+        </tr>
+        <tr>
+          <td>IRMOF-1</td>
+          <td>3502</td>
+          <td>3543</td>
+          <td>3123</td>
+          <td>3519</td>
+          <td>3504</td>
+          <td>N/A</td>
+          <td>3722</td>
+        </tr>
+        <tr>
+          <td>MIL-100 (Cr)</td>
+          <td>2107</td>
+          <td>1853</td>
+          <td>2111</td>
+          <td>N/A</td>
+          <td>1852</td>
+          <td>2094</td>
+          <td>1957</td>
+        </tr>
+        <tr>
+          <td>MIL-100 (Fe)</td>
+          <td>2386</td>
+          <td>2438</td>
+          <td>2203</td>
+          <td>2426</td>
+          <td>82</td>
+          <td>2423</td>
+          <td>1933</td>
+        </tr>
+        <tr>
+          <td>MIL-101</td>
+          <td>3828</td>
+          <td>2862</td>
+          <td>2944</td>
+          <td>N/A</td>
+          <td>2939</td>
+          <td>3331</td>
+          <td>3164</td>
+        </tr>
+        <tr>
+          <td>MIL-53 (Al)</td>
+          <td>1221</td>
+          <td>1168</td>
+          <td>1405</td>
+          <td>1164</td>
+          <td>1183</td>
+          <td>1212</td>
+          <td>1510</td>
+        </tr>
+        <tr>
+          <td>MOF-74 (Mg)</td>
+          <td>1828</td>
+          <td>1834</td>
+          <td>1902</td>
+          <td>N/A</td>
+          <td>1839</td>
+          <td>1791</td>
+          <td>1796</td>
+        </tr>
+        <tr>
+          <td>MOF-808</td>
+          <td>44</td>
+          <td>N/A</td>
+          <td>1275</td>
+          <td>N/A</td>
+          <td>N/A</td>
+          <td>1147</td>
+          <td>1690</td>
+        </tr>
+        <tr>
+          <td>NU-1000</td>
+          <td>2439</td>
+          <td>2181</td>
+          <td>2633</td>
+          <td>N/A</td>
+          <td>2144</td>
+          <td>2672</td>
+          <td>3050</td>
+        </tr>
+        <tr>
+          <td>NU-1200</td>
+          <td>2711</td>
+          <td>934</td>
+          <td>2601</td>
+          <td>N/A</td>
+          <td>1073</td>
+          <td>2930</td>
+          <td>3192</td>
+        </tr>
+        <tr>
+          <td>NU-1500 (Fe)</td>
+          <td>3543</td>
+          <td>3594</td>
+          <td>3111</td>
+          <td>N/A</td>
+          <td>3758</td>
+          <td>3492</td>
+          <td>3944</td>
+        </tr>
+        <tr>
+          <td>UiO-66</td>
+          <td>1239</td>
+          <td>1239</td>
+          <td>1443</td>
+          <td>N/A</td>
+          <td>1242</td>
+          <td>1304</td>
+          <td>1289</td>
+        </tr>
+        <tr>
+          <td>ZIF-8</td>
+          <td>1429</td>
+          <td>1386</td>
+          <td>1575</td>
+          <td>1381</td>
+          <td>1390</td>
+          <td>1414</td>
+          <td>1588</td>
+        </tr>
+      </tbody>
+    </table>
+  </table-wrap>
 </sec>
 <sec id="acknowledgements">
   <title>Acknowledgements</title>
-  <p>We acknowledge contributions from Brigitta Sipocz, Syrtis Major,
-  and Semyeong Oh, and support from Kathryn Johnston during the genesis
-  of this project.</p>
+  <p>This publication was made possible by the generous support of the
+  Government of Portugal through the Portuguese Foundation for
+  International Cooperation in Science, Technology and Higher Education
+  and was undertaken in the MIT Portugal Program. Software and website
+  development was supported by the Office of Naval Research under grant
+  number N00014-20-1-2150, as well as by the National Research
+  Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded
+  by the government of Korea (MSIT). We thank Omar Farha, Timur
+  Islamoglu, and Karam Idrees for kindly providing the raw data of the
+  experimental isotherms in the work by Islamoglu et al.
+  (<xref alt="2022" rid="ref-islamoglu2022you" ref-type="bibr">2022</xref>).</p>
 </sec>
 </body>
 <back>
 <ref-list>
-  <ref id="ref-PearsonU003A2017">
+  <ref id="ref-sesami_1">
     <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
-        <name><surname>Pearson</surname><given-names>S.</given-names></name>
-        <name><surname>Price-Whelan</surname><given-names>A. M.</given-names></name>
-        <name><surname>Johnston</surname><given-names>K. V.</given-names></name>
+        <name><surname>Sinha</surname><given-names>P.</given-names></name>
+        <name><surname>Datar</surname><given-names>A.</given-names></name>
+        <name><surname>Jeong</surname><given-names>C.</given-names></name>
+        <name><surname>Deng</surname><given-names>X.</given-names></name>
+        <name><surname>Chung</surname><given-names>Y. G.</given-names></name>
+        <name><surname>Lin</surname><given-names>L.</given-names></name>
       </person-group>
-      <article-title>Gaps in Globular Cluster Streams: Pal 5 and the Galactic Bar</article-title>
-      <source>ArXiv e-prints</source>
-      <year iso-8601-date="2017-03">2017</year><month>03</month>
-      <uri>http://adsabs.harvard.edu/abs/2017arXiv170304627P</uri>
+      <article-title>Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements</article-title>
+      <source>The Journal of Physical Chemistry C</source>
+      <year iso-8601-date="2019-07">2019</year><month>07</month>
+      <volume>123</volume>
+      <uri>https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116</uri>
+      <pub-id pub-id-type="doi">10.1021/acs.jpcc.9b02116</pub-id>
     </element-citation>
   </ref>
-  <ref id="ref-BinneyU003A2008">
-    <element-citation publication-type="book">
-      <person-group person-group-type="author">
-        <name><surname>Binney</surname><given-names>J.</given-names></name>
-        <name><surname>Tremaine</surname><given-names>S.</given-names></name>
-      </person-group>
-      <source>Galactic Dynamics: Second Edition</source>
-      <publisher-name>Princeton University Press</publisher-name>
-      <year iso-8601-date="2008">2008</year>
-      <uri>http://adsabs.harvard.edu/abs/2008gady.book.....B</uri>
-    </element-citation>
-  </ref>
-  <ref id="ref-gaia">
+  <ref id="ref-sesami_2">
     <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
-        <string-name>Gaia Collaboration</string-name>
+        <name><surname>Datar</surname><given-names>A.</given-names></name>
+        <name><surname>Chung</surname><given-names>Y. G.</given-names></name>
+        <name><surname>Lin</surname><given-names>L.</given-names></name>
       </person-group>
-      <article-title>The Gaia mission</article-title>
-      <source>Astronomy and Astrophysics</source>
-      <year iso-8601-date="2016-11">2016</year><month>11</month>
-      <volume>595</volume>
-      <uri>http://adsabs.harvard.edu/abs/2016A%26A...595A...1G</uri>
-      <pub-id pub-id-type="doi">10.1051/0004-6361/201629272</pub-id>
+      <article-title>Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method</article-title>
+      <source>The Journal of Physical Chemistry Letters</source>
+      <year iso-8601-date="2020-06">2020</year><month>06</month>
+      <volume>11</volume>
+      <uri>https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518</uri>
+      <pub-id pub-id-type="doi">10.1021/acs.jpclett.0c01518</pub-id>
     </element-citation>
   </ref>
-  <ref id="ref-astropy">
+  <ref id="ref-pygaps">
     <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
-        <string-name>Astropy Collaboration</string-name>
+        <name><surname>Iacomi</surname><given-names>P.</given-names></name>
+        <name><surname>Llewellyn</surname><given-names>P. L.</given-names></name>
       </person-group>
-      <article-title>Astropy: A community Python package for astronomy</article-title>
-      <source>Astronomy and Astrophysics</source>
-      <year iso-8601-date="2013-10">2013</year><month>10</month>
-      <volume>558</volume>
-      <uri>http://adsabs.harvard.edu/abs/2013A%26A...558A..33A</uri>
-      <pub-id pub-id-type="doi">10.1051/0004-6361/201322068</pub-id>
+      <article-title>pyGAPS: a Python-Based Framework for Adsorption Isotherm Processing and Material Characterisation</article-title>
+      <source>Adsorption</source>
+      <year iso-8601-date="2019-09">2019</year><month>09</month>
+      <volume>25</volume>
+      <uri>https://link.springer.com/article/10.1007/s10450-019-00168-5</uri>
+      <pub-id pub-id-type="doi">10.1007/s10450-019-00168-5</pub-id>
     </element-citation>
   </ref>
-  <ref id="ref-fidgit">
+  <ref id="ref-betsi">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Osterrieth</surname><given-names>J. .W. M.</given-names></name>
+        <name><surname>Rampersad</surname><given-names>J.</given-names></name>
+        <name><surname>Madden</surname><given-names>D.</given-names></name>
+        <name><surname>Rampal</surname><given-names>N.</given-names></name>
+        <name><surname>Skoric</surname><given-names>L.</given-names></name>
+        <name><surname>Connolly</surname><given-names>B.</given-names></name>
+        <name><surname>Allendorf</surname><given-names>M. D.</given-names></name>
+        <name><surname>Stavila</surname><given-names>V.</given-names></name>
+        <name><surname>Snider</surname><given-names>J. L.</given-names></name>
+        <name><surname>Ameloot</surname><given-names>R.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>How Reproducible are Surface Areas Calculated from the BET Equation?</article-title>
+      <source>Advanced Materials</source>
+      <year iso-8601-date="2022-05">2022</year><month>05</month>
+      <volume>34</volume>
+      <uri>https://onlinelibrary.wiley.com/doi/full/10.1002/adma.202201502</uri>
+      <pub-id pub-id-type="doi">10.1002/adma.202201502</pub-id>
+    </element-citation>
+  </ref>
+  <ref id="ref-brunauer1938adsorption">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Brunauer</surname><given-names>Stephen</given-names></name>
+        <name><surname>Emmett</surname><given-names>Paul Hugh</given-names></name>
+        <name><surname>Teller</surname><given-names>Edward</given-names></name>
+      </person-group>
+      <article-title>Adsorption of gases in multimolecular layers</article-title>
+      <source>Journal of the American Chemical Society</source>
+      <publisher-name>ACS Publications</publisher-name>
+      <year iso-8601-date="1938">1938</year>
+      <volume>60</volume>
+      <issue>2</issue>
+      <fpage>309</fpage>
+      <lpage>319</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-beatmap">
     <element-citation>
       <person-group person-group-type="author">
-        <name><surname>Smith</surname><given-names>A. M.</given-names></name>
-        <name><surname>Thaney</surname><given-names>K.</given-names></name>
-        <name><surname>Hahnel</surname><given-names>M.</given-names></name>
+        <name><surname>Sadeghi</surname><given-names>A.</given-names></name>
+        <name><surname>Bell</surname><given-names>E.</given-names></name>
+        <name><surname>Gostick</surname><given-names>J.</given-names></name>
       </person-group>
-      <article-title>Fidgit: An ungodly union of GitHub and figshare</article-title>
+      <article-title>Beatmap v0.1.2</article-title>
       <source>GitHub repository</source>
       <publisher-name>GitHub</publisher-name>
       <year iso-8601-date="2020">2020</year>
-      <uri>https://github.com/arfon/fidgit</uri>
+      <uri>https://github.com/PMEAL/beatmap</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-gomez2016application">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Gómez-Gualdrón</surname><given-names>Diego A</given-names></name>
+        <name><surname>Moghadam</surname><given-names>Peyman Z</given-names></name>
+        <name><surname>Hupp</surname><given-names>Joseph T</given-names></name>
+        <name><surname>Farha</surname><given-names>Omar K</given-names></name>
+        <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
+      </person-group>
+      <article-title>Application of consistency criteria to calculate BET areas of micro-and mesoporous metal–organic frameworks</article-title>
+      <source>Journal of the American Chemical Society</source>
+      <publisher-name>ACS Publications</publisher-name>
+      <year iso-8601-date="2016">2016</year>
+      <volume>138</volume>
+      <issue>1</issue>
+      <fpage>215</fpage>
+      <lpage>224</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-wang2015ultrahigh">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Wang</surname><given-names>Timothy C</given-names></name>
+        <name><surname>Bury</surname><given-names>Wojciech</given-names></name>
+        <name><surname>Gómez-Gualdrón</surname><given-names>Diego A</given-names></name>
+        <name><surname>Vermeulen</surname><given-names>Nicolaas A</given-names></name>
+        <name><surname>Mondloch</surname><given-names>Joseph E</given-names></name>
+        <name><surname>Deria</surname><given-names>Pravas</given-names></name>
+        <name><surname>Zhang</surname><given-names>Kainan</given-names></name>
+        <name><surname>Moghadam</surname><given-names>Peyman Z</given-names></name>
+        <name><surname>Sarjeant</surname><given-names>Amy A</given-names></name>
+        <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Ultrahigh surface area zirconium MOFs and insights into the applicability of the BET theory</article-title>
+      <source>Journal of the American Chemical Society</source>
+      <publisher-name>ACS Publications</publisher-name>
+      <year iso-8601-date="2015">2015</year>
+      <volume>137</volume>
+      <issue>10</issue>
+      <fpage>3585</fpage>
+      <lpage>3591</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-fagerlund1973determination">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Fagerlund</surname><given-names>Göran</given-names></name>
+      </person-group>
+      <article-title>Determination of specific surface by the BET method</article-title>
+      <source>Matériaux et Construction</source>
+      <publisher-name>Springer</publisher-name>
+      <year iso-8601-date="1973">1973</year>
+      <volume>6</volume>
+      <fpage>239</fpage>
+      <lpage>245</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-rouquerol2013adsorption">
+    <element-citation publication-type="book">
+      <person-group person-group-type="author">
+        <name><surname>Rouquerol</surname><given-names>Jean</given-names></name>
+        <name><surname>Rouquerol</surname><given-names>Françoise</given-names></name>
+        <name><surname>Llewellyn</surname><given-names>Philip</given-names></name>
+        <name><surname>Maurin</surname><given-names>Guillaume</given-names></name>
+        <name><surname>Sing</surname><given-names>Kenneth SW</given-names></name>
+      </person-group>
+      <source>Adsorption by powders and porous solids: Principles, methodology and applications</source>
+      <publisher-name>Academic press</publisher-name>
+      <year iso-8601-date="2013">2013</year>
+    </element-citation>
+  </ref>
+  <ref id="ref-rouquerol2007bet">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Rouquerol</surname><given-names>J</given-names></name>
+        <name><surname>Llewellyn</surname><given-names>Philip</given-names></name>
+        <name><surname>Rouquerol</surname><given-names>F</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Is the BET equation applicable to microporous adsorbents</article-title>
+      <source>Stud. Surf. Sci. Catal</source>
+      <year iso-8601-date="2007">2007</year>
+      <volume>160</volume>
+      <issue>07</issue>
+      <fpage>49</fpage>
+      <lpage>56</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-willems2012algorithms">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Willems</surname><given-names>Thomas F</given-names></name>
+        <name><surname>Rycroft</surname><given-names>Chris H</given-names></name>
+        <name><surname>Kazi</surname><given-names>Michaeel</given-names></name>
+        <name><surname>Meza</surname><given-names>Juan C</given-names></name>
+        <name><surname>Haranczyk</surname><given-names>Maciej</given-names></name>
+      </person-group>
+      <article-title>Algorithms and tools for high-throughput geometry-based analysis of crystalline porous materials</article-title>
+      <source>Microporous and Mesoporous Materials</source>
+      <publisher-name>Elsevier</publisher-name>
+      <year iso-8601-date="2012">2012</year>
+      <volume>149</volume>
+      <issue>1</issue>
+      <fpage>134</fpage>
+      <lpage>141</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-betsi_github">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Rampersad</surname><given-names>J.</given-names></name>
+        <name><surname>Osterrieth</surname><given-names>J. W.</given-names></name>
+        <name><surname>Rampal</surname><given-names>N.</given-names></name>
+      </person-group>
+      <article-title>Betsi-gui</article-title>
+      <source>GitHub repository</source>
+      <publisher-name>GitHub</publisher-name>
+      <year iso-8601-date="2020">2020</year>
+      <uri>https://github.com/nakulrampal/betsi-gui</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-pygaps_docs">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Iacomi</surname><given-names>P.</given-names></name>
+      </person-group>
+      <article-title>pyGAPS 4.4.0 documentation</article-title>
+      <source>pyGAPS read the docs</source>
+      <publisher-name>Sphinx</publisher-name>
+      <year iso-8601-date="2019">2019</year>
+      <uri>https://pygaps.readthedocs.io/en/master/</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-dubbeldam2016raspa">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Dubbeldam</surname><given-names>David</given-names></name>
+        <name><surname>Calero</surname><given-names>Sofı́a</given-names></name>
+        <name><surname>Ellis</surname><given-names>Donald E</given-names></name>
+        <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
+      </person-group>
+      <article-title>RASPA: Molecular simulation software for adsorption and diffusion in flexible nanoporous materials</article-title>
+      <source>Molecular Simulation</source>
+      <publisher-name>Taylor &amp; Francis</publisher-name>
+      <year iso-8601-date="2016">2016</year>
+      <volume>42</volume>
+      <issue>2</issue>
+      <fpage>81</fpage>
+      <lpage>101</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-islamoglu2022you">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Islamoglu</surname><given-names>Timur</given-names></name>
+        <name><surname>Idrees</surname><given-names>Karam B</given-names></name>
+        <name><surname>Son</surname><given-names>Florencia A</given-names></name>
+        <name><surname>Chen</surname><given-names>Zhijie</given-names></name>
+        <name><surname>Lee</surname><given-names>Seung-Joon</given-names></name>
+        <name><surname>Li</surname><given-names>Peng</given-names></name>
+        <name><surname>Farha</surname><given-names>Omar K</given-names></name>
+      </person-group>
+      <article-title>Are you using the right probe molecules for assessing the textural properties of metal–organic frameworks?</article-title>
+      <source>Journal of Materials Chemistry A</source>
+      <publisher-name>Royal Society of Chemistry</publisher-name>
+      <year iso-8601-date="2022">2022</year>
+      <volume>10</volume>
+      <issue>1</issue>
+      <fpage>157</fpage>
+      <lpage>173</lpage>
     </element-citation>
   </ref>
 </ref-list>
