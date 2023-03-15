@@ -1,0 +1,7 @@
+Will operate on the CIF files in /Users/gianmarcoterrones/Dropbox (MIT)/2022-SESAMI-app-v2/Data/N2_isotherms_8MOFs_77K/CIF_files and /Users/gianmarcoterrones/Dropbox (MIT)/2022-SESAMI-app-v2/Data/N2_isotherms_add_6MOFs_77K/CIF_files
+
+Command will look like `zeo++-0.3/network -ha -sa 2.27 2.27 2000 {CIF_name}.cif`
+http://www.zeoplusplus.org/examples.html
+	probe radius of 2.27A; 2000 MC samples per atom
+
+Moved the .sa files from the CIF file folder to this folder.
