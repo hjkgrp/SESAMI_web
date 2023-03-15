@@ -1,5 +1,5 @@
 ---
-title: 'SESAMI web: A web interface for surface area analysis'
+title: 'SESAMI web: an accessible interface for surface area prediction from adsorption isotherms'
 tags:
   - surface area
   - BET
