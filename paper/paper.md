@@ -1,5 +1,5 @@
 ---
-title: 'SESAMI web: an accessible interface for surface area prediction from adsorption isotherms'
+title: 'SESAMI Web: An Accessible Interface for Surface Area Prediction from Adsorption Isotherms'
 tags:
   - SESAMI
   - surface area
@@ -22,11 +22,11 @@ authors:
   - name: Yongchul G. Chung
     orcid: 0000-0002-7756-0589
     corresponding: true
-    affiliation: 1
+    affiliation: 2
 affiliations:
  - name: Department of Chemical Engineering, Massachusetts Institute of Technology, USA
    index: 1
- - name: School of Chemical and Biomolecular Engineering, Pusan National University, South Korea
+ - name: School of Chemical Engineering, Pusan National University, South Korea
    index: 2
  - name: William G. Lowrie Department of Chemical and Biomolecular Engineering, The Ohio State University, USA
    index: 3
@@ -59,20 +59,9 @@ To assess the performance of SESAMI code in predicting surface areas from isothe
 
 ![The crystal structures and isotherms of 3 of the 14 metal-organic frameworks used to benchmark different isotherm to surface area codes.\label{fig:isotherms}](figures/crystal_structs_and_isotherms.tif)
 
-We find that over the set of 13 GCMC isotherms, the SESAMI machine learning model and BEaTmap have the best correlation with Zeo++ surface areas [@willems2012algorithms] calculated with a 1.67 Å probe N~2~ molecule (Tables \ref{corr_table} and \ref{area_table}). Nevertheless, all software are in generally good agreement, underscoring the benefit of a computational approach to surface area calculation. The agreement between software is also not surprising due to the similar approach taken by most of the codes of considering multiple subsets of consecutive data points and applying checks like the Rouquerol criteria to select a linear region for BET analysis. The benchmark isotherms, CSV files of surface area predictions across different software tools for both GCMC and experimental isotherms, details about settings used for each software, and employed analysis scripts are available at <https://github.com/hjkgrp/SESAMI_web>.
+We find that over the set of 13 GCMC isotherms, the SESAMI machine learning model and BEaTmap have the best correlation with Zeo++ surface areas [@willems2012algorithms] calculated with a 1.67 Å probe N~2~ molecule (Tables \ref{corr_table} and \ref{gcmc_area_table}). Nevertheless, all software are in generally good agreement, underscoring the benefit of a computational approach to surface area calculation. The agreement between software is also not surprising due to the similar approach taken by most of the codes of considering multiple subsets of consecutive data points and applying checks like the Rouquerol criteria to select a linear region for BET analysis. Indeed, this agreement is also observed over the 9 experimental isotherms (Table \ref{exp_area_table}). The benchmark isotherms, XLSX files of surface area predictions across different software tools for both GCMC and experimental isotherms, details about settings used for each software, and employed analysis scripts are available at <https://github.com/hjkgrp/SESAMI_web>.
 
-Table: Comparison between surface area predictions from Zeo++ with a 1.67 Å probe N~2~ molecule, and software for isotherm to surface area calculation. Zeo++ calculations were conducted with the same CIF files used to generate GCMC isotherms, and the high accuracy flag and 2,000 samples were used. The surface area calculation software took as input the GCMC isotherms. The number of successful isotherm to surface area calculations for each software are indicated as well. \label{corr_table}
-
-| Surface area calculation software | Mean Absolute Percent Error (MAPE)  | Pearson correlation coefficient  | Successful calculations  |
-| ------- | --- | --- | --- |
-| SESAMI 1 (BET) | 19.4 | 0.85 | 13 |
-| SESAM1 1 (BET+ESW) | 17.9 | 0.72 | 12 |
-| SESAMI 2 (LASSO) | 12.4 | 0.95 | 13 |
-| BETSI | 17.0 | 0.92 | 5 |
-| pyGAPS | 23.0 | 0.75 | 12 |
-| BEaTmap | 12.6 | 0.93 | 12 |
-
-Table: Calculated surface areas (m^2^/g) for the 13 MOFs with GCMC isotherms. Cases where a software does not find a surface area are denoted by N/A. \label{area_table}
+Table: Calculated surface areas (m^2^/g) for the 13 MOFs with GCMC isotherms. Cases where a software does not find a surface area are denoted by N/A. Zeo++ calculations were conducted with the same CIF files used to generate GCMC isotherms, and a 1.67 Å probe N~2~ molecule, the high accuracy flag, and 2,000 samples were used. All other software took as input the GCMC isotherms.\label{gcmc_area_table}
 
 | | SESAMI 1 (BET)  | SESAMI 1 (BET+ESW)  | SESAMI 2 (LASSO)  | BETSI  | pyGAPS  | BEaTmap  | Zeo++  |
 | ------ | ------ | ------- | ------ | ---- | ---- | ----- | ---- |
@@ -89,6 +78,31 @@ Table: Calculated surface areas (m^2^/g) for the 13 MOFs with GCMC isotherms. Ca
 | NU-1500 (Fe) | 3543 | 3594 | 3111 | N/A | 3758 | 3492 | 3944 |
 | UiO-66 | 1239 | 1239 | 1443 | N/A | 1242 | 1304 | 1289 |
 | ZIF-8 | 1429 | 1386 | 1575 | 1381 | 1390 | 1414 | 1588 |
+
+Table: Comparison between surface area predictions from Zeo++ and software for isotherm to surface area calculation, over the 13 MOFs with GCMC isotherms. The number of successful isotherm to surface area calculations for each software are indicated as well.\label{corr_table}
+
+| Surface area calculation software | Mean Absolute Percent Error (MAPE)  | Pearson correlation coefficient  | Successful calculations  |
+| ------- | --- | --- | --- |
+| SESAMI 1 (BET) | 19.4 | 0.85 | 13 |
+| SESAM1 1 (BET+ESW) | 17.9 | 0.72 | 12 |
+| SESAMI 2 (LASSO) | 12.4 | 0.95 | 13 |
+| BETSI | 17.0 | 0.92 | 5 |
+| pyGAPS | 23.0 | 0.75 | 12 |
+| BEaTmap | 12.6 | 0.93 | 12 |
+
+Table: Calculated surface areas (m^2^/g) for the 9 MOFs with experimental isotherms. Cases where a software does not find a surface area are denoted by N/A.  All other software took as input the experimental isotherms.\label{exp_area_table}
+
+| | SESAMI 1 (BET)  | SESAMI 1 (BET+ESW)  | SESAMI 2 (LASSO)  | BETSI  | pyGAPS  | BEaTmap  |
+| ------ | ------ | ------- | ------ | ---- | ---- | ----- |
+| HKUST-1 | 1505 | 1466 | 1668 | N/A | 1495 | 1498 |
+| MOF-74 (Mg) | 1580 | 1467 | 1692 | N/A | 1574 | 1565 |
+| MOF-808 | 1998 | 900 | 1727 | N/A | 2439 | 1752 |
+| NU-1000 | 2154 | 2090 | 2385 | N/A | 2654 | 2459 |
+| NU-1200 | 2893 | 2718 | 2781 | 2758 | 3917 | 3069 |
+| NU-1500 (Fe) | 3305 | 3409 | 2809 | N/A | 3413 | 3227 |
+| SIFSIX-3 (Ni) | 356 | 201 | 716 | N/A | 355 | 353 |
+| UiO-66 | 1251 | 1228 | 1413 | 1250 | 1249 | 1246 |
+| ZIF-8 | 1092 | 910 | 1214 | N/A | 1082 | 1047 |
 
 
 # Acknowledgements

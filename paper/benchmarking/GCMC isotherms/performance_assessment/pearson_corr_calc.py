@@ -1,5 +1,5 @@
 # The goal of this script is to calculate Pearson correlation coefficients between Zeo++ areas and areas calculated by different programs.
-# Across the 13 MOFs (I will exclude SIFSIX due to its poor GCMC isotherm).
+# Across the 13 MOFs (I exclude SIFSIX-3 due to its poor GCMC isotherm).
 
 import numpy as np
 from scipy.stats import pearsonr

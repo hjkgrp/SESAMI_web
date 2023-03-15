@@ -18,8 +18,8 @@
 <article-id pub-id-type="publisher-id">0</article-id>
 <article-id pub-id-type="doi">N/A</article-id>
 <title-group>
-<article-title>SESAMI web: an accessible interface for surface area
-prediction from adsorption isotherms</article-title>
+<article-title>SESAMI Web: An Accessible Interface for Surface Area
+Prediction from Adsorption Isotherms</article-title>
 </title-group>
 <contrib-group>
 <contrib contrib-type="author">
@@ -60,7 +60,7 @@ prediction from adsorption isotherms</article-title>
 <surname>Chung</surname>
 <given-names>Yongchul G.</given-names>
 </name>
-<xref ref-type="aff" rid="aff-1"/>
+<xref ref-type="aff" rid="aff-2"/>
 <xref ref-type="corresp" rid="cor-1"><sup>*</sup></xref>
 </contrib>
 <aff id="aff-1">
@@ -71,8 +71,8 @@ of Technology, USA</institution>
 </aff>
 <aff id="aff-2">
 <institution-wrap>
-<institution>School of Chemical and Biomolecular Engineering, Pusan
-National University, South Korea</institution>
+<institution>School of Chemical Engineering, Pusan National University,
+South Korea</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-3">
@@ -295,92 +295,29 @@ a Creative Commons Attribution 4.0 International License (CC BY
   surface areas
   (<xref alt="Willems et al., 2012" rid="ref-willems2012algorithms" ref-type="bibr">Willems
   et al., 2012</xref>) calculated with a 1.67 Å probe N<sub>2</sub>
-  molecule (Tables <xref alt="1" rid="corr_table">1</xref> and
-  <xref alt="2" rid="area_table">2</xref>). Nevertheless, all software
-  are in generally good agreement, underscoring the benefit of a
-  computational approach to surface area calculation. The agreement
+  molecule (Tables <xref alt="2" rid="corr_table">2</xref> and
+  <xref alt="1" rid="gcmc_area_table">1</xref>). Nevertheless, all
+  software are in generally good agreement, underscoring the benefit of
+  a computational approach to surface area calculation. The agreement
   between software is also not surprising due to the similar approach
   taken by most of the codes of considering multiple subsets of
   consecutive data points and applying checks like the Rouquerol
-  criteria to select a linear region for BET analysis. The benchmark
-  isotherms, CSV files of surface area predictions across different
-  software tools for both GCMC and experimental isotherms, details about
-  settings used for each software, and employed analysis scripts are
-  available at
+  criteria to select a linear region for BET analysis. Indeed, this
+  agreement is also observed over the 9 experimental isotherms (Table
+  <xref alt="3" rid="exp_area_table">3</xref>). The benchmark isotherms,
+  XLSX files of surface area predictions across different software tools
+  for both GCMC and experimental isotherms, details about settings used
+  for each software, and employed analysis scripts are available at
   <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
-  <table-wrap>
-    <caption>
-      <p>Comparison between surface area predictions from Zeo++ with a
-      1.67 Å probe N<sub>2</sub> molecule, and software for isotherm to
-      surface area calculation. Zeo++ calculations were conducted with
-      the same CIF files used to generate GCMC isotherms, and the high
-      accuracy flag and 2,000 samples were used. The surface area
-      calculation software took as input the GCMC isotherms. The number
-      of successful isotherm to surface area calculations for each
-      software are indicated as well.
-      <styled-content id="corr_table"></styled-content></p>
-    </caption>
-    <table>
-      <colgroup>
-        <col width="44%" />
-        <col width="19%" />
-        <col width="19%" />
-        <col width="19%" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Surface area calculation software</th>
-          <th>Mean Absolute Percent Error (MAPE)</th>
-          <th>Pearson correlation coefficient</th>
-          <th>Successful calculations</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>SESAMI 1 (BET)</td>
-          <td>19.4</td>
-          <td>0.85</td>
-          <td>13</td>
-        </tr>
-        <tr>
-          <td>SESAM1 1 (BET+ESW)</td>
-          <td>17.9</td>
-          <td>0.72</td>
-          <td>12</td>
-        </tr>
-        <tr>
-          <td>SESAMI 2 (LASSO)</td>
-          <td>12.4</td>
-          <td>0.95</td>
-          <td>13</td>
-        </tr>
-        <tr>
-          <td>BETSI</td>
-          <td>17.0</td>
-          <td>0.92</td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>pyGAPS</td>
-          <td>23.0</td>
-          <td>0.75</td>
-          <td>12</td>
-        </tr>
-        <tr>
-          <td>BEaTmap</td>
-          <td>12.6</td>
-          <td>0.93</td>
-          <td>12</td>
-        </tr>
-      </tbody>
-    </table>
-  </table-wrap>
   <table-wrap>
     <caption>
       <p>Calculated surface areas (m<sup>2</sup>/g) for the 13 MOFs with
       GCMC isotherms. Cases where a software does not find a surface
-      area are denoted by N/A.
-      <styled-content id="area_table"></styled-content></p>
+      area are denoted by N/A. Zeo++ calculations were conducted with
+      the same CIF files used to generate GCMC isotherms, and a 1.67 Å
+      probe N<sub>2</sub> molecule, the high accuracy flag, and 2,000
+      samples were used. All other software took as input the GCMC
+      isotherms.<styled-content id="gcmc_area_table"></styled-content></p>
     </caption>
     <table>
       <colgroup>
@@ -539,6 +476,183 @@ a Creative Commons Attribution 4.0 International License (CC BY
       </tbody>
     </table>
   </table-wrap>
+  <table-wrap>
+    <caption>
+      <p>Comparison between surface area predictions from Zeo++ and
+      software for isotherm to surface area calculation, over the 13
+      MOFs with GCMC isotherms. The number of successful isotherm to
+      surface area calculations for each software are indicated as
+      well.<styled-content id="corr_table"></styled-content></p>
+    </caption>
+    <table>
+      <colgroup>
+        <col width="44%" />
+        <col width="19%" />
+        <col width="19%" />
+        <col width="19%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Surface area calculation software</th>
+          <th>Mean Absolute Percent Error (MAPE)</th>
+          <th>Pearson correlation coefficient</th>
+          <th>Successful calculations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SESAMI 1 (BET)</td>
+          <td>19.4</td>
+          <td>0.85</td>
+          <td>13</td>
+        </tr>
+        <tr>
+          <td>SESAM1 1 (BET+ESW)</td>
+          <td>17.9</td>
+          <td>0.72</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>SESAMI 2 (LASSO)</td>
+          <td>12.4</td>
+          <td>0.95</td>
+          <td>13</td>
+        </tr>
+        <tr>
+          <td>BETSI</td>
+          <td>17.0</td>
+          <td>0.92</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>pyGAPS</td>
+          <td>23.0</td>
+          <td>0.75</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>BEaTmap</td>
+          <td>12.6</td>
+          <td>0.93</td>
+          <td>12</td>
+        </tr>
+      </tbody>
+    </table>
+  </table-wrap>
+  <table-wrap>
+    <caption>
+      <p>Calculated surface areas (m<sup>2</sup>/g) for the 9 MOFs with
+      experimental isotherms. Cases where a software does not find a
+      surface area are denoted by N/A. All other software took as input
+      the experimental
+      isotherms.<styled-content id="exp_area_table"></styled-content></p>
+    </caption>
+    <table>
+      <colgroup>
+        <col width="16%" />
+        <col width="16%" />
+        <col width="18%" />
+        <col width="16%" />
+        <col width="11%" />
+        <col width="11%" />
+        <col width="13%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th></th>
+          <th>SESAMI 1 (BET)</th>
+          <th>SESAMI 1 (BET+ESW)</th>
+          <th>SESAMI 2 (LASSO)</th>
+          <th>BETSI</th>
+          <th>pyGAPS</th>
+          <th>BEaTmap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>HKUST-1</td>
+          <td>1505</td>
+          <td>1466</td>
+          <td>1668</td>
+          <td>N/A</td>
+          <td>1495</td>
+          <td>1498</td>
+        </tr>
+        <tr>
+          <td>MOF-74 (Mg)</td>
+          <td>1580</td>
+          <td>1467</td>
+          <td>1692</td>
+          <td>N/A</td>
+          <td>1574</td>
+          <td>1565</td>
+        </tr>
+        <tr>
+          <td>MOF-808</td>
+          <td>1998</td>
+          <td>900</td>
+          <td>1727</td>
+          <td>N/A</td>
+          <td>2439</td>
+          <td>1752</td>
+        </tr>
+        <tr>
+          <td>NU-1000</td>
+          <td>2154</td>
+          <td>2090</td>
+          <td>2385</td>
+          <td>N/A</td>
+          <td>2654</td>
+          <td>2459</td>
+        </tr>
+        <tr>
+          <td>NU-1200</td>
+          <td>2893</td>
+          <td>2718</td>
+          <td>2781</td>
+          <td>2758</td>
+          <td>3917</td>
+          <td>3069</td>
+        </tr>
+        <tr>
+          <td>NU-1500 (Fe)</td>
+          <td>3305</td>
+          <td>3409</td>
+          <td>2809</td>
+          <td>N/A</td>
+          <td>3413</td>
+          <td>3227</td>
+        </tr>
+        <tr>
+          <td>SIFSIX-3 (Ni)</td>
+          <td>356</td>
+          <td>201</td>
+          <td>716</td>
+          <td>N/A</td>
+          <td>355</td>
+          <td>353</td>
+        </tr>
+        <tr>
+          <td>UiO-66</td>
+          <td>1251</td>
+          <td>1228</td>
+          <td>1413</td>
+          <td>1250</td>
+          <td>1249</td>
+          <td>1246</td>
+        </tr>
+        <tr>
+          <td>ZIF-8</td>
+          <td>1092</td>
+          <td>910</td>
+          <td>1214</td>
+          <td>N/A</td>
+          <td>1082</td>
+          <td>1047</td>
+        </tr>
+      </tbody>
+    </table>
+  </table-wrap>
 </sec>
 <sec id="acknowledgements">
   <title>Acknowledgements</title>
@@ -634,12 +748,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Emmett</surname><given-names>Paul Hugh</given-names></name>
         <name><surname>Teller</surname><given-names>Edward</given-names></name>
       </person-group>
-      <article-title>Adsorption of gases in multimolecular layers</article-title>
+      <article-title>Adsorption of Gases in Multimolecular Layers</article-title>
       <source>Journal of the American Chemical Society</source>
       <publisher-name>ACS Publications</publisher-name>
       <year iso-8601-date="1938">1938</year>
       <volume>60</volume>
       <issue>2</issue>
+      <pub-id pub-id-type="doi">10.1021/ja01269a023</pub-id>
       <fpage>309</fpage>
       <lpage>319</lpage>
     </element-citation>
@@ -652,7 +767,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Gostick</surname><given-names>J.</given-names></name>
       </person-group>
       <article-title>Beatmap v0.1.2</article-title>
-      <source>GitHub repository</source>
       <publisher-name>GitHub</publisher-name>
       <year iso-8601-date="2020">2020</year>
       <uri>https://github.com/PMEAL/beatmap</uri>
@@ -667,12 +781,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Farha</surname><given-names>Omar K</given-names></name>
         <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
       </person-group>
-      <article-title>Application of consistency criteria to calculate BET areas of micro-and mesoporous metal–organic frameworks</article-title>
+      <article-title>Application of Consistency Criteria to Calculate BET Areas of Micro-and Mesoporous Metal–Organic Frameworks</article-title>
       <source>Journal of the American Chemical Society</source>
       <publisher-name>ACS Publications</publisher-name>
       <year iso-8601-date="2016">2016</year>
       <volume>138</volume>
       <issue>1</issue>
+      <pub-id pub-id-type="doi">10.1021/jacs.5b10266</pub-id>
       <fpage>215</fpage>
       <lpage>224</lpage>
     </element-citation>
@@ -692,12 +807,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
         <name><surname>others</surname></name>
       </person-group>
-      <article-title>Ultrahigh surface area zirconium MOFs and insights into the applicability of the BET theory</article-title>
+      <article-title>Ultrahigh Surface Area Zirconium MOFs and Insights into the Applicability of the BET Theory</article-title>
       <source>Journal of the American Chemical Society</source>
       <publisher-name>ACS Publications</publisher-name>
       <year iso-8601-date="2015">2015</year>
       <volume>137</volume>
       <issue>10</issue>
+      <pub-id pub-id-type="doi">10.1021/ja512973b</pub-id>
       <fpage>3585</fpage>
       <lpage>3591</lpage>
     </element-citation>
@@ -707,11 +823,12 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <person-group person-group-type="author">
         <name><surname>Fagerlund</surname><given-names>Göran</given-names></name>
       </person-group>
-      <article-title>Determination of specific surface by the BET method</article-title>
+      <article-title>Determination of Specific Surface by the BET Method</article-title>
       <source>Matériaux et Construction</source>
       <publisher-name>Springer</publisher-name>
       <year iso-8601-date="1973">1973</year>
       <volume>6</volume>
+      <pub-id pub-id-type="doi">10.1007/BF02479039</pub-id>
       <fpage>239</fpage>
       <lpage>245</lpage>
     </element-citation>
@@ -725,9 +842,10 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Maurin</surname><given-names>Guillaume</given-names></name>
         <name><surname>Sing</surname><given-names>Kenneth SW</given-names></name>
       </person-group>
-      <source>Adsorption by powders and porous solids: Principles, methodology and applications</source>
+      <source>Adsorption by Powders and Porous Solids: Principles, Methodology and Applications</source>
       <publisher-name>Academic press</publisher-name>
       <year iso-8601-date="2013">2013</year>
+      <pub-id pub-id-type="doi">10.1016/B978-0-12-598920-6.X5000-3</pub-id>
     </element-citation>
   </ref>
   <ref id="ref-rouquerol2007bet">
@@ -738,7 +856,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Rouquerol</surname><given-names>F</given-names></name>
         <name><surname>others</surname></name>
       </person-group>
-      <article-title>Is the BET equation applicable to microporous adsorbents</article-title>
+      <article-title>Is the BET Equation Applicable to Microporous Adsorbents?</article-title>
       <source>Stud. Surf. Sci. Catal</source>
       <year iso-8601-date="2007">2007</year>
       <volume>160</volume>
@@ -756,12 +874,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Meza</surname><given-names>Juan C</given-names></name>
         <name><surname>Haranczyk</surname><given-names>Maciej</given-names></name>
       </person-group>
-      <article-title>Algorithms and tools for high-throughput geometry-based analysis of crystalline porous materials</article-title>
+      <article-title>Algorithms and Tools for High-Throughput Geometry-Based Analysis of Crystalline Porous Materials</article-title>
       <source>Microporous and Mesoporous Materials</source>
       <publisher-name>Elsevier</publisher-name>
       <year iso-8601-date="2012">2012</year>
       <volume>149</volume>
       <issue>1</issue>
+      <pub-id pub-id-type="doi">10.1016/j.micromeso.2011.08.020</pub-id>
       <fpage>134</fpage>
       <lpage>141</lpage>
     </element-citation>
@@ -774,7 +893,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Rampal</surname><given-names>N.</given-names></name>
       </person-group>
       <article-title>Betsi-gui</article-title>
-      <source>GitHub repository</source>
       <publisher-name>GitHub</publisher-name>
       <year iso-8601-date="2020">2020</year>
       <uri>https://github.com/nakulrampal/betsi-gui</uri>
@@ -786,7 +904,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Iacomi</surname><given-names>P.</given-names></name>
       </person-group>
       <article-title>pyGAPS 4.4.0 documentation</article-title>
-      <source>pyGAPS read the docs</source>
       <publisher-name>Sphinx</publisher-name>
       <year iso-8601-date="2019">2019</year>
       <uri>https://pygaps.readthedocs.io/en/master/</uri>
@@ -800,12 +917,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Ellis</surname><given-names>Donald E</given-names></name>
         <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
       </person-group>
-      <article-title>RASPA: Molecular simulation software for adsorption and diffusion in flexible nanoporous materials</article-title>
+      <article-title>RASPA: Molecular Simulation Software for Adsorption and Diffusion in Flexible Nanoporous Materials</article-title>
       <source>Molecular Simulation</source>
       <publisher-name>Taylor &amp; Francis</publisher-name>
       <year iso-8601-date="2016">2016</year>
       <volume>42</volume>
       <issue>2</issue>
+      <pub-id pub-id-type="doi">10.1080/08927022.2015.1010082</pub-id>
       <fpage>81</fpage>
       <lpage>101</lpage>
     </element-citation>
@@ -821,12 +939,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Li</surname><given-names>Peng</given-names></name>
         <name><surname>Farha</surname><given-names>Omar K</given-names></name>
       </person-group>
-      <article-title>Are you using the right probe molecules for assessing the textural properties of metal–organic frameworks?</article-title>
+      <article-title>Are You Using the Right Probe Molecules for Assessing the Textural Properties of Metal–Organic Frameworks?</article-title>
       <source>Journal of Materials Chemistry A</source>
       <publisher-name>Royal Society of Chemistry</publisher-name>
       <year iso-8601-date="2022">2022</year>
       <volume>10</volume>
       <issue>1</issue>
+      <pub-id pub-id-type="doi">10.1039/D1TA08021K</pub-id>
       <fpage>157</fpage>
       <lpage>173</lpage>
     </element-citation>

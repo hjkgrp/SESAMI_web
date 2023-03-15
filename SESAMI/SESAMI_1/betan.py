@@ -315,7 +315,7 @@ class BETAn:
             yerr=yerr,
             fmt="o",
             capsize=3,
-            label="BET Data points",
+            label="BET data points",
         )
 
         ax.xaxis.label.set_text("$p/p_0$")
@@ -497,7 +497,7 @@ class BETAn:
         if maketitle == "Yes":
             titletext = "BET Consistency Plot"
             ax3.set_title(titletext)
-        ax3.errorbar(data["P_rel"], data["BET_y2"], fmt="o", label="BET Data points")
+        ax3.errorbar(data["P_rel"], data["BET_y2"], fmt="o", label="BET data points")
         ax3.set_ylim(ax3.get_ylim())
 
         if tryminorticks == "Yes":
@@ -615,7 +615,7 @@ class BETAn:
                     titletext = "BET+ESW Linear Region Plot"
                 ax2.set_title(titletext)
             ax2.errorbar(
-                linear["P_rel"], linear["BETy"], fmt="o", label="BET Data points"
+                linear["P_rel"], linear["BETy"], fmt="o", label="BET data points"
             )
             ax2.plot(
                 linear["P_rel"],
