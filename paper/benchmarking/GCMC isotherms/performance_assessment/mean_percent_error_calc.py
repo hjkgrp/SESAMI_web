@@ -1,5 +1,5 @@
 # The goal of this script is to calculate the mean absolute percent error between Zeo++ areas and areas calculated by different programs.
-# Across the 13 MOFs (I will exclude SIFSIX)
+# Across the 13 MOFs (I will exclude SIFSIX due to its poor GCMC isotherm).
 
 import numpy as np
 

@@ -39,9 +39,6 @@ for i, MOF in enumerate(MOFs):
 
 	try:
 		result_dict = pgc.area_BET(isotherm, verbose=True)
-		# print(f'result_dict #{i+1}:')
-		# print(result_dict)
-
 		# area is originally in m2/kg because material_unit is kg. https://pygaps.readthedocs.io/en/master/reference/characterisation/area_bet.html
 
 		print(f'BET area #{i+1} is {result_dict["area"] / 1000} in m2/g') # Divide by 1000 to convert from m2/kg to m2/g

@@ -44,15 +44,12 @@ for i, MOF in enumerate(MOFs):
 
 	try:
 		result_dict = pgc.area_BET(isotherm, verbose=True)
-		# print(f'result_dict #{i+1}:')
-		# print(result_dict)
-
 		# area is originally in m2/kg because material_unit is kg. https://pygaps.readthedocs.io/en/master/reference/characterisation/area_bet.html
 
 		print(f'BET area #{i+1} is {result_dict["area"] / 1000} in m2/g') # Divide by 1000 to convert from m2/kg to m2/g
 	except:
 		print('Issue with this isotherm')
-		# For MOF-808 and SIFSIX-3-Ni, got this error: pygaps.utilities.exceptions.CalculationError: The isotherm does not have enough points (at least 3) in the BET region. Unable to calculate BET area.
+		# For MOF-808 and SIFSIX-3-Ni, I get this error: pygaps.utilities.exceptions.CalculationError: The isotherm does not have enough points (at least 3) in the BET region. Unable to calculate BET area.
 
 	print()
 	print('************************************')
