@@ -143,20 +143,21 @@ a Creative Commons Attribution 4.0 International License (CC BY
   porous material’s viability in applications ranging from catalysis to
   separations to gas storage. The most widely used approach for the
   evaluation of a material’s specific surface area, i.e. surface area
-  per unit mass, is Brunauer-Emmett-Teller (BET) theory
+  per unit mass, is the Brunauer-Emmett-Teller (BET) method
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
-  et al., 1938</xref>). Given the adsorption isotherm of a gas in an
-  adsorbent, one can use BET theory to determine the specific surface
-  area of the adsorbent upon identification of an appropriate linear
-  region in the isotherm. This procedure is sometimes automatically
-  performed by the software program that comes with the commercial
-  adsorption apparatus that measures the adsorption isotherm.
-  Unfortunately, the linear region selection is a large source of
-  variability in BET-calculated areas. In addition, for certain types of
-  isotherms, automatic selection of the linear region by the commercial
-  software sometimes fails. As a result, many researchers perform the
-  analyses manually on a spreadsheet, which can become time-consuming
-  and nearly impossible for some types of isotherms
+  et al., 1938</xref>). That is, given the adsorption isotherm of a gas
+  (i.e., N<sub>2</sub> or Ar) in an adsorbent, one can use the BET
+  theory to determine the specific surface area of the adsorbent upon
+  identification of an appropriate linear region in the isotherm. This
+  procedure is sometimes automatically performed by the software program
+  that comes with the commercial adsorption apparatus that measures the
+  adsorption isotherm. Unfortunately, the linear region selection is a
+  large source of variability in BET-calculated areas. In addition, for
+  certain types of isotherms, automatic selection of the linear region
+  by the commercial software sometimes fails. As a result, many
+  researchers perform the analyses manually on a spreadsheet, which can
+  become time-consuming and nearly impossible for some types of
+  isotherms
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>). These challenges have motivated the development
   of programs for the automated determination of BET areas
@@ -195,8 +196,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
   &amp; Llewellyn, 2019</xref>;
   <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
-  et al., 2019</xref>), the SESAMI web interface allows a user to
-  generate surface area predictions on their web browser by uploading
+  et al., 2019</xref>), the SESAMI web interface allows a user to make
+  surface area predictions on their web browser simply by uploading
   isotherm data. The website facilitates access to the previously
   developed SESAMI models (SESAMI 1 and 2) for porous material surface
   area prediction
@@ -208,15 +209,14 @@ a Creative Commons Attribution 4.0 International License (CC BY
   research groups seeking to use SESAMI code, which was previously
   packaged in Python and Jupyter Notebook scripts.</p>
   <p>SESAMI 1 applies computational routines to identify suitable linear
-  regions of adsorption isotherms for Brunauer-Emmett-Teller surface
-  area prediction
+  regions of adsorption isotherms for BET surface area predictions
   (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
   1973</xref>). The automated workflow includes consideration of
   Rouquerol criteria
-  (<xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
-  Rouquerol et al., 2007</xref>;
-  <xref alt="Jean Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">Jean
-  Rouquerol et al., 2013</xref>) and the use of coefficients of
+  (<xref alt="F. Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">F.
+  Rouquerol et al., 2013</xref>;
+  <xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
+  Rouquerol et al., 2007</xref>) and the use of coefficients of
   determination as a measure of linearity. Furthermore, SESAMI 1
   supports a combined BET+ESW (excess sorption work) approach for linear
   region selection; this combined approach has been shown to outperform
@@ -234,7 +234,12 @@ a Creative Commons Attribution 4.0 International License (CC BY
   et al., 2020</xref>). The LASSO model uses as input the average
   loading in seven isotherm pressure regions as well as pairwise
   products of these loadings. The SESAMI routines support isotherms with
-  N<sub>2</sub> and argon adsorbate at 77 K or 87 K, respectively.</p>
+  N<sub>2</sub> and argon adsorbate at 77 K or 87 K, respectively. We
+  note that a recent study shows that surface areas determined from
+  N<sub>2</sub> or Ar isotherms are similar, despite the latest 2015
+  IUPAC report’s suggested use of Ar
+  (<xref alt="Datar et al., 2022" rid="ref-datar2022brunauer" ref-type="bibr">Datar
+  et al., 2022</xref>).</p>
   <p>The SESAMI web interface has extensive error handling and clearly
   alerts users of issues with their adsorption isotherm data. For
   example, it alerts the user if no ESW minima is found by SESAMI 1 or
@@ -244,10 +249,10 @@ a Creative Commons Attribution 4.0 International License (CC BY
   the interface displays SESAMI 1 calculation results including
   information on the chosen linear region, namely the satisfied
   Rouquerol criteria
-  (<xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
-  Rouquerol et al., 2007</xref>;
-  <xref alt="Jean Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">Jean
-  Rouquerol et al., 2013</xref>), the pressure range and number of data
+  (<xref alt="F. Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">F.
+  Rouquerol et al., 2013</xref>;
+  <xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
+  Rouquerol et al., 2007</xref>), the pressure range and number of data
   points in the region, and the coefficient of determination. The
   interface also displays intermediate SESAMI 1 values for surface area
   calculation, namely the BET constant, C, and the monolayer adsorption
@@ -274,19 +279,19 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="benchmarking">
   <title>Benchmarking</title>
-  <p>To assess the performance of SESAMI code in predicting surface
-  areas from isotherms, we benchmarked the SESAMI routines against other
+  <p>To assess the performance of the SESAMI code in predicting surface
+  areas from isotherms, we benchmark the SESAMI routines against other
   similar programs for 13 simulated and 9 experimental N<sub>2</sub>
-  isotherms obtained at 77 K for 14 metal-organic frameworks, some of
-  which are shown in
+  isotherms obtained at 77 K for 14 metal-organic frameworks (MOFs),
+  some of which are shown in
   <xref alt="[fig:isotherms]" rid="figU003Aisotherms">[fig:isotherms]</xref>.
-  Simulated isotherms were obtained from Grand Canonical Monte Carlo
-  (GCMC) simulations using RASPA open-source software
+  Simulated isotherms are obtained from grand canonical Monte Carlo
+  (GCMC) simulations using the open-source RASPA software
   (<xref alt="Dubbeldam et al., 2016" rid="ref-dubbeldam2016raspa" ref-type="bibr">Dubbeldam
-  et al., 2016</xref>), and experimental adsorption isotherms were
+  et al., 2016</xref>), and experimental adsorption isotherms are
   obtained from the experimental data reported by Islamogu and coworkers
   (<xref alt="Islamoglu et al., 2022" rid="ref-islamoglu2022you" ref-type="bibr">Islamoglu
-  et al., 2022</xref>). The data were then used to calculate the surface
+  et al., 2022</xref>). The data are then used to calculate the surface
   areas from the SESAMI website, BETSI
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>;
@@ -299,21 +304,20 @@ a Creative Commons Attribution 4.0 International License (CC BY
   (<xref alt="Sadeghi et al., 2020" rid="ref-beatmap" ref-type="bibr">Sadeghi
   et al., 2020</xref>).</p>
   <fig>
-    <caption><p>The crystal structures and isotherms of 3 of the 14
-    metal-organic frameworks used to benchmark different isotherm to
-    surface area
+    <caption><p>The crystal structures and isotherms of 3 of the 14 MOFs
+    used to benchmark different isotherm to surface area
     codes.<styled-content id="figU003Aisotherms"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="tiff" xlink:href="media/figures/crystal_structs_and_isotherms.tif" />
   </fig>
   <p>We find that over the set of 13 GCMC isotherms, the SESAMI machine
-  learning model and BEaTmap have the best correlation with Zeo++
-  surface areas
+  learning model (run from the web interface) and BEaTmap have the best
+  correlation with Zeo++ surface areas
   (<xref alt="Willems et al., 2012" rid="ref-willems2012algorithms" ref-type="bibr">Willems
   et al., 2012</xref>) calculated with a 1.67 Å probe N<sub>2</sub>
-  molecule (Tables <xref alt="2" rid="corr_table">2</xref> and
-  <xref alt="1" rid="gcmc_area_table">1</xref>). Nevertheless, all
-  software are in generally good agreement, underscoring the benefit of
-  a computational approach to surface area calculation. The agreement
+  molecule (Tables <xref alt="1" rid="gcmc_area_table">1</xref> and
+  <xref alt="2" rid="corr_table">2</xref>). Nevertheless, all software
+  are in generally good agreement, underscoring the benefit of a
+  computational approach to surface area calculation. The agreement
   between software is also not surprising due to the similar approach
   taken by most of the codes of considering multiple subsets of
   consecutive data points and applying checks like the Rouquerol
@@ -321,17 +325,18 @@ a Creative Commons Attribution 4.0 International License (CC BY
   agreement is also observed over the 9 experimental isotherms (Table
   <xref alt="3" rid="exp_area_table">3</xref>). The benchmark isotherms,
   XLSX files of surface area predictions across different software tools
-  for both GCMC and experimental isotherms, details about settings used
-  for each software, and employed analysis scripts are available at
+  for both GCMC and experimental isotherms, detailed settings used for
+  each software, and analysis scripts employed are available at
   <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
   <table-wrap>
     <caption>
       <p>Calculated surface areas (m<sup>2</sup>/g) for the 13 MOFs with
       GCMC isotherms. Cases where a software does not find a surface
-      area are denoted by N/A. Zeo++ calculations were conducted with
-      the same CIF files used to generate GCMC isotherms, and a 1.67 Å
-      probe N<sub>2</sub> molecule, the high accuracy flag, and 2,000
-      samples were used. All other software took as input the GCMC
+      area are denoted by N/A. Zeo++ calculations are conducted with the
+      same CIF files used to generate GCMC isotherms, and a 1.67 Å probe
+      N<sub>2</sub> molecule, the high accuracy flag, and 2,000 Monte
+      Carlo samples per atom are used. All other software take as input
+      the GCMC
       isotherms.<styled-content id="gcmc_area_table"></styled-content></p>
     </caption>
     <table>
@@ -558,7 +563,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <caption>
       <p>Calculated surface areas (m<sup>2</sup>/g) for the 9 MOFs with
       experimental isotherms. Cases where a software does not find a
-      surface area are denoted by N/A. All other software took as input
+      surface area are denoted by N/A. All other software take as input
       the experimental
       isotherms.<styled-content id="exp_area_table"></styled-content></p>
     </caption>
@@ -668,6 +673,68 @@ a Creative Commons Attribution 4.0 International License (CC BY
       </tbody>
     </table>
   </table-wrap>
+  <table-wrap>
+    <caption>
+      <p>Settings used for software for isotherm to surface area
+      calculation.<styled-content id="settings_table"></styled-content>
+      </p>
+    </caption>
+    <table>
+      <colgroup>
+        <col width="28%" />
+        <col width="28%" />
+        <col width="41%" />
+        <col width="1%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Surface area calculation software</th>
+          <th>Mode of access</th>
+          <th>Settings</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SESAMI 1 (BET)<break/>SESAM1 1 (BET+ESW)<break/>SESAMI 2
+          (LASSO)</td>
+          <td>Run from SESAMI web interface</td>
+          <td>Type of gas: Nitrogen<break/>Scope: BET and
+          BET+ESW<break/>R<sup>2</sup> cutoff:
+          0.9995<break/>R<sup>2</sup> min: 0.998<break/>Include ML
+          prediction?: Yes<break/></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>BETSI</td>
+          <td>GUI started from the command line</td>
+          <td>Minimum number of points in the linear region:
+          10<break/>Minimum R<sup>2</sup>: 0.998<break/>Rouquerol
+          criteria 1: Yes<break/>Rouquerol criteria 2:
+          Yes<break/>Rouquerol criteria 3: No<break/>Rouquerol criteria
+          4: No<break/>Rouquerol criteria 5: No<break/></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>pyGAPS</td>
+          <td>Python package</td>
+          <td>Used function
+          <monospace>area_BET</monospace><break/>Default values for
+          keyword arguments<break/></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>BEaTmap</td>
+          <td>Run from BEaTmap web interface</td>
+          <td colspan="2">Adsorbate cross-sectional area: 16.2
+          Å<sup>2</sup>/molecule<break/>Criteria 1: Yes  | Criteria 2:
+          Yes  | Criteria 3: No  | Criteria 4: No  | Minimum number of
+          data points: 5  | BET calculation criteria: Maximum data
+          points |</td>
+        </tr>
+      </tbody>
+    </table>
+  </table-wrap>
 </sec>
 <sec id="acknowledgements">
   <title>Acknowledgements</title>
@@ -678,9 +745,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   development was supported by the Office of Naval Research under grant
   number N00014-20-1-2150, as well as by the National Research
   Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded
-  by the government of Korea (MSIT). We thank Timur Islamoglu, Karam
-  Idrees, and Omar Farha for kindly providing the raw data of the
-  experimental isotherms in the work by Islamoglu et al.
+  by the government of Korea (MSIT). L. C. L. acknowledges the support
+  from the Yushan Young Scholar Program (NTU-110VV009) and the National
+  Science of Technology Council (110-2222-E-002-011-MY3). We thank Timur
+  Islamoglu, Karam Idrees, and Omar Farha for kindly providing the raw
+  data of the experimental isotherms in the work by Islamoglu et al.
   (<xref alt="2022" rid="ref-islamoglu2022you" ref-type="bibr">2022</xref>).</p>
 </sec>
 </body>
@@ -851,16 +920,16 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <ref id="ref-rouquerol2013adsorption">
     <element-citation publication-type="book">
       <person-group person-group-type="author">
-        <name><surname>Rouquerol</surname><given-names>Jean</given-names></name>
-        <name><surname>Rouquerol</surname><given-names>Françoise</given-names></name>
-        <name><surname>Llewellyn</surname><given-names>Philip</given-names></name>
-        <name><surname>Maurin</surname><given-names>Guillaume</given-names></name>
-        <name><surname>Sing</surname><given-names>Kenneth SW</given-names></name>
+        <name><surname>Rouquerol</surname><given-names>F.</given-names></name>
+        <name><surname>Rouquerol</surname><given-names>J.</given-names></name>
+        <name><surname>Sing</surname><given-names>K. S. W.</given-names></name>
+        <name><surname>Llewellyn</surname><given-names>P.</given-names></name>
+        <name><surname>Maurin</surname><given-names>G.</given-names></name>
       </person-group>
       <source>Adsorption by Powders and Porous Solids: Principles, Methodology and Applications</source>
       <publisher-name>Academic press</publisher-name>
       <year iso-8601-date="2013">2013</year>
-      <pub-id pub-id-type="doi">10.1016/B978-0-12-598920-6.X5000-3</pub-id>
+      <edition>2nd Edition</edition>
     </element-citation>
   </ref>
   <ref id="ref-rouquerol2007bet">
@@ -869,10 +938,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Rouquerol</surname><given-names>J</given-names></name>
         <name><surname>Llewellyn</surname><given-names>Philip</given-names></name>
         <name><surname>Rouquerol</surname><given-names>F</given-names></name>
-        <name><surname>others</surname></name>
       </person-group>
       <article-title>Is the BET Equation Applicable to Microporous Adsorbents?</article-title>
-      <source>Stud. Surf. Sci. Catal</source>
+      <source>Studies in Surface Science and Catalysis</source>
       <year iso-8601-date="2007">2007</year>
       <volume>160</volume>
       <issue>07</issue>
@@ -904,7 +972,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <element-citation>
       <person-group person-group-type="author">
         <name><surname>Rampersad</surname><given-names>J.</given-names></name>
-        <name><surname>Osterrieth</surname><given-names>J. W.</given-names></name>
+        <name><surname>Osterrieth</surname><given-names>J. .W. M.</given-names></name>
         <name><surname>Rampal</surname><given-names>N.</given-names></name>
       </person-group>
       <article-title>Betsi-gui</article-title>
@@ -946,13 +1014,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <ref id="ref-islamoglu2022you">
     <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
-        <name><surname>Islamoglu</surname><given-names>Timur</given-names></name>
-        <name><surname>Idrees</surname><given-names>Karam B</given-names></name>
-        <name><surname>Son</surname><given-names>Florencia A</given-names></name>
-        <name><surname>Chen</surname><given-names>Zhijie</given-names></name>
-        <name><surname>Lee</surname><given-names>Seung-Joon</given-names></name>
-        <name><surname>Li</surname><given-names>Peng</given-names></name>
-        <name><surname>Farha</surname><given-names>Omar K</given-names></name>
+        <name><surname>Islamoglu</surname><given-names>T.</given-names></name>
+        <name><surname>Idrees</surname><given-names>K. B.</given-names></name>
+        <name><surname>Son</surname><given-names>F. A.</given-names></name>
+        <name><surname>Chen</surname><given-names>Z.</given-names></name>
+        <name><surname>Lee</surname><given-names>S.</given-names></name>
+        <name><surname>Li</surname><given-names>P.</given-names></name>
+        <name><surname>Farha</surname><given-names>O. K.</given-names></name>
       </person-group>
       <article-title>Are You Using the Right Probe Molecules for Assessing the Textural Properties of Metal–Organic Frameworks?</article-title>
       <source>Journal of Materials Chemistry A</source>
@@ -963,6 +1031,25 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <pub-id pub-id-type="doi">10.1039/D1TA08021K</pub-id>
       <fpage>157</fpage>
       <lpage>173</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-datar2022brunauer">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Datar</surname><given-names>A.</given-names></name>
+        <name><surname>Yoon</surname><given-names>S.</given-names></name>
+        <name><surname>Lin</surname><given-names>L</given-names></name>
+        <name><surname>Chung</surname><given-names>Y. G.</given-names></name>
+      </person-group>
+      <article-title>Brunauer–Emmett–Teller Areas from Nitrogen and Argon Isotherms Are Similar</article-title>
+      <source>Langmuir</source>
+      <publisher-name>ACS Publications</publisher-name>
+      <year iso-8601-date="2022">2022</year>
+      <volume>38</volume>
+      <issue>38</issue>
+      <pub-id pub-id-type="doi">10.1021/acs.langmuir.2c01390</pub-id>
+      <fpage>11631</fpage>
+      <lpage>11640</lpage>
     </element-citation>
   </ref>
 </ref-list>
