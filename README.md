@@ -9,7 +9,7 @@ For additional support, feedback, and inquiry, contact support(at)sesami-web.org
 # Sample Output
 You will be able to change font type, font size, dot-per-inch (dpi) etc on this website for your publication.
 
-![example_input](/example_input/sesami-output.png)
+![example_input](/images/sesami-output.png)
 
 # Website Configuration
 Website is powered by `Mongo DB 5.3.1` and `Google Cloud Run`

@@ -28,7 +28,7 @@ Prediction of Materials from Adsorption Isotherms</article-title>
 <surname>Terrones</surname>
 <given-names>Gianmarco G.</given-names>
 </name>
-<xref ref-type="aff" rid="aff-1"/>
+<xref ref-type="aff" rid="aff-1g"/>
 </contrib>
 <contrib contrib-type="author">
 <contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-6530-0974</contrib-id>
@@ -75,31 +75,31 @@ Prediction of Materials from Adsorption Isotherms</article-title>
 <aff id="aff-1">
 <institution-wrap>
 <institution>Department of Chemical Engineering, Massachusetts Institute
-of Technology, USA</institution>
+of Technology, Cambridge, MA, USA</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-2">
 <institution-wrap>
 <institution>School of Chemical Engineering, Pusan National University,
-South Korea</institution>
+Busan, South Korea</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-3">
 <institution-wrap>
 <institution>William G. Lowrie Department of Chemical and Biomolecular
-Engineering, The Ohio State University, USA</institution>
+Engineering, The Ohio State University, Columbus, OH, USA</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-4">
 <institution-wrap>
 <institution>Department of Chemical Engineering, National Taiwan
-University, Taiwan</institution>
+University, Taipei, Taiwan</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-5">
 <institution-wrap>
 <institution>Department of Chemistry, Massachusetts Institute of
-Technology, USA</institution>
+Technology, Cambridge, MA, USA</institution>
 </institution-wrap>
 </aff>
 </contrib-group>
@@ -147,7 +147,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
   et al., 1938</xref>). That is, given the adsorption isotherm of a gas
   (i.e., N<sub>2</sub> or Ar) in an adsorbent, one can use the BET
-  theory to determine the specific surface area of the adsorbent upon
+  method to determine the specific surface area of the adsorbent upon
   identification of an appropriate linear region in the isotherm. This
   procedure is sometimes automatically performed by the software program
   that comes with the commercial adsorption apparatus that measures the
@@ -220,7 +220,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   determination as a measure of linearity. Furthermore, SESAMI 1
   supports a combined BET+ESW (excess sorption work) approach for linear
   region selection; this combined approach has been shown to outperform
-  the BET approach in some cases
+  the BET method in some cases
   (<xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
   et al., 2019</xref>). A user can specify a cutoff R<sup>2</sup> and a
   minimum R<sup>2</sup>, such that a candidate linear region is favored
@@ -239,7 +239,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   N<sub>2</sub> or Ar isotherms are similar, despite the latest 2015
   IUPAC report’s suggested use of Ar
   (<xref alt="Datar et al., 2022" rid="ref-datar2022brunauer" ref-type="bibr">Datar
-  et al., 2022</xref>).</p>
+  et al., 2022</xref>;
+  <xref alt="Thommes et al., 2015" rid="ref-thommes2015physisorption" ref-type="bibr">Thommes
+  et al., 2015</xref>).</p>
   <p>The SESAMI web interface has extensive error handling and clearly
   alerts users of issues with their adsorption isotherm data. For
   example, it alerts the user if no ESW minima is found by SESAMI 1 or
@@ -269,10 +271,12 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
   <fig>
     <caption><p>Information displayed by the SESAMI web interface after
-    a calculation has been run. a) Interface printout of information on
-    the SESAMI 1 chosen linear regions, and SESAMI 1 and 2 calculation
-    results. b) Figure download functionality for figures detailing
-    SESAMI 1
+    a calculation has been run, here for a GCMC isotherm of MIL-101.
+    Apart from the inclusion of the LASSO prediction, default settings
+    were used (e.g. N<sub>2</sub> gas). a) Interface printout of
+    information on the SESAMI 1 chosen linear regions, and SESAMI 1 and
+    2 calculation results. b) Figure download functionality for figures
+    detailing the SESAMI 1
     calculation.<styled-content id="figU003Ainterface"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="tiff" xlink:href="media/figures/web_interface.tif" />
   </fig>
@@ -498,25 +502,27 @@ a Creative Commons Attribution 4.0 International License (CC BY
   </table-wrap>
   <table-wrap>
     <caption>
-      <p>Comparison between surface area predictions from Zeo++ and
-      software for isotherm to surface area calculation, over the 13
-      MOFs with GCMC isotherms. The number of successful isotherm to
-      surface area calculations for each software are indicated as
-      well.<styled-content id="corr_table"></styled-content></p>
+      <p>Comparison between surface area predictions from software for
+      isotherm to surface area calculation and from Zeo++, over the 13
+      MOFs with GCMC isotherms. The mean absolute percent error and
+      Pearson correlation coefficient are taken with respect to Zeo++
+      predictions for each software, over all successful surface area
+      calculations for that
+      software.<styled-content id="corr_table"></styled-content></p>
     </caption>
     <table>
       <colgroup>
-        <col width="44%" />
-        <col width="19%" />
-        <col width="19%" />
-        <col width="19%" />
+        <col width="33%" />
+        <col width="22%" />
+        <col width="28%" />
+        <col width="17%" />
       </colgroup>
       <thead>
         <tr>
-          <th>Surface area calculation software</th>
-          <th>Mean Absolute Percent Error (MAPE)</th>
+          <th>Software</th>
+          <th>Mean absolute percent error (MAPE)</th>
           <th>Pearson correlation coefficient</th>
-          <th>Successful calculations</th>
+          <th>Successful calculations (out of 13)</th>
         </tr>
       </thead>
       <tbody>
@@ -676,8 +682,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <table-wrap>
     <caption>
       <p>Settings used for software for isotherm to surface area
-      calculation.<styled-content id="settings_table"></styled-content>
-      </p>
+      calculation. All BET calculations by SESAMI 1 and pyGAPS reported
+      in this work fulfill Rouquerol criteria 1 and
+      2.<styled-content id="settings_table"></styled-content> </p>
     </caption>
     <table>
       <colgroup>
@@ -687,7 +694,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       </colgroup>
       <thead>
         <tr>
-          <th>Surface area calculation software</th>
+          <th>Software</th>
           <th>Mode of access</th>
           <th>Settings</th>
         </tr>
@@ -1048,6 +1055,28 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <pub-id pub-id-type="doi">10.1021/acs.langmuir.2c01390</pub-id>
       <fpage>11631</fpage>
       <lpage>11640</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-thommes2015physisorption">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Thommes</surname><given-names>M.</given-names></name>
+        <name><surname>Kaneko</surname><given-names>K.</given-names></name>
+        <name><surname>Neimark</surname><given-names>A. V.</given-names></name>
+        <name><surname>Olivier</surname><given-names>J. P.</given-names></name>
+        <name><surname>Rodriguez-Reinoso</surname><given-names>F.</given-names></name>
+        <name><surname>Rouquerol</surname><given-names>J.</given-names></name>
+        <name><surname>Sing</surname><given-names>K. S. W.</given-names></name>
+      </person-group>
+      <article-title>Physisorption of Gases, with Special Reference to the Evaluation of Surface Area and Pore Size Distribution (IUPAC Technical Report)</article-title>
+      <source>Pure and Applied Chemistry</source>
+      <publisher-name>De Gruyter</publisher-name>
+      <year iso-8601-date="2015">2015</year>
+      <volume>87</volume>
+      <issue>9-10</issue>
+      <pub-id pub-id-type="doi">10.1515/pac-2014-1117</pub-id>
+      <fpage>1051</fpage>
+      <lpage>1069</lpage>
     </element-citation>
   </ref>
 </ref-list>
