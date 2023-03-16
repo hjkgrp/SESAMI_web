@@ -229,7 +229,7 @@ class BETAn:
         x : numpy.ndarray
             Array of p/p0 values. p is vapor pressure, and p0 is saturation vapor pressure.
         params : tuple
-            The variables needed for the BET equations. Xm and C, from Fagerlund, G. (1973). Determination of specific surface by the BET method.        
+            The variables needed for the BET equations. A molar version of Xm (qm) and C, from Fagerlund, G. (1973). Determination of specific surface by the BET method.        
 
         Returns
         -------
@@ -300,7 +300,7 @@ class BETAn:
         with_fit : str
             If set to "Yes", the plot will include the BET fit, the BET+ESW fit, the BET region, and the BET+ESW region; otherwise, not.            
         fit_data : list
-            Information for BET and BET+ESW. In particular (for BET and for BET+ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.
+            Information for BET and BET+ESW. In particular (for BET and for BET+ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as a molar version of Xm (called qm here) and C. These last two are referred to as params in the code.
 
         Returns
         -------
@@ -721,7 +721,7 @@ class BETAn:
         with_fit : str
             If set to "Yes", the plot will include the BET fit, the BET+ESW fit, the BET region, and the BET+ESW region; otherwise, not.             
         fit_data : list
-            Information for BET and BET+ESW. In particular (for BET and for BET+ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as Xm (called qm here) and C. These last two are referred to as params in the code.           
+            Information for BET and BET+ESW. In particular (for BET and for BET+ESW), the indices of the data points that start and end the chosen linear region (rbet), as well as a molar version of Xm (called qm here) and C. These last two are referred to as params in the code.           
 
         Returns
         -------
@@ -1144,9 +1144,9 @@ class BETAn:
         plotting_information : dict
             Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
         bet_info : list
-            [rbet, bet_params]. The first entry contains the indices of the data points that start and end the chosen linear region (rbet). The second entry contains Xm (called qm here) and C.
+            [rbet, bet_params]. The first entry contains the indices of the data points that start and end the chosen linear region (rbet). The second entry contains a molar version of Xm (called qm here) and C.
         betesw_info : list
-            [rbet, bet_params]. The first entry contains the indices of the data points that start and end the chosen linear region (rbet). The second entry contains Xm (called qm here) and C.
+            [rbet, bet_params]. The first entry contains the indices of the data points that start and end the chosen linear region (rbet). The second entry contains a molar version of Xm (called qm here) and C.
         data : pandas.core.frame.DataFrame
             Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
         plot_number : int
