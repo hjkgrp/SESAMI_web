@@ -1,5 +1,5 @@
 ---
-title: 'SESAMI Web: An Accessible Interface for Surface Area Prediction from Adsorption Isotherms'
+title: 'SESAMI Web: An Accessible Interface for Surface Area Prediction of Materials from Adsorption Isotherms'
 tags:
   - SESAMI
   - surface area
@@ -12,13 +12,17 @@ authors:
     orcid: 0000-0001-5360-165X
     affiliation: 1
   - name: Yu Chen
+    orcid: 0000-0002-6530-0974
     affiliation: 2
+  - name: Archit Datar
+    orcid: 0000-0002-5276-0103
+    affiliation: 3
   - name: Li-Chiang Lin
     orcid: 0000-0002-2821-9501
-    affiliation: 3
+    affiliation: 4
   - name: Heather J. Kulik
     orcid: 0000-0001-9342-0191
-    affiliation: "1, 4"
+    affiliation: "1, 5"
   - name: Yongchul G. Chung
     orcid: 0000-0002-7756-0589
     corresponding: true
@@ -30,8 +34,10 @@ affiliations:
    index: 2
  - name: William G. Lowrie Department of Chemical and Biomolecular Engineering, The Ohio State University, USA
    index: 3
- - name: Department of Chemistry, Massachusetts Institute of Technology, USA
+ - name: Department of Chemical Engineering, National Taiwan University, Taiwan
    index: 4
+ - name: Department of Chemistry, Massachusetts Institute of Technology, USA
+   index: 5
 date: 17 March 2023
 bibliography: paper.bib
 
@@ -107,7 +113,7 @@ Table: Calculated surface areas (m^2^/g) for the 9 MOFs with experimental isothe
 
 # Acknowledgements
 
-This publication was made possible by the generous support of the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and was undertaken in the MIT Portugal Program. Software and website development was supported by the Office of Naval Research under grant number N00014-20-1-2150, as well as by the National Research Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded by the government of Korea (MSIT). We thank Omar Farha, Timur Islamoglu, and Karam Idrees for kindly providing the raw data of the experimental isotherms in the work by @islamoglu2022you.
+This publication was made possible by the generous support of the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and was undertaken in the MIT Portugal Program. Software and website development was supported by the Office of Naval Research under grant number N00014-20-1-2150, as well as by the National Research Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded by the government of Korea (MSIT). We thank Timur Islamoglu, Karam Idrees, and Omar Farha for kindly providing the raw data of the experimental isotherms in the work by @islamoglu2022you.
 
 <!-- # Citations
 

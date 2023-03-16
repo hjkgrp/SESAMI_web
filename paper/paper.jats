@@ -19,7 +19,7 @@
 <article-id pub-id-type="doi">N/A</article-id>
 <title-group>
 <article-title>SESAMI Web: An Accessible Interface for Surface Area
-Prediction from Adsorption Isotherms</article-title>
+Prediction of Materials from Adsorption Isotherms</article-title>
 </title-group>
 <contrib-group>
 <contrib contrib-type="author">
@@ -31,6 +31,7 @@ Prediction from Adsorption Isotherms</article-title>
 <xref ref-type="aff" rid="aff-1"/>
 </contrib>
 <contrib contrib-type="author">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-6530-0974</contrib-id>
 <name>
 <surname>Chen</surname>
 <given-names>Yu</given-names>
@@ -38,12 +39,20 @@ Prediction from Adsorption Isotherms</article-title>
 <xref ref-type="aff" rid="aff-2"/>
 </contrib>
 <contrib contrib-type="author">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-5276-0103</contrib-id>
+<name>
+<surname>Datar</surname>
+<given-names>Archit</given-names>
+</name>
+<xref ref-type="aff" rid="aff-3"/>
+</contrib>
+<contrib contrib-type="author">
 <contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-2821-9501</contrib-id>
 <name>
 <surname>Lin</surname>
 <given-names>Li-Chiang</given-names>
 </name>
-<xref ref-type="aff" rid="aff-3"/>
+<xref ref-type="aff" rid="aff-4"/>
 </contrib>
 <contrib contrib-type="author">
 <contrib-id contrib-id-type="orcid">https://orcid.org/0000-0001-9342-0191</contrib-id>
@@ -52,7 +61,7 @@ Prediction from Adsorption Isotherms</article-title>
 <given-names>Heather J.</given-names>
 </name>
 <xref ref-type="aff" rid="aff-1"/>
-<xref ref-type="aff" rid="aff-4"/>
+<xref ref-type="aff" rid="aff-5"/>
 </contrib>
 <contrib contrib-type="author" corresp="yes">
 <contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-7756-0589</contrib-id>
@@ -82,6 +91,12 @@ Engineering, The Ohio State University, USA</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-4">
+<institution-wrap>
+<institution>Department of Chemical Engineering, National Taiwan
+University, Taiwan</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-5">
 <institution-wrap>
 <institution>Department of Chemistry, Massachusetts Institute of
 Technology, USA</institution>
@@ -663,8 +678,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   development was supported by the Office of Naval Research under grant
   number N00014-20-1-2150, as well as by the National Research
   Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded
-  by the government of Korea (MSIT). We thank Omar Farha, Timur
-  Islamoglu, and Karam Idrees for kindly providing the raw data of the
+  by the government of Korea (MSIT). We thank Timur Islamoglu, Karam
+  Idrees, and Omar Farha for kindly providing the raw data of the
   experimental isotherms in the work by Islamoglu et al.
   (<xref alt="2022" rid="ref-islamoglu2022you" ref-type="bibr">2022</xref>).</p>
 </sec>
