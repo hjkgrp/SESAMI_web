@@ -10,7 +10,7 @@ tags:
 authors:
   - name: Gianmarco G. Terrones
     orcid: 0000-0001-5360-165X
-    affiliation: 1
+    affiliation: 1g
   - name: Yu Chen
     orcid: 0000-0002-6530-0974
     affiliation: 2
@@ -110,7 +110,7 @@ Table: Calculated surface areas (m^2^/g) for the 9 MOFs with experimental isothe
 | UiO-66 | 1251 | 1228 | 1413 | 1250 | 1249 | 1246 |
 | ZIF-8 | 1092 | 910 | 1214 | N/A | 1082 | 1047 |
 
-Table: Settings used for software for isotherm to surface area calculation.\label{settings_table}
+Table: Settings used for software for isotherm to surface area calculation. All BET calculations by SESAMI 1 and pyGAPS reported in this work fulfill Rouquerol criteria 1 and 2.\label{settings_table}
 <!-- Need to use grid table for new lines in table. https://stackoverflow.com/questions/11700487/how-do-i-add-a-newline-in-a-markdown-table -->
 
 +-----------------------------------+------------------------------------+-----------------------------------------------------+

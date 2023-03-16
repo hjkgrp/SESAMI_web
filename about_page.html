@@ -29,6 +29,13 @@
     margin-right: auto;
     width: 100%;
   }
+
+  img {
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>
 
 <body>
@@ -60,12 +67,14 @@
     We consider the “right-most” region, which is the region having a high-pressure limit at the point where the first maximum of q(1 − p/p0) occurs (q is the loading), as per consistency criterion 1, and a low-pressure limit at the lowest pressure point on the isotherm. Next, we consider a region that has the same upper pressure limit but a lower pressure limit that is shifted to the right by one point on the pressure axis. We continue to move the lower pressure limit to the right until we locate a region with 4 consecutive data points. Then, we shift the upper pressure limit to a smaller value by one point, and again move the lower pressure limit to the right as before until we reach another 4-point linear region. The process continues until we reach a 4-point region at the lowest pressure point on the isotherm, which we define as the “left-most” region. We select a linear region to compute the BET area that satisfies as many consistency criteria as possible. <br><br>
 
     <h4>Best Region for BET area calculation</h4> 
-    To select the best region (i.e., the linear region that satisfies the most consistency criteria), we search through all possible “linear” regions. Here, a linear region is a set of 4 consecutive points having an R<sup>2</sup> value of greater than 0.998, and fulfilling the consistency criteria 1 and 2. We start with the “right-most” region from the isotherm, and check if it is “linear”. If it is, we store it as the “current best region”. If not, we continue to consider subsequent regions till we find one that is “linear”. Then, we move on to further regions as per the above scheme. If a region is not “linear”, it is disregarded. If it is, we check if it satisfies consistency criteria 3, 4 and has an R<sup>2</sup> > 0.9995. The satisfaction of these three conditions indicates that the region satisfies all the requirements of the BET analysis. We choose this as the “final best region” and the algorithm ends. If not, we check if it satisfies more consistency criteria than the “current best region”. If it does, we replace the “current best region” with the new region. This process is repeated until we reach the “left-most” region. At this point, we end the search by choosing the “current best region” as the “final best region”. The final best region is used to compute the BET area for the structure. <br><br>
+    To select the best region (i.e., the linear region that satisfies the most consistency criteria), we search through all possible “linear” regions. Here, a linear region is a set of 4 consecutive points having an R<sup>2</sup> value of greater than 0.998 (or whatever the user has set R<sup>2</sup> min to be), and fulfilling the consistency criteria 1 and 2. We start with the “right-most” region from the isotherm, and check if it is “linear”. If it is, we store it as the “current best region”. If not, we continue to consider subsequent regions till we find one that is “linear”. Then, we move on to further regions as per the above scheme. If a region is not “linear”, it is disregarded. If it is, we check if it satisfies consistency criteria 3, 4 and has an R<sup>2</sup> > 0.9995 (or whatever the user has set R<sup>2</sup> cutoff to be). The satisfaction of these three conditions indicates that the region satisfies all the requirements of the BET analysis. We choose this as the “final best region” and the algorithm ends. If not, we check if it satisfies more consistency criteria than the “current best region”. If it does, we replace the “current best region” with the new region. This process is repeated until we reach the “left-most” region. At this point, we end the search by choosing the “current best region” as the “final best region”. The final best region is used to compute the BET area for the structure. <br><br>
+
+    <img src="images/SESAMI_1_algorithm.png" alt="The SESAMI 1 algorithm">
 
     <h3>ESW areas</h3> 
-    The ESW area was computed from the loading at the first minima on the ESW plot. <br><br>
+    The ESW area is computed from the loading at the first minima on the ESW plot. <br><br>
 
-    We computed the slope at each point and identified the point where the slope changed sign from negative to positive to obtain the ESW minima. The slope at each point was the slope of a line fitted through 7 points; 3 before and 3 after the selected point. Even though using 7 points to compute the slopes in our study yielded satisfactory results, we still highly recommend that users visually inspect the choice of the first local minimum to ensure that it is reasonable. <br><br>
+    We compute the slope at each point and identify the point where the slope changes sign from negative to positive to obtain the ESW minima. The slope at each point is the slope of a line fitted through 7 points; 3 before and 3 after the selected point. Even though using 7 points to compute the slopes in the SESAMI 1 study yielded satisfactory results, we still highly recommend that users visually inspect the choice of the first local minimum to ensure that it is reasonable. <br><br>
 
     <h3>BET + ESW areas</h3> 
     The BET + ESW areas are computed in the same way as the BET areas except that the algorithm is forced to include the ESW minimum in the selected region. Thus, the chosen region must satisfy the consistency criteria 1, 2 and have an R<sup>2</sup> > 0.998, and include the relative pressure corresponding to the ESW minimum point. The correct calculation of the BET + ESW areas depends on the correct identification of the ESW minimum. If the ESW minimum is wrongly identified, the BET + ESW area will also be wrong. Thus, we recommend that users ensure that the first minimum is correctly identified. <br><br>
