@@ -311,7 +311,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   </fig>
   <p>We find that over the set of 13 GCMC isotherms, the SESAMI machine
   learning model (run from the web interface) and BEaTmap have the best
-  correlation with Zeo++ surface areas
+  correlation with Zeo++ version 0.3 surface areas
   (<xref alt="Willems et al., 2012" rid="ref-willems2012algorithms" ref-type="bibr">Willems
   et al., 2012</xref>) calculated with a 1.67 Å probe N<sub>2</sub>
   molecule (Tables <xref alt="1" rid="gcmc_area_table">1</xref> and
@@ -682,55 +682,53 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <table>
       <colgroup>
         <col width="28%" />
-        <col width="28%" />
-        <col width="41%" />
-        <col width="1%" />
+        <col width="29%" />
+        <col width="42%" />
       </colgroup>
       <thead>
         <tr>
           <th>Surface area calculation software</th>
           <th>Mode of access</th>
           <th>Settings</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>SESAMI 1 (BET)<break/>SESAM1 1 (BET+ESW)<break/>SESAMI 2
           (LASSO)</td>
-          <td>Run from SESAMI web interface</td>
+          <td>Run from SESAMI web interface<break/>Accessed February
+          2023</td>
           <td>Type of gas: Nitrogen<break/>Scope: BET and
           BET+ESW<break/>R<sup>2</sup> cutoff:
           0.9995<break/>R<sup>2</sup> min: 0.998<break/>Include ML
           prediction?: Yes<break/></td>
-          <td></td>
         </tr>
         <tr>
           <td>BETSI</td>
-          <td>GUI started from the command line</td>
+          <td>GUI started from the command line<break/>GitHub version
+          1.0.20</td>
           <td>Minimum number of points in the linear region:
           10<break/>Minimum R<sup>2</sup>: 0.998<break/>Rouquerol
           criteria 1: Yes<break/>Rouquerol criteria 2:
           Yes<break/>Rouquerol criteria 3: No<break/>Rouquerol criteria
           4: No<break/>Rouquerol criteria 5: No<break/></td>
-          <td></td>
         </tr>
         <tr>
           <td>pyGAPS</td>
-          <td>Python package</td>
+          <td>Python package<break/>Conda version 4.4.2</td>
           <td>Used function
           <monospace>area_BET</monospace><break/>Default values for
           keyword arguments<break/></td>
-          <td></td>
         </tr>
         <tr>
           <td>BEaTmap</td>
-          <td>Run from BEaTmap web interface</td>
-          <td colspan="2">Adsorbate cross-sectional area: 16.2
-          Å<sup>2</sup>/molecule<break/>Criteria 1: Yes  | Criteria 2:
-          Yes  | Criteria 3: No  | Criteria 4: No  | Minimum number of
-          data points: 5  | BET calculation criteria: Maximum data
-          points |</td>
+          <td>Run from BEaTmap web interface<break/>Accessed February
+          2023</td>
+          <td>Adsorbate cross-sectional area: 16.2
+          Å<sup>2</sup>/molecule<break/>Criteria 1: Yes<break/>Criteria
+          2: Yes<break/>Criteria 3: No<break/>Criteria 4:
+          No<break/>Minimum number of data points: 5<break/>BET
+          calculation criteria: Maximum data points</td>
         </tr>
       </tbody>
     </table>

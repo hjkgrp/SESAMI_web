@@ -65,7 +65,7 @@ To assess the performance of the SESAMI code in predicting surface areas from is
 
 ![The crystal structures and isotherms of 3 of the 14 MOFs used to benchmark different isotherm to surface area codes.\label{fig:isotherms}](figures/crystal_structs_and_isotherms.tif)
 
-We find that over the set of 13 GCMC isotherms, the SESAMI machine learning model (run from the web interface) and BEaTmap have the best correlation with Zeo++ surface areas [@willems2012algorithms] calculated with a 1.67 Å probe N~2~ molecule (Tables \ref{gcmc_area_table} and \ref{corr_table}). Nevertheless, all software are in generally good agreement, underscoring the benefit of a computational approach to surface area calculation. The agreement between software is also not surprising due to the similar approach taken by most of the codes of considering multiple subsets of consecutive data points and applying checks like the Rouquerol criteria to select a linear region for BET analysis. Indeed, this agreement is also observed over the 9 experimental isotherms (Table \ref{exp_area_table}). The benchmark isotherms, XLSX files of surface area predictions across different software tools for both GCMC and experimental isotherms, detailed settings used for each software, and analysis scripts employed are available at <https://github.com/hjkgrp/SESAMI_web>.
+We find that over the set of 13 GCMC isotherms, the SESAMI machine learning model (run from the web interface) and BEaTmap have the best correlation with Zeo++ version 0.3 surface areas [@willems2012algorithms] calculated with a 1.67 Å probe N~2~ molecule (Tables \ref{gcmc_area_table} and \ref{corr_table}). Nevertheless, all software are in generally good agreement, underscoring the benefit of a computational approach to surface area calculation. The agreement between software is also not surprising due to the similar approach taken by most of the codes of considering multiple subsets of consecutive data points and applying checks like the Rouquerol criteria to select a linear region for BET analysis. Indeed, this agreement is also observed over the 9 experimental isotherms (Table \ref{exp_area_table}). The benchmark isotherms, XLSX files of surface area predictions across different software tools for both GCMC and experimental isotherms, detailed settings used for each software, and analysis scripts employed are available at <https://github.com/hjkgrp/SESAMI_web>.
 
 Table: Calculated surface areas (m^2^/g) for the 13 MOFs with GCMC isotherms. Cases where a software does not find a surface area are denoted by N/A. Zeo++ calculations are conducted with the same CIF files used to generate GCMC isotherms, and a 1.67 Å probe N~2~ molecule, the high accuracy flag, and 2,000 Monte Carlo samples per atom are used. All other software take as input the GCMC isotherms.\label{gcmc_area_table}
 
@@ -113,34 +113,34 @@ Table: Calculated surface areas (m^2^/g) for the 9 MOFs with experimental isothe
 Table: Settings used for software for isotherm to surface area calculation.\label{settings_table}
 <!-- Need to use grid table for new lines in table. https://stackoverflow.com/questions/11700487/how-do-i-add-a-newline-in-a-markdown-table -->
 
-+-----------------------------------+-----------------------------------+----------------------------------------------------+
-| Surface area calculation software | Mode of access                    | Settings                                           |
-+===================================+===================================+====================================================+
-| SESAMI 1 (BET)\                   | Run from SESAMI web interface     | Type of gas: Nitrogen\                             |
-| SESAM1 1 (BET+ESW)\               |                                   | Scope: BET and BET+ESW\                            |
-| SESAMI 2 (LASSO)                  |                                   | R^2^ cutoff: 0.9995\                               |
-|                                   |                                   | R^2^ min: 0.998\                                   |
-|                                   |                                   | Include ML prediction?: Yes\                       |
-+-----------------------------------+-----------------------------------+----------------------------------------------------+
-| BETSI                             | GUI started from the command line | Minimum number of points in the linear region: 10\ |
-|                                   |                                   | Minimum R^2^: 0.998\                               |
-|                                   |                                   | Rouquerol criteria 1: Yes\                         |
-|                                   |                                   | Rouquerol criteria 2: Yes\                         |
-|                                   |                                   | Rouquerol criteria 3: No\                          |
-|                                   |                                   | Rouquerol criteria 4: No\                          |
-|                                   |                                   | Rouquerol criteria 5: No\                          |
-+-----------------------------------+-----------------------------------+----------------------------------------------------+
-| pyGAPS                            | Python package                    | Used function `area_BET`\                          |
-|                                   |                                   | Default values for keyword arguments\              |
-+-----------------------------------+-----------------------------------+----------------------------------------------------+
-| BEaTmap                           | Run from BEaTmap web interface    | Adsorbate cross-sectional area: 16.2 Å^2^/molecule\ |
-|                                   |                                   | Criteria 1: Yes\                                   |
-|                                   |                                   | Criteria 2: Yes\                                   |
-|                                   |                                   | Criteria 3: No\                                    |
-|                                   |                                   | Criteria 4: No\                                    |
-|                                   |                                   | Minimum number of data points: 5\                  |
-|                                   |                                   | BET calculation criteria: Maximum data points      |
-+-----------------------------------+-----------------------------------+----------------------------------------------------+
++-----------------------------------+------------------------------------+-----------------------------------------------------+
+| Surface area calculation software | Mode of access                     | Settings                                            |
++===================================+====================================+=====================================================+
+| SESAMI 1 (BET)\                   | Run from SESAMI web interface\     | Type of gas: Nitrogen\                              |
+| SESAM1 1 (BET+ESW)\               | Accessed February 2023             | Scope: BET and BET+ESW\                             |
+| SESAMI 2 (LASSO)                  |                                    | R^2^ cutoff: 0.9995\                                |
+|                                   |                                    | R^2^ min: 0.998\                                    |
+|                                   |                                    | Include ML prediction?: Yes\                        |
++-----------------------------------+------------------------------------+-----------------------------------------------------+
+| BETSI                             | GUI started from the command line\ | Minimum number of points in the linear region: 10\  |
+|                                   | GitHub version 1.0.20              | Minimum R^2^: 0.998\                                |
+|                                   |                                    | Rouquerol criteria 1: Yes\                          |
+|                                   |                                    | Rouquerol criteria 2: Yes\                          |
+|                                   |                                    | Rouquerol criteria 3: No\                           |
+|                                   |                                    | Rouquerol criteria 4: No\                           |
+|                                   |                                    | Rouquerol criteria 5: No\                           |
++-----------------------------------+------------------------------------+-----------------------------------------------------+
+| pyGAPS                            | Python package\                    | Used function `area_BET`\                           |
+|                                   | Conda version 4.4.2                | Default values for keyword arguments\               |
++-----------------------------------+------------------------------------+-----------------------------------------------------+
+| BEaTmap                           | Run from BEaTmap web interface\    | Adsorbate cross-sectional area: 16.2 Å^2^/molecule\ |
+|                                   | Accessed February 2023             | Criteria 1: Yes\                                    |
+|                                   |                                    | Criteria 2: Yes\                                    |
+|                                   |                                    | Criteria 3: No\                                     |
+|                                   |                                    | Criteria 4: No\                                     |
+|                                   |                                    | Minimum number of data points: 5\                   |
+|                                   |                                    | BET calculation criteria: Maximum data points       |
++-----------------------------------+------------------------------------+-----------------------------------------------------+
 
 
 # Acknowledgements
