@@ -412,7 +412,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   some of which are shown in
   <xref alt="[fig:isotherms]" rid="figU003Aisotherms">[fig:isotherms]</xref>.
   Simulated isotherms are obtained from grand canonical Monte Carlo
-  (GCMC) simulations using the open-source RASPA software
+  (GCMC) simulations using the open-source RASPA 2.0.47 software
   (<xref alt="Dubbeldam et al., 2016" rid="ref-dubbeldam2016raspa" ref-type="bibr">Dubbeldam
   et al., 2016</xref>), and experimental adsorption isotherms are
   obtained from the experimental data reported by Islamogu and coworkers
