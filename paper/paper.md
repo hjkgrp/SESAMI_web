@@ -50,13 +50,13 @@ Surface area determination is important for the evaluation of a porous materialâ
 
 # Theory background
 
-In the BET method, specific surface area is calculation using Equation \ref{eq:surface_area}. $S$ is a material's specific surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
+In the BET method, specific surface area is calculation using Equation \ref{eq:surface_area}. $S$ is a material's specific surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
 
 \begin{equation}\label{eq:surface_area}
 S = \frac{q_m} N A_m
 \end{equation}
 
-In order to attain $q_m$, it is necessary to identify the monolayer loading region. This region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure and $p_0$ is the saturated vapor pressure. $s$ is the slope of the line of $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ versus $\frac{p}{p_0}$ within the monolayer loading region, and $i$ is the intercept of the line [@fagerlund1973determination]. $s$ and $i$ can be used to calculate the BET constant, $C$, and $q_m$ (see Equations \ref{eq:C} and \ref{eq:qm}).  
+In order to attain $q_m$, it is necessary to identify the monolayer loading region. This region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. $s$ is the slope of the line of $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ versus $\frac{p}{p_0}$ within the monolayer loading region, and $i$ is the intercept of the line [@fagerlund1973determination]. $s$ and $i$ can be used to calculate the BET constant, $C$, and $q_m$ (see Equations \ref{eq:C} and \ref{eq:qm}).  
 
 \begin{equation}\label{eq:C}
 C = \frac{s}{i} + 1
@@ -66,14 +66,13 @@ C = \frac{s}{i} + 1
 q_m = \frac{1}{s+i}
 \end{equation}
 
-The Rouquerol consistency criteria are as follows:  
+The Rouquerol consistency criteria, which are recommended to use to select a linear region, are as follows:  
 <!-- Use two spaces for a line break. -->
-1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$, where $q$ is adsorbate loading.  
+1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$.  
 2. The value of $C$ should be positive.  
 3. The value of the monolayer loading capacity should correspond to a value of $p/p_0$ which falls within the selected linear region.  
 4. The value of $p/p_0$ calculated from BET theory, $1/(\sqrt{C}+1)$, and $p/p_0$ calculated from the third consistency rule should be equal (with Â±10% tolerance).    
 5. The linear region should end at the knee of the isotherm.  
-Note to Greg: some of the criteria above are nearly verbatim from the SESAMI 1 paper
 
 
 # Summary

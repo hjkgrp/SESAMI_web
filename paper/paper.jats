@@ -205,7 +205,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   adsorbent, <inline-formula><alternatives>
   <tex-math><![CDATA[N]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>N</mml:mi></mml:math></alternatives></inline-formula>
-  is the Avogadro constant, <inline-formula><alternatives>
+  is the Avogadro constant, and <inline-formula><alternatives>
   <tex-math><![CDATA[A_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>A</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
   is the area taken up by a single adsorbate molecule in the
@@ -228,10 +228,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
   where <inline-formula><alternatives>
   <tex-math><![CDATA[p]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>p</mml:mi></mml:math></alternatives></inline-formula>
-  is the vapor pressure and <inline-formula><alternatives>
+  is the vapor pressure, <inline-formula><alternatives>
   <tex-math><![CDATA[p_0]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
-  is the saturated vapor pressure. <inline-formula><alternatives>
+  is the saturated vapor pressure, and <inline-formula><alternatives>
+  <tex-math><![CDATA[q]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi></mml:math></alternatives></inline-formula>
+  is the adsorbate loading. <inline-formula><alternatives>
   <tex-math><![CDATA[s]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>s</mml:mi></mml:math></alternatives></inline-formula>
   is the slope of the line of <inline-formula><alternatives>
@@ -269,7 +272,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <tex-math><![CDATA[
   q_m = \frac{1}{s+i}]]></tex-math>
   <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:mi>s</mml:mi><mml:mo>+</mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
-  <p>The Rouquerol consistency criteria are as follows:
+  <p>The Rouquerol consistency criteria, which are recommended to use to
+  select a linear region, are as follows:
   1. The linear region should only be a range of
   <inline-formula><alternatives>
   <tex-math><![CDATA[p/p_0]]></tex-math>
@@ -279,11 +283,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
   monotonically increases with <inline-formula><alternatives>
   <tex-math><![CDATA[p/p_0]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>,
-  where <inline-formula><alternatives>
-  <tex-math><![CDATA[q]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi></mml:math></alternatives></inline-formula>
-  is adsorbate loading.
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>.
   2. The value of <inline-formula><alternatives>
   <tex-math><![CDATA[C]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>
@@ -304,9 +304,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
   calculated from the third consistency rule should be equal (with ±10%
   tolerance).
-  5. The linear region should end at the knee of the isotherm.
-  Note to Greg: some of the criteria above are nearly verbatim from the
-  SESAMI 1 paper</p>
+  5. The linear region should end at the knee of the isotherm.</p>
 </sec>
 <sec id="summary">
   <title>Summary</title>
