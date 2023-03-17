@@ -34,10 +34,10 @@ class BETAn:
             self.selected_gas_cs = 0.142e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
         elif selected_gas == "Nitrogen":
             self.selected_gas_cs = 0.162e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
-        elif selected_gas == "Carbon dioxide":
-            self.selected_gas_cs = 0.142e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
-        elif selected_gas == "Krypton":
-            self.selected_gas_cs = 0.210e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
+        # elif selected_gas == "Carbon dioxide":
+        #     self.selected_gas_cs = 0.142e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
+        # elif selected_gas == "Krypton":
+        #     self.selected_gas_cs = 0.210e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
 
         self.loadunits = "mol/kg"
         # self.weight_of_box = 1e-20 #gm

@@ -49,14 +49,13 @@ bibliography: paper.bib
 Surface area determination is important for the evaluation of material’s viability in applications ranging from catalysis to separations to gas storage. The most widely used approach for the evaluation of a material’s gravimetric surface area, i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET) method [@brunauer1938adsorption]. That is, given the adsorption isotherm of a gas (i.e., N~2~ or Ar) in an adsorbent, one can use the BET method to determine the specific surface area of the adsorbent upon identification of an appropriate linear region in the isotherm. The BET equation is used to fit the isotherm data to locate the linear region of pressure where a monolayer forms. Afterwards, the uptake value at a data point within the pressure range is chosen based on the Rouquerol consistency criteria [@rouquerol2013adsorption; @rouquerol2007bet]. The value is then multiplied by the molecular cross-sectional area of the adsorbate to obtain the material's surface area, under the assumption that the material's surface is completely covered by the adsorbate molecules. Many researchers perform the analyses manually on a spreadsheet, which is time-consuming, and nearly impossible for some types of isotherms, which leads to large variability in BET-calculated areas [@betsi]. These challenges have motivated the development of programs for the automated determination of BET areas [@betsi; @sesami_1; @sesami_2; @pygaps; @beatmap]. Furthermore, shortcomings of BET as a tool for surface area calculation, such as its relatively poor performance in treating high surface area materials with multimodal pore sizes @wang2015ultrahigh; [@gomez2016application], have led to the development of alternate methods for surface area calculation from isotherms [@sesami_1; @sesami_2].
 
 # Theory background
-
-In the BET method, the surface area is calculation using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
+In the BET method, the surface area is calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
 
 \begin{equation}\label{eq:surface_area}
 S = \frac{q_m} N A_m
 \end{equation}
 
-In order to attain $q_m$, it is necessary to identify the monolayer loading region. This region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure and $p_0$ is the saturated vapor pressure. $s$ is the slope of the line of $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ versus $\frac{p}{p_0}$ within the monolayer loading region, and $i$ is the intercept of the line [@fagerlund1973determination]. $s$ and $i$ can be used to calculate the BET constant, $C$, and $q_m$ (see Equations \ref{eq:C} and \ref{eq:qm}).  
+In order to attain $q_m$, it is necessary to identify the monolayer loading region. This region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. $s$ is the slope of the line of $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ versus $\frac{p}{p_0}$ within the monolayer loading region, and $i$ is the intercept of the line [@fagerlund1973determination]. $s$ and $i$ can be used to calculate the BET constant, $C$, and $q_m$ (see Equations \ref{eq:C} and \ref{eq:qm}).  
 
 \begin{equation}\label{eq:C}
 C = \frac{s}{i} + 1
@@ -66,9 +65,9 @@ C = \frac{s}{i} + 1
 q_m = \frac{1}{s+i}
 \end{equation}
 
-The Rouquerol consistency criteria are as follows:  
+The Rouquerol consistency criteria, which are recommended to use to select a linear region, are as follows:  
 <!-- Use two spaces for a line break. -->
-1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$, where $q$ is adsorbate loading.  
+1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$.  
 2. The value of $C$ should be positive.  
 3. The value of the monolayer loading capacity should correspond to a value of $p/p_0$ which falls within the selected linear region.  
 4. The value of $p/p_0$ calculated from BET theory, $1/(\sqrt{C}+1)$, and $p/p_0$ calculated from the third consistency rule should be equal (with ±10% tolerance).    
@@ -87,7 +86,7 @@ The SESAMI web interface has extensive error handling and clearly alerts users o
 
 # Benchmarking
 
-To assess the performance of the SESAMI code in predicting surface areas from isotherms, we benchmark the SESAMI routines against other similar programs for 13 simulated and 9 experimental N~2~ isotherms obtained at 77 K for 14 metal-organic frameworks (MOFs), some of which are shown in \autoref{fig:isotherms}. Simulated isotherms are obtained from grand canonical Monte Carlo (GCMC) simulations using the open-source RASPA software [@dubbeldam2016raspa], and experimental adsorption isotherms are obtained from the experimental data reported by Islamogu and coworkers [@islamoglu2022you]. The data are then used to calculate the surface areas from the SESAMI website, BETSI [@betsi; @betsi_github], pyGAPS [@pygaps; @pygaps_docs], and BEaTmap [@beatmap].
+To assess the performance of the SESAMI code in predicting surface areas from isotherms, we benchmark the SESAMI routines against other similar programs for 13 simulated and 9 experimental N~2~ isotherms obtained at 77 K for 14 metal-organic frameworks (MOFs), some of which are shown in \autoref{fig:isotherms}. Simulated isotherms are obtained from grand canonical Monte Carlo (GCMC) simulations using the open-source RASPA 2.0.47 software [@dubbeldam2016raspa], and experimental adsorption isotherms are obtained from the experimental data reported by Islamogu and coworkers [@islamoglu2022you]. The data are then used to calculate the surface areas from the SESAMI website, BETSI [@betsi; @betsi_github], pyGAPS [@pygaps; @pygaps_docs], and BEaTmap [@beatmap].
 
 ![The crystal structures and isotherms of 3 of the 14 MOFs used to benchmark different isotherm to surface area codes.\label{fig:isotherms}](figures/crystal_structs_and_isotherms.tif)
 
