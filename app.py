@@ -541,7 +541,7 @@ def process_info():
     if info_dict["adsorbate"] == "Nitrogen":
         final_dict["temperature"] = 77
     elif info_dict["adsorbate"] == "Argon":
-        final_dict["temperature"] = 87
+        final_dict["temperature"] = 87 # TODO generalize for custom gas
 
     final_dict["ip"] = request.remote_addr
     final_dict["timestamp"] = datetime.now().isoformat()

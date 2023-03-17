@@ -102,12 +102,12 @@
 
   </div>
   <div style='font-size:14px; background-color:#F6EFA6; border: solid black 2px;' class="container">
-  Default gas molecule for the analysis is <b>Nitrogen</b>.<br><br>
+  Default gas molecule for the analysis is <b>Nitrogen</b>, i.e. N<sub>2</sub>.<br><br>
 
-    Calculations assume the input data file contains isotherm measured at one of the following conditions:<br>
+    Calculations assume the input data file contains an isotherm measured at one of the following conditions:<br>
     &#8226 Nitrogen: T = 77 K <br>
     &#8226 Argon: T = 87 K <br>
-    For both cases, p<sub>0</sub> = 1e5 Pa. <br><br>
+    For both cases, p<sub>0</sub> = 1e5 Pa. The cross section of nitrogen used in the code is 16.2 Å<sup>2</sup> per molecule. The cross section of argon used is 14.2 Å<sup>2</sup> per molecule.<br><br>
   
   If you want to analyze a BET isotherm from simulation, <a href="/example_csv" download>download the example CSV file</a> and format your simulation data accordingly. Note the units and the column names in the first row!<br>
   </div>
@@ -210,7 +210,7 @@
     <div id='general_options'>
 
       <!-- Adsorbate -->
-      <div class='row' style='margin-top: 0.5cm;'>
+      <div class='row' id='gas_dropdown_section' style='margin-top: 0.5cm;'>
         <div class='col-lg-4'>Type of gas</div>
         <div class='col-lg-8'>
           <input id='gas_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="Nitrogen" list='gas_list' onmousedown="value = '';" />
@@ -218,6 +218,50 @@
             <option value="Nitrogen">
             <option value="Argon">
           </datalist>
+        </div>
+      </div>
+
+      <!-- Custom adsorbate -->
+      <div class='row' style='margin-top: 0.5cm;'>
+        <div class='col-lg-4'>Custom adsorbate</div>
+        <div class='col-lg-8'>
+          <input id='custom_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="No" list='custom_list' onmousedown="value = '';" />
+          <datalist id='custom_list' style='font-size: 16px;'>
+            <option value="Yes">
+            <option value="No">
+          </datalist>
+        </div>
+      </div>
+
+      <div id='custom_options'>
+        <!-- Custom adsorbate cross section -->
+        <div class = 'row' style='margin-top: 0.25cm;'>
+          <div class='col-lg-4'>
+            Custom adsorbate cross section (Å<sup>2</sup>)
+          </div>
+          <div class='col-lg-8'>
+            <input type="text" id="custom_xsection_input" style='font-size: 16px; width:100%' class='form-control' placeholder="16.2">
+          </div>
+        </div>
+
+        <!-- Custom adsorbate temperature -->
+        <div class = 'row' style='margin-top: 0.25cm;'>
+          <div class='col-lg-4'>
+            Custom adsorbate temperature (K)
+          </div>
+          <div class='col-lg-8'>
+            <input type="text" id="custom_temperature_input" style='font-size: 16px; width:100%' class='form-control' placeholder="77">
+          </div>
+        </div>
+
+        <!-- Custom adsorbate saturation pressure -->
+        <div class = 'row' style='margin-top: 0.25cm;'>
+          <div class='col-lg-4'>
+            Custom adsorbate saturation pressure (Pa)
+          </div>
+          <div class='col-lg-8'>
+            <input type="text" id="custom_sat_p_input" style='font-size: 16px; width:100%' class='form-control' placeholder="100000">
+          </div>
         </div>
       </div>
 
@@ -391,6 +435,10 @@
     // setting default values
     $('#permission_checkbox').prop('checked', true)
     $('#gas_dropdown').val('Nitrogen') 
+    $('#custom_dropdown').val('No')
+    $('custom_xsection_input').val('16.2')
+    $('custom_temperature_input').val('77')
+    $('custom_sat_p').val('100000')
     $('#scope_dropdown').val('BET and BET+ESW')
     $('#r2cutoff_input').val('0.9995') 
     $('#r2min_input').val('0.998')
@@ -399,6 +447,8 @@
     $('#fontsize_dropdown').val('10') 
     $('#fonttype_dropdown').val('sans-serif') 
     $('#dpi_dropdown').val('300') 
+
+    $("#custom_options").hide()
 
   }
 
@@ -548,6 +598,17 @@
 
   })
 
+  // Runs when the Custom adsorbate dropdown is changed. 
+  $("#custom_dropdown").change(function () {
+    custom = $('#custom_dropdown').val()
+    if (custom == 'Yes'){
+      $("#gas_dropdown_section").hide()
+      $("#custom_options").show()
+    } else if (custom == 'No'){
+      $("#gas_dropdown_section").show()
+      $("#custom_options").hide()
+    }
+  });
 
   // Runs when the "Upload CSV or AIF" button is clicked.
   $('#upload_button').on('click', function () { // button triggers upload
@@ -788,7 +849,7 @@
       'email': $('#user_email').val(),
       'institution': $('#user_institution').val(),
       'adsorbent': $('#user_material').val(),
-      'adsorbate': $('#gas_dropdown').val()
+      'adsorbate': $('#gas_dropdown').val() // TODO add info for custom settings
     }
 
     $.post('/process_info', JSON.stringify(info_dict)).done( // Pushing information to the MongoDB.
@@ -800,7 +861,7 @@
       })
   })
 
-  // Runs when the "Download Figure" button is clicked.
+  // Runs when the "Download figure" button is clicked.
   $('#download_button').click(function () { 
     var a = document.createElement('a');
     a.href = FIGURE_PATH // The download's location.
