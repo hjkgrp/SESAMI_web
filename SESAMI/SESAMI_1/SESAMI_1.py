@@ -12,12 +12,17 @@ def calculation_runner(MAIN_PATH, user_options, USER_ID, plot_number):
 
     minlinelength = 4 # Minimum number of points required for a group of points to be considered a line
 
-    p0 = 1e5  # Note that this is fixed. For both argon at 87 K and nitrogen at 77 K, the saturation pressure is 1e5 Pa.
-    gas = user_options["gas"]
-    if gas == 'Argon':
-        temperature = 87 # K
-    elif gas == 'Nitrogen':
-        temperature = 77 # K
+    if user_options['custom adsorbate'] == 'Yes':
+        p0 = float(user_options['custom saturation pressure'])
+        temperature = float(user_options['custom temperature'])
+        gas = 'Custom'
+    elif user_options['custom adsorbate'] == 'No':
+        p0 = 1e5  # For both argon at 87 K and nitrogen at 77 K, the saturation pressure is 1e5 Pa.
+        gas = user_options["gas"]
+        if gas == 'Argon':
+            temperature = 87 # K
+        elif gas == 'Nitrogen':
+            temperature = 77 # K
 
     # changing some variable types
     user_options["font size"] = int(user_options["font size"])

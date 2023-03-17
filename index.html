@@ -213,7 +213,7 @@
       <div class='row' id='gas_dropdown_section' style='margin-top: 0.5cm;'>
         <div class='col-lg-4'>Type of gas</div>
         <div class='col-lg-8'>
-          <input id='gas_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="Nitrogen" list='gas_list' onmousedown="value = '';" />
+          <input id='gas_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' list='gas_list' onmousedown="value = '';" />
           <datalist id='gas_list' style='font-size: 16px;'>
             <option value="Nitrogen">
             <option value="Argon">
@@ -225,7 +225,7 @@
       <div class='row' style='margin-top: 0.5cm;'>
         <div class='col-lg-4'>Custom adsorbate</div>
         <div class='col-lg-8'>
-          <input id='custom_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="No" list='custom_list' onmousedown="value = '';" />
+          <input id='custom_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' list='custom_list' onmousedown="value = '';" />
           <datalist id='custom_list' style='font-size: 16px;'>
             <option value="Yes">
             <option value="No">
@@ -273,7 +273,7 @@
       <div class='row' style='margin-top: 0.25cm;'>
         <div class='col-lg-4'>Scope</div>
         <div class='col-lg-8'>
-          <input id='scope_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="BET and BET+ESW" list='scope_list' onmousedown="value = '';" />
+          <input id='scope_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' list='scope_list' onmousedown="value = '';" />
           <datalist id='scope_list' style='font-size: 16px;'>
             <option value="BET and BET+ESW">
             <option value="BET">
@@ -301,24 +301,26 @@
         </div>
       </div>
 
-      <div class='row' style='margin-top: 1.5cm;'>
-        <div class='col-lg-4'> <h5>SESAMI 2.0</h5> </div>
-      </div>
-
-      <!-- ML -->
-      <div class='row' style='margin-top: 0.25cm;'>
-        <div class='col-lg-4'>Include ML prediction?</div>
-        <div class='col-lg-8'>
-          <input id='ML_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' placeholder="No" list='ML_list' onmousedown="value = '';" />
-          <datalist id='ML_list' style='font-size: 16px;'>
-            <option value="Yes">
-            <option value="No">
-          </datalist>
+      <div id='ml_section'>
+        <div class='row' style='margin-top: 1.5cm;'>
+          <div class='col-lg-4'> <h5>SESAMI 2.0</h5> </div>
         </div>
 
-        <p style='margin-top: 0.25cm;'>
-          Note: The Lasso ML model prediction is automatically multiplied by 1.148 if Nitrogen gas is the adsorbate. See the SESAMI 2 paper for more details. 
-        </p>
+        <!-- ML -->
+        <div class='row' style='margin-top: 0.25cm;'>
+          <div class='col-lg-4'>Include ML prediction?</div>
+          <div class='col-lg-8'>
+            <input id='ML_dropdown' autocomplete="off" style='font-size: 16px; width:100%' class='form-control' list='ML_list' onmousedown="value = '';" />
+            <datalist id='ML_list' style='font-size: 16px;'>
+              <option value="Yes">
+              <option value="No">
+            </datalist>
+          </div>
+
+          <p style='margin-top: 0.25cm;'>
+            Note: The Lasso ML model prediction is automatically multiplied by 1.148 if Nitrogen gas is the adsorbate. See the SESAMI 2 paper for more details. 
+          </p>
+        </div>
       </div>
 
     </div>
@@ -436,9 +438,9 @@
     $('#permission_checkbox').prop('checked', true)
     $('#gas_dropdown').val('Nitrogen') 
     $('#custom_dropdown').val('No')
-    $('custom_xsection_input').val('16.2')
-    $('custom_temperature_input').val('77')
-    $('custom_sat_p').val('100000')
+    $('#custom_xsection_input').val('16.2')
+    $('#custom_temperature_input').val('77')
+    $('#custom_sat_p_input').val('100000')
     $('#scope_dropdown').val('BET and BET+ESW')
     $('#r2cutoff_input').val('0.9995') 
     $('#r2min_input').val('0.998')
@@ -604,9 +606,14 @@
     if (custom == 'Yes'){
       $("#gas_dropdown_section").hide()
       $("#custom_options").show()
+
+      // Disable ML approach for a custom gas, since the ML approach expects a P0 of 1e5 Pa
+      $("#ml_section").hide() 
+      $('#ML_dropdown').val('No')
     } else if (custom == 'No'){
       $("#gas_dropdown_section").show()
       $("#custom_options").hide()
+      $("#ml_section").show()
     }
   });
 
@@ -748,6 +755,27 @@
     gas = $('#gas_dropdown').val()
     scope = $('#scope_dropdown').val()
     ML_boolean = $('#ML_dropdown').val()
+    
+    // Account for if custom adsorbate settings are used.
+    custom_boolean = $('#custom_dropdown').val()
+    custom_xsection = $('#custom_xsection_input').val()
+    custom_temperature = $('#custom_temperature_input').val()
+    custom_sat_p_input = $('#custom_sat_p_input').val()
+
+    // Ensuring that no dropdowns options are empty.
+    const var_names = ["Type of gas", "Custom adsorbate", "Scope", "Include ML prediction?", "Figure legend", "Figure font size", "Figure font type", "Figure dpi"]
+    const vars = [gas, custom_boolean, scope, ML_boolean, legend, font_size, font_type, dpi]
+    // If we are using the custom adsorbate, don't care if type of gas is empty.
+    var_names.shift() // Remove first element.
+    vars.shift()
+
+    for (let i=0; i<= vars.length; i++){
+      if (vars[i] == ''){
+        error_message = var_names[i].concat(" dropdown is empty. Please select an option.")
+        alert(error_message)
+        return; // Quit the function
+      }
+    }
 
     // Ensuring the user put in numbers for R2 cutoff and R2min
     if (isNaN(R2cutoff) || isNaN(R2min)) {
@@ -758,6 +786,18 @@
       alert("R2cutoff and R2min must be between zero and one."); // Values outside this range don't make sense.
       return;
     }
+    // Ensuring the user put in numbers for custom_xsection, custom_temperature, custom_sat_p_input
+    if (custom_boolean == 'Yes'){ // Only need to check this if the user is using the custom adsorbate option.
+      if (isNaN(custom_xsection) || isNaN(custom_temperature) || isNaN(custom_sat_p_input)) {
+        alert("Custom adsorbate cross section, temperature, and saturation pressure must be numbers.");
+        return;
+      }   
+      if (custom_xsection <=0 || custom_temperature <=0 || custom_sat_p_input <=0) {
+        alert("Custom adsorbate cross section, temperature, and saturation pressure must be greater than zero.");
+        return;
+      }      
+    }
+
 
     // If the user used the font size drop down but never clicked anything, need to prevent this error of an empty field.
     if (font_size == '') {
@@ -767,7 +807,22 @@
       dpi = '300'
     }
 
-    myDict = {'dpi': dpi, 'font size': font_size, 'font type': font_type, 'legend': legend, 'R2 cutoff': R2cutoff, 'R2 min': R2min, 'gas': gas, 'scope': scope, 'ML': ML_boolean} // User options
+    // User options
+    myDict = {
+      'dpi': dpi, 
+      'font size': font_size, 
+      'font type': font_type, 
+      'legend': legend, 
+      'R2 cutoff': R2cutoff, 
+      'R2 min': R2min, 
+      'gas': gas, 
+      'scope': scope, 
+      'ML': ML_boolean,
+      'custom adsorbate': custom_boolean,
+      'custom cross section': custom_xsection,
+      'custom temperature': custom_temperature,
+      'custom saturation pressure': custom_sat_p_input
+    } 
 
     // Setting the options of plottype_dropdown based on the scope
     document.getElementById('plottype_list').innerHTML = option_generator(scope)
@@ -849,7 +904,11 @@
       'email': $('#user_email').val(),
       'institution': $('#user_institution').val(),
       'adsorbent': $('#user_material').val(),
-      'adsorbate': $('#gas_dropdown').val() // TODO add info for custom settings
+      'adsorbate': gas,
+      'custom_adsorbate': custom_boolean,
+      'custom_cross_section': custom_xsection,
+      'custom_temperature': custom_temperature,
+      'custom_saturation_pressure': custom_sat_p_input
     }
 
     $.post('/process_info', JSON.stringify(info_dict)).done( // Pushing information to the MongoDB.

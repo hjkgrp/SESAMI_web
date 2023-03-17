@@ -536,12 +536,26 @@ def process_info():
     final_dict["institution"] = info_dict["institution"]
     final_dict["adsorbent"] = info_dict["adsorbent"]
     final_dict["isotherm_data"] = isotherm_data
-    final_dict["adsorbate"] = info_dict["adsorbate"]
+    final_dict["custom_adsorbate"] = info_dict["custom adsorbate"]
 
-    if info_dict["adsorbate"] == "Nitrogen":
-        final_dict["temperature"] = 77
-    elif info_dict["adsorbate"] == "Argon":
-        final_dict["temperature"] = 87 # TODO generalize for custom gas
+    if info_dict["custom adsorbate"] == 'No':  
+        final_dict["adsorbate"] = info_dict["adsorbate"]
+
+        if info_dict["adsorbate"] == "Nitrogen":
+            final_dict["temperature"] = 77
+            final_dict["cross_section"] = 16.2
+        elif info_dict["adsorbate"] == "Argon":
+            final_dict["temperature"] = 87 
+            final_dict["cross_section"] = 14.2
+
+        # For both of the above gases, saturation pressure is 1e5 Pa
+        final_dict["saturation_pressure"] = 100000
+    elif info_dict["custom_adsorbate"] == 'Yes':
+        final_dict["adsorbate"] = "Custom" # We specify the special case, since a custom gas is used.
+        final_dict["temperature"] = info_dict["custom_temperature"]
+        final_dict["cross_section"] = info_dict["custom_cross_section"]
+        final_dict["saturation_pressure"] = info_dict["custom_saturation_pressure"]
+
 
     final_dict["ip"] = request.remote_addr
     final_dict["timestamp"] = datetime.now().isoformat()

@@ -31,13 +31,16 @@ class BETAn:
         self.T = selected_temperature
 
         if selected_gas == "Argon":
-            self.selected_gas_cs = 0.142e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
+            self.selected_gas_cs = 0.142e-18  # m²/molecule; Ref: 10.1039/D1TA08021K
         elif selected_gas == "Nitrogen":
-            self.selected_gas_cs = 0.162e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
+            self.selected_gas_cs = 0.162e-18  # m²/molecule; Ref: 10.1039/D1TA08021K
         # elif selected_gas == "Carbon dioxide":
-        #     self.selected_gas_cs = 0.142e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
+        #     self.selected_gas_cs = 0.142e-18  # m²/molecule; Ref: 10.1039/D1TA08021K
         # elif selected_gas == "Krypton":
-        #     self.selected_gas_cs = 0.210e-18  # m2/molecule; Ref: 10.1039/D1TA08021K
+        #     self.selected_gas_cs = 0.210e-18  # m²/molecule; Ref: 10.1039/D1TA08021K
+        elif selected_gas == "Custom":
+            # Multiply by 1e-20 to convert to m²/molecule, from Å²/molecule
+            self.selected_gas_cs = float(plotting_information['custom cross section']) * 1e-20 
 
         self.loadunits = "mol/kg"
         # self.weight_of_box = 1e-20 #gm
@@ -284,7 +287,7 @@ class BETAn:
         Parameters 
         ----------
         plotting_information : dict
-            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', 'ML', 'custom adsorbate', 'custom cross section', 'custom temperature', and 'custom saturation pressure'.
         ax : matplotlib.axes._subplots.AxesSubplot
             The axes on which to plot.
         data : pandas.core.frame.DataFrame
@@ -476,7 +479,7 @@ class BETAn:
         Parameters 
         ----------
         plotting_information : dict
-            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', 'ML', 'custom adsorbate', 'custom cross section', 'custom temperature', and 'custom saturation pressure'.
         ax3 : matplotlib.axes._subplots.AxesSubplot
             The axes on which to plot.
         data : pandas.core.frame.DataFrame
@@ -553,7 +556,7 @@ class BETAn:
         Parameters 
         ----------
         plotting_information : dict
-            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', 'ML', 'custom adsorbate', 'custom cross section', 'custom temperature', and 'custom saturation pressure'.
         ax2 : matplotlib.axes._subplots.AxesSubplot
             The axes on which to plot.
         p : numpy.int64
@@ -663,7 +666,7 @@ class BETAn:
             data['phi']: Pandas series object containing 'phi' values in J/g
                 phi: qxNaxAcs where q: Loading in mol/kg=framework, Na: Avogadro number, Acs: Cross-sectional area of Ar atom.
             minima: numpy.int64. The index of 'Loading' value corresponding to a minima of 'phi' values.
-            eswarea: numpy.float64. The surface area in m2/g corresponding to the 'Loading' at which 'phi' is minimum.
+            eswarea: numpy.float64. The surface area in m²/g corresponding to the 'Loading' at which 'phi' is minimum.
         """
         data = data.copy(deep=True)
 
@@ -684,7 +687,7 @@ class BETAn:
                 / 1000
                 * self.N_A
                 * self.selected_gas_cs
-            )  # m2/g
+            )  # m²/g
         else:
             eswarea = None
 
@@ -709,7 +712,7 @@ class BETAn:
         Parameters 
         ----------
         plotting_information : dict
-            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', 'ML', 'custom adsorbate', 'custom cross section', 'custom temperature', and 'custom saturation pressure'.
         ax : matplotlib.axes._subplots.AxesSubplot
             The axes on which to plot.
         data : pandas.core.frame.DataFrame
@@ -950,10 +953,10 @@ class BETAn:
         # This is related to equation 1 of Fagerlund, G. (1973). Determination of specific surface by the BET method.
         # qm[=]mmol/g[=]mol/kg
         # self.N_A[=]atoms/mol
-        # self.selected_gas_cs[=]m2/atom
+        # self.selected_gas_cs[=]m²/atom
         # Factor of 1000 to convert from mmol to mol.
-        # A_BET[=]m2/g
-        A_BET = qm * self.N_A * self.selected_gas_cs / 1000  # m2/g
+        # A_BET[=]m²/g
+        A_BET = qm * self.N_A * self.selected_gas_cs / 1000  # m²/g
 
         return [
             linear,
@@ -1142,7 +1145,7 @@ class BETAn:
         Parameters 
         ----------
         plotting_information : dict
-            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', 'ML', 'custom adsorbate', 'custom cross section', 'custom temperature', and 'custom saturation pressure'.
         bet_info : list
             [rbet, bet_params]. The first entry contains the indices of the data points that start and end the chosen linear region (rbet). The second entry contains a molar version of Xm (called qm here) and C.
         betesw_info : list
@@ -1389,7 +1392,7 @@ class BETAn:
         data : pandas.core.frame.DataFrame
             Represents an isotherm. Columns are "Pressure", "Loading", "P_rel", "BETy", "BET_y2", and "phi".
         plotting_information : dict
-            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', and 'ML'.
+            Lots of plotting and calculation settings from the front end (i.e. the SESAMI webpage). The keys are 'dpi', 'font size', 'font type', 'legend', 'R2 cutoff', 'R2 min', 'gas', 'scope', 'ML', 'custom adsorbate', 'custom cross section', 'custom temperature', and 'custom saturation pressure'.
         MAIN_PATH : str
             The main directory of the SESAMI website code.
         plot_number : int

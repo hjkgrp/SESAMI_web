@@ -139,15 +139,15 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <body>
 <sec id="statement-of-need">
   <title>Statement of need</title>
-  <p>Surface area determination is important for the evaluation of a
-  porous material’s viability in applications ranging from catalysis to
+  <p>Surface area determination is important for the evaluation of
+  material’s viability in applications ranging from catalysis to
   separations to gas storage. The most widely used approach for the
-  evaluation of a material’s specific surface area, i.e. surface area
+  evaluation of a material’s gravimetric surface area, i.e. surface area
   per unit mass, is the Brunauer-Emmett-Teller (BET) method
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
   et al., 1938</xref>). That is, given the adsorption isotherm of a gas
   (i.e., N<sub>2</sub> or Ar) in an adsorbent, one can use the BET
-  method to determine the specific surface area of the adsorbent upon
+  method to determine the gravimetric surface area of the adsorbent upon
   identification of an appropriate linear region in the isotherm. The
   BET equation is used to fit the isotherm data to locate the linear
   region of pressure where a monolayer forms. Afterwards, the uptake
@@ -159,13 +159,10 @@ a Creative Commons Attribution 4.0 International License (CC BY
   Rouquerol et al., 2007</xref>). The value is then multiplied by the
   molecular cross-sectional area of the adsorbate to obtain the
   material’s surface area, under the assumption that the material’s
-  surface is completely covered by the adsorbate molecules. This
-  procedure is sometimes automatically performed by commercial
-  adsorption apparatuses that measure adsorption isotherms, but a
-  suitable linear region is not always identified. Consequently, many
+  surface is completely covered by the adsorbate molecules. Many
   researchers perform the analyses manually on a spreadsheet, which is
-  time-consuming, nearly impossible for some types of isotherms, and
-  leads to large variability in BET-calculated areas
+  time-consuming, and nearly impossible for some types of isotherms,
+  which leads to large variability in BET-calculated areas
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>). These challenges have motivated the development
   of programs for the automated determination of BET areas
@@ -180,11 +177,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
   et al., 2019</xref>). Furthermore, shortcomings of BET as a tool for
   surface area calculation, such as its relatively poor performance in
-  treating high surface area materials with multimodal pore sizes
+  treating high surface area materials with multimodal pore sizes Wang
+  et al.
+  (<xref alt="2015" rid="ref-wang2015ultrahigh" ref-type="bibr">2015</xref>);
   (<xref alt="Gómez-Gualdrón et al., 2016" rid="ref-gomez2016application" ref-type="bibr">Gómez-Gualdrón
-  et al., 2016</xref>;
-  <xref alt="Wang et al., 2015" rid="ref-wang2015ultrahigh" ref-type="bibr">Wang
-  et al., 2015</xref>), have led to the development of alternate methods
+  et al., 2016</xref>), have led to the development of alternate methods
   for surface area calculation from isotherms
   (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
   et al., 2020</xref>;
@@ -193,12 +190,12 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="theory-background">
   <title>Theory background</title>
-  <p>In the BET method, specific surface area is calculation using
-  Equation <xref alt="1" rid="eqU003Asurface_area">1</xref>.
+  <p>In the BET method, the surface area is calculated using Equation
+  <xref alt="1" rid="eqU003Asurface_area">1</xref>.
   <inline-formula><alternatives>
   <tex-math><![CDATA[S]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>S</mml:mi></mml:math></alternatives></inline-formula>
-  is a material’s specific surface area, <inline-formula><alternatives>
+  is a material’s surface area, <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
   is the molar amount of adsorbate forming a monolayer per unit mass of
@@ -322,15 +319,15 @@ a Creative Commons Attribution 4.0 International License (CC BY
   et al., 2019</xref>), the SESAMI web interface allows a user to make
   surface area predictions on their web browser simply by uploading
   isotherm data. The website facilitates access to the previously
-  developed SESAMI models (SESAMI 1 and 2) for porous material surface
-  area prediction
+  developed SESAMI models (SESAMI 1 and 2) for the evaluation of
+  material’s surface area
   (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
   et al., 2020</xref>;
   <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
-  et al., 2019</xref>) and has been tested by experimental groups. The
-  motivation for this interface is to lower the barrier of entry for
-  research groups seeking to use SESAMI code, which was previously
-  packaged in Python and Jupyter Notebook scripts.</p>
+  et al., 2019</xref>). The motivation for this interface is to lower
+  the barrier of entry for research groups seeking to use SESAMI code,
+  which was previously packaged in Python and Jupyter Notebook
+  scripts.</p>
   <p>SESAMI 1 applies computational routines to identify suitable linear
   regions of adsorption isotherms for BET surface area predictions
   (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
