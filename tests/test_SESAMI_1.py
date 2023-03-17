@@ -40,7 +40,17 @@ benchmark_values_list = [({'C': 201.07820437891343, 'qm': 28.42284930790741, 'A_
 inputs = [] # Populated below
 for i in range(10): # Ten test cases
 	inputs.append((MAIN_PATH, 
-		{'dpi': '300', 'font size': '10', 'font type': 'sans-serif', 'legend': 'Yes', 'R2 cutoff': R2_cutoffs[i], 'R2 min': R2_mins[i], 'gas': gases[i], 'scope': scopes[i], 'ML': 'No'},
+		{
+        'dpi': '300', 
+        'font size': '10', 
+        'font type': 'sans-serif', 
+        'legend': 'Yes', 
+        'R2 cutoff': R2_cutoffs[i], 
+        'R2 min': R2_mins[i], 
+        'gas': gases[i], 
+        'scope': scopes[i], 
+        'ML': 'No',
+        'custom adsorbate': 'No'},
 		'test', # all session_ID set to 'test'
 		i,
         benchmark_values_list[i])) # session_plot_num

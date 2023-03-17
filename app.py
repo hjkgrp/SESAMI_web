@@ -536,9 +536,9 @@ def process_info():
     final_dict["institution"] = info_dict["institution"]
     final_dict["adsorbent"] = info_dict["adsorbent"]
     final_dict["isotherm_data"] = isotherm_data
-    final_dict["custom_adsorbate"] = info_dict["custom adsorbate"]
+    final_dict["custom_adsorbate"] = info_dict["custom_adsorbate"]
 
-    if info_dict["custom adsorbate"] == 'No':  
+    if info_dict["custom_adsorbate"] == 'No':  
         final_dict["adsorbate"] = info_dict["adsorbate"]
 
         if info_dict["adsorbate"] == "Nitrogen":
