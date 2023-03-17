@@ -209,8 +209,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   monolayer.</p>
   <p><named-content id="eqU003Asurface_area" content-type="equation"><disp-formula><alternatives>
   <tex-math><![CDATA[
-  S = \frac{q_m} N A_m]]></tex-math>
-  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>N</mml:mi></mml:mfrac><mml:msub><mml:mi>A</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
+  S = q_m N A_m]]></tex-math>
+  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>N</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
   <p>In order to attain <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,

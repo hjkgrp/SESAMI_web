@@ -52,7 +52,7 @@ Surface area determination is important for the evaluation of material’s viabi
 In the BET method, the surface area is calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
 
 \begin{equation}\label{eq:surface_area}
-S = \frac{q_m} N A_m
+S = q_m N A_m
 \end{equation}
 
 In order to attain $q_m$, it is necessary to identify the monolayer loading region. This region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. $s$ is the slope of the line of $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ versus $\frac{p}{p_0}$ within the monolayer loading region, and $i$ is the intercept of the line [@fagerlund1973determination]. $s$ and $i$ can be used to calculate the BET constant, $C$, and $q_m$ (see Equations \ref{eq:C} and \ref{eq:qm}).  
