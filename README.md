@@ -54,13 +54,14 @@ CSV file: see [example](/example_input/example_loading_data.csv)
 J. Phys. Chem. C 2019, 123, 33, 20195 - 20209
 - [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518),
 J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
+- Reference for SESAMI web interface paper coming soon!
 
 # Authors
 - Archit Datar (SESAMI python code development)
 - Gianmarco G. Terrones (SESAMI web interface development)
 - Yongchul G. Chung (project supervision, Mongo DB Atlas and Google Cloud integration)
 
-# JOSS Supplementary Files
+# JOSS Paper Supplementary Files
 Files used for software performance benchmarking can be found [here](paper/benchmarking).
 
 # Funding Acknowledgement
