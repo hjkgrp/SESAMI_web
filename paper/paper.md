@@ -38,7 +38,7 @@ affiliations:
    index: 4
  - name: Department of Chemistry, Massachusetts Institute of Technology, Cambridge, MA, USA
    index: 5
-date: 17 March 2023
+date: 20 March 2023
 bibliography: paper.bib
 
 
@@ -49,6 +49,7 @@ bibliography: paper.bib
 Surface area characterization is one of the most important material's characterization techniques for modern engineering application. The most widely used approach to calculate a material’s gravimetric surface area, i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET) method [@brunauer1938adsorption]. The method computes the surface area given the adsorption isotherm of a probe gas (i.e., N~2~ or Ar) in an adsorbent. Despite its importance, many researchers either obtain the BET area from commercial software that comes with equipment, or perform the analyses manually on a spreadsheet, which is time-consuming, and nearly impossible for some types of isotherms, which leads to large variability in BET-calculated areas [@betsi]. These challenges have motivated the development of programs for the automated and standardized calculation of BET areas [@sesami_1; @pygaps; @sesami_2; @betsi;  @beatmap]. Furthermore, shortcomings of BET method as a tool for surface area characterization, such as its relatively poor performance in treating high surface area materials with multimodal pore sizes [@wang2015ultrahigh; @gomez2016application], have led to the development of alternate methods for surface area calculation from isotherms [@sesami_1; @sesami_2]. 
 
 # Theory background
+<!-- TODO clean this up -->
 The surface area of a material is calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
 
 \begin{equation}\label{eq:surface_area}
@@ -57,28 +58,28 @@ S = q_m N A_m
 
 In order to attain $q_m$, it is necessary to identify the monolayer loading region from the isotherm using the BET method. The BET method is based on the BET equation \ref{eq:BET} which fits the isotherm data to locate the linear region of pressure where a monolayer forms. 
 
-\begin{equation}\label{eq: BET}
-
+\begin{equation}\label{eq:BET}
+\frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}
 \end{equation}
 
-The linaer region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. Afterwards, the uptake value at a data point within the pressure range is chosen based on the Rouquerol consistency criteria [@rouquerol2007bet; @rouquerol2013adsorption]. The value is then multiplied by the molecular cross-sectional area of the adsorbate to obtain the material's surface area, under the assumption that the material's surface is completely covered by the adsorbate molecules. 
+The linear region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. Afterwards, the uptake value at a data point within the pressure range is chosen based on the Rouquerol consistency criteria [@rouquerol2007bet; @rouquerol2013adsorption]. The value is then multiplied by the molecular cross-sectional area of the adsorbate, $A_m$, to obtain the material's surface area, under the assumption that the material's surface is completely covered by the adsorbate molecules. 
 
 A set of consistency criteria has been proposed by Rouquerol et al. to select the linear region of the isotherm, so that the BET method could be used to characterize the surface area in microporous materials (materials with pores less than 20 angstrom). The consistency criteria are as follows:
 
 <!-- Use two spaces for a line break. -->
 1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$.  
-2. The value of $C$ should be positive.  
+2. The value of the BET constant, $C$, should be positive.  
 3. The value of the monolayer loading capacity should correspond to a value of $p/p_0$ which falls within the selected linear region.  
-4. The value of $p/p_0$ calculated from BET theory, $1/(\sqrt{C}+1)$, and $p/p_0$ calculated from the third consistency rule should be equal (with ±10% tolerance).    
+4. The value of $p/p_0$ calculated from BET theory, $1/(\sqrt{C}+1)$, and $p/p_0$ calculated from the third consistency rule should be equal (with ±10% tolerance).  
 5. The linear region should end at the knee of the isotherm.  
 
 # Summary
 
 The SESAMI web interface allows a user to make surface area predictions on their web browser simply by uploading isotherm data. The website facilitates access to the previously developed SESAMI models (SESAMI 1 and 2) for the evaluation of material's surface area [@sesami_1; @sesami_2]. The motivation for this interface is to lower the barrier of entry for research groups seeking to use SESAMI code, which was previously packaged in Python and Jupyter Notebook scripts.
 
-SESAMI 1 applies computational routines to identify suitable linear regions of adsorption isotherms for BET surface area predictions [@fagerlund1973determination]. The automated workflow includes consideration of Rouquerol criteria and the use of coefficients of determination as a measure of linearity. Furthermore, SESAMI 1 supports a combined BET+ESW (excess sorption work) approach for linear region selection; this combined approach has been shown to outperform the BET method in some cases [@sesami_1]. A user can specify a cutoff R^2^ and a minimum R^2^, such that a candidate linear region is favored to be selected if it has an R^2^ above the cutoff, and a candidate linear region is only considered if it has an R^2^ above the minimum. On the other hand, SESAMI 2 applies a machine learning (specifically, regularized linear regression with LASSO) model for the accurate surface area prediction of high surface area materials, improving on BET performance for these materials [@sesami_2]. The LASSO model uses as input the average loading in seven isotherm pressure regions as well as pairwise products of these loadings. The SESAMI routines support isotherms with N~2~ and argon adsorbate at 77 K or 87 K, respectively. We note that a recent study shows that surface areas determined from N~2~ or Ar isotherms are similar, despite the latest 2015 IUPAC report's suggested use of Ar [@datar2022brunauer; @thommes2015physisorption].
+SESAMI 1 applies computational routines to identify suitable linear regions of adsorption isotherms for BET surface area predictions [@fagerlund1973determination]. The automated workflow includes consideration of Rouquerol criteria and the use of coefficients of determination as a measure of linearity. Furthermore, SESAMI 1 supports a combined BET+ESW (excess sorption work) approach for linear region selection; this combined approach has been shown to outperform the BET method in some cases [@sesami_1]. A user can specify a cutoff R^2^ and a minimum R^2^, such that a candidate linear region is favored to be selected if it has an R^2^ above the cutoff, and a candidate linear region is only considered if it has an R^2^ above the minimum. On the other hand, SESAMI 2 applies a machine learning (specifically, regularized linear regression with LASSO) model for the accurate surface area prediction of high surface area materials, improving on BET performance for these materials [@sesami_2]. The LASSO model uses as input the average loading in seven isotherm pressure regions as well as pairwise products of these loadings. The SESAMI routines support isotherms with N~2~ and argon adsorbate at 77 K or 87 K, respectively. We note that a recent study shows that surface areas determined from N~2~ or Ar isotherms are similar, despite the latest 2015 IUPAC report's suggested use of Ar [@datar2022brunauer; @thommes2015physisorption]. In addition, the SESAMI 1 code supports arbitrary user-specified adsorbates if their cross-section, saturation vapor pressure, and temperature are specified.
 
-The SESAMI web interface has extensive error handling and clearly alerts users of issues with their adsorption isotherm data. For example, it alerts the user if no ESW minima is found by SESAMI 1 or if the data is incompatible with SESAMI 2 code due to data sparsity in certain pressure regions. As shown in \autoref{fig:interface}, the interface displays SESAMI 1 calculation results including information on the chosen linear region, namely the satisfied Rouquerol criteria, the pressure range and number of data points in the region, and the coefficient of determination. The interface also displays intermediate SESAMI 1 values for surface area calculation, namely the BET constant, $C$, and the monolayer adsorption loading, $q_m$. Furthermore, the SESAMI web interface allows the user to download figures generated by SESAMI 1 that indicate, among other things, the chosen linear monolayer loading regions by the BET and BET+ESW approaches as well as the excess sorption work plot (\autoref{fig:interface}). The user can convert output from commercial equipment to AIF format and upload the converted data to the interface for analysis. The SESAMI web interface is publicly available at <https://sesami-web.org/>, and source code is available at <https://github.com/hjkgrp/SESAMI_web>.
+The SESAMI web interface has extensive error handling and clearly alerts users of issues with their adsorption isotherm data. For example, it alerts the user if no ESW minima is found by SESAMI 1 or if the data is incompatible with SESAMI 2 code due to data sparsity in certain pressure regions. As shown in \autoref{fig:interface}, the interface displays SESAMI 1 calculation results including information on the chosen linear region, namely the satisfied Rouquerol criteria, the pressure range and number of data points in the region, and the coefficient of determination. The interface also displays intermediate SESAMI 1 values for surface area calculation, namely $C$ and $q_m$. Furthermore, the SESAMI web interface allows the user to download figures generated by SESAMI 1 that indicate, among other things, the chosen linear monolayer loading regions by the BET and BET+ESW approaches as well as the excess sorption work plot (\autoref{fig:interface}). The user can convert output from commercial equipment to AIF format and upload the converted data to the interface for analysis. The SESAMI web interface is publicly available at <https://sesami-web.org/>, and source code is available at <https://github.com/hjkgrp/SESAMI_web>.
 
 
 ![Information displayed by the SESAMI web interface after a calculation has been run, here for a GCMC isotherm of MIL-101. Apart from the inclusion of the LASSO prediction, default settings were used (e.g. N~2~ gas). a) Interface printout of information on the SESAMI 1 chosen linear regions, and SESAMI 1 and 2 calculation results. b) Figure download functionality for figures detailing the SESAMI 1 calculation.\label{fig:interface}](figures/web_interface.tif)
@@ -170,19 +171,5 @@ Table: Settings used for software for isotherm to surface area calculation. All 
 # Acknowledgements
 
 This publication was made possible by the generous support of the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and was undertaken in the MIT Portugal Program. Software and website development was supported by the Office of Naval Research under grant number N00014-20-1-2150, as well as by the National Research Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded by the government of Korea (MSIT). L. C. L. acknowledges the support from the Yushan Young Scholar Program (NTU-110VV009) and the National Science of Technology Council (110-2222-E-002-011-MY3). We thank Timur Islamoglu, Karam Idrees, and Omar Farha for kindly providing the raw data of the experimental isotherms in the work by @islamoglu2022you.
-
-<!-- # Citations
-
-Citations to entries in paper.bib should be in
-[rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
-format.
-
-If you want to cite a software repository URL (e.g. something on GitHub without a preferred
-citation) then you can do it with the example BibTeX entry below for @fidgit.
-
-For a quick reference, the following citation commands can be used:
-- `@author:2001`  ->  "Author et al. (2001)"
-- `[@author:2001]` -> "(Author et al., 2001)"
-- `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)" -->
 
 # References
