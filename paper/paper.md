@@ -1,5 +1,5 @@
 ---
-title: 'SESAMI Web: An Accessible Interface for Surface Area Prediction of Materials from Adsorption Isotherms'
+title: 'SESAMI APP: An Accessible Interface for Surface Area Prediction of Materials from Adsorption Isotherms'
 tags:
   - SESAMI
   - surface area
