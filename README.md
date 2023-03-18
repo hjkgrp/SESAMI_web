@@ -60,5 +60,10 @@ J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
 - Gianmarco G. Terrones (SESAMI web interface development)
 - Yongchul G. Chung (project supervision, Mongo DB Atlas and Google Cloud integration)
 
+# JOSS Supplementary Files
+Files used for software performance benchmarking can be found [here](paper/benchmarking)
+
 # Funding Acknowledgement
-- Gianmarco G. Terrones was supported by the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and through the MIT Portugal Program. Software and website development was supported by the Office of Naval Research under grant number N00014-20-1-2150, as well as by the National Research Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded by the government of Korea (MSIT). Gianmarco G. Terrones was partially supported by an Alfred P. Sloan Foundation Scholarship (Grant Number G-2020-14067). 
+- Gianmarco G. Terrones was supported by the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and through the MIT Portugal Program. 
+- Software and website development was supported by the Office of Naval Research under grant number N00014-20-1-2150, as well as by the National Research Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded by the government of Korea (MSIT). 
+- Gianmarco G. Terrones was partially supported by an Alfred P. Sloan Foundation Scholarship (Grant Number G-2020-14067). 
