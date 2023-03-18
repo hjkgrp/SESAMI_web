@@ -49,29 +49,26 @@ bibliography: paper.bib
 Surface area characterization is one of the most important material's characterization techniques for modern engineering application. The most widely used approach to calculate a material’s gravimetric surface area, i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET) method [@brunauer1938adsorption]. The method computes the surface area given the adsorption isotherm of a probe gas (i.e., N~2~ or Ar) in an adsorbent. Despite its importance, many researchers either obtain the BET area from commercial software that comes with equipment, or perform the analyses manually on a spreadsheet, which is time-consuming, and nearly impossible for some types of isotherms, which leads to large variability in BET-calculated areas [@betsi]. These challenges have motivated the development of programs for the automated and standardized calculation of BET areas [@sesami_1; @pygaps; @sesami_2; @betsi;  @beatmap]. Furthermore, shortcomings of BET method as a tool for surface area characterization, such as its relatively poor performance in treating high surface area materials with multimodal pore sizes [@wang2015ultrahigh; @gomez2016application], have led to the development of alternate methods for surface area calculation from isotherms [@sesami_1; @sesami_2]. 
 
 # Theory background
-<!-- TODO clean this up -->
 The surface area of a material is calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
 
 \begin{equation}\label{eq:surface_area}
 S = q_m N A_m
 \end{equation}
 
-In order to attain $q_m$, it is necessary to identify the monolayer loading region from the isotherm using the BET method. The BET method is based on the BET equation \ref{eq:BET} which fits the isotherm data to locate the linear region of pressure where a monolayer forms. 
-
-\begin{equation}\label{eq:BET}
-\frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}
-\end{equation}
-
-The linaer region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. Afterwards, the uptake value at a data point within the pressure range is chosen based on the consistency criteria proposed by Rouquerol et al. [@rouquerol2007bet; @rouquerol2013adsorption]. The consistency criteria are as follows:
+In order to attain $q_m$, as well as the BET constant ($C$), it is necessary to identify the monolayer loading region from the isotherm using the BET method [@fagerlund1973determination]. This region is assigned to a section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. The linear region for BET analysis is usually chosen based on the consistency criteria proposed by Rouquerol et al. [@rouquerol2007bet; @rouquerol2013adsorption]. The consistency criteria are as follows:
 
 <!-- Use two spaces for a line break. -->
 1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$.  
-2. The value of the BET constant, $C$, should be positive.  
+2. The value of the $C$ should be positive.  
 3. The value of the monolayer loading capacity should correspond to a value of $p/p_0$ which falls within the selected linear region.  
 4. The value of $p/p_0$ calculated from BET theory, $1/(\sqrt{C}+1)$, and $p/p_0$ calculated from the third consistency rule should be equal (with ±10% tolerance).  
 5. The linear region should end at the knee of the isotherm.  
 
-Finally, the selected uptake value is multiplied by the molecular cross-sectional area of the adsorbate, typically derived from the bulk liquid density (16.2 Å^2^/molecule for N~2~; 14.2 Å^2^/molecule for Ar), to obtain the material's surface area, under the assumption that the adsorbate molecules only present on the material's surface and not on top of one another. 
+Once a linear region is selected, the identified uptake value is multiplied by the molecular cross-sectional area of the adsorbate, typically derived from the bulk liquid density (16.2 Å^2^/molecule for N~2~; 14.2 Å^2^/molecule for Ar), to obtain the material's surface area, under the assumption that the adsorbate molecules only form a monolayer (Equation \ref{eq:surface_area}). The BET method is based on the BET equation (Equation \ref{eq:BET}). 
+
+\begin{equation}\label{eq:BET}
+\frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}
+\end{equation}
 
 # Summary
 
