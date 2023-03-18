@@ -62,9 +62,7 @@ In order to attain $q_m$, it is necessary to identify the monolayer loading regi
 \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}
 \end{equation}
 
-The linear region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. Afterwards, the uptake value at a data point within the pressure range is chosen based on the Rouquerol consistency criteria [@rouquerol2007bet; @rouquerol2013adsorption]. The value is then multiplied by the molecular cross-sectional area of the adsorbate, $A_m$, to obtain the material's surface area, under the assumption that the material's surface is completely covered by the adsorbate molecules. 
-
-A set of consistency criteria has been proposed by Rouquerol et al. to select the linear region of the isotherm, so that the BET method could be used to characterize the surface area in microporous materials (materials with pores less than 20 angstrom). The consistency criteria are as follows:
+The linaer region is assigned to the section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. Afterwards, the uptake value at a data point within the pressure range is chosen based on the consistency criteria proposed by Rouquerol et al. [@rouquerol2007bet; @rouquerol2013adsorption]. The consistency criteria are as follows:
 
 <!-- Use two spaces for a line break. -->
 1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$.  
@@ -72,6 +70,8 @@ A set of consistency criteria has been proposed by Rouquerol et al. to select th
 3. The value of the monolayer loading capacity should correspond to a value of $p/p_0$ which falls within the selected linear region.  
 4. The value of $p/p_0$ calculated from BET theory, $1/(\sqrt{C}+1)$, and $p/p_0$ calculated from the third consistency rule should be equal (with ±10% tolerance).  
 5. The linear region should end at the knee of the isotherm.  
+
+Finally, the selected uptake value is multiplied by the molecular cross-sectional area of the adsorbate, typically derived from the bulk liquid density (16.2 Å^2^/molecule for N~2~; 14.2 Å^2^/molecule for Ar), to obtain the material's surface area, under the assumption that the adsorbate molecules only present on the material's surface and not on top of one another. 
 
 # Summary
 
