@@ -61,7 +61,7 @@ J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
 - Yongchul G. Chung (project supervision, Mongo DB Atlas and Google Cloud integration)
 
 # JOSS Supplementary Files
-Files used for software performance benchmarking can be found [here](paper/benchmarking)
+Files used for software performance benchmarking can be found [here](paper/benchmarking).
 
 # Funding Acknowledgement
 - Gianmarco G. Terrones was supported by the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and through the MIT Portugal Program. 
