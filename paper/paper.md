@@ -10,7 +10,7 @@ tags:
 authors:
   - name: Gianmarco G. Terrones
     orcid: 0000-0001-5360-165X
-    affiliation: 1g
+    affiliation: 1
   - name: Yu Chen
     orcid: 0000-0002-6530-0974
     affiliation: 2
