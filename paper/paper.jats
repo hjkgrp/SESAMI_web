@@ -18,7 +18,7 @@
 <article-id pub-id-type="publisher-id">0</article-id>
 <article-id pub-id-type="doi">N/A</article-id>
 <title-group>
-<article-title>SESAMI Web: An Accessible Interface for Surface Area
+<article-title>SESAMI APP: An Accessible Interface for Surface Area
 Prediction of Materials from Adsorption Isotherms</article-title>
 </title-group>
 <contrib-group>
@@ -28,7 +28,7 @@ Prediction of Materials from Adsorption Isotherms</article-title>
 <surname>Terrones</surname>
 <given-names>Gianmarco G.</given-names>
 </name>
-<xref ref-type="aff" rid="aff-1g"/>
+<xref ref-type="aff" rid="aff-1"/>
 </contrib>
 <contrib contrib-type="author">
 <contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-6530-0974</contrib-id>
@@ -106,8 +106,8 @@ Technology, Cambridge, MA, USA</institution>
 <author-notes>
 <corresp id="cor-1">* E-mail: <email></email></corresp>
 </author-notes>
-<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2023-03-17">
-<day>17</day>
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2023-03-20">
+<day>20</day>
 <month>3</month>
 <year>2023</year>
 </pub-date>
@@ -139,33 +139,23 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <body>
 <sec id="statement-of-need">
   <title>Statement of need</title>
-  <p>Surface area determination is important for the evaluation of
-  material’s viability in applications ranging from catalysis to
-  separations to gas storage. The most widely used approach for the
-  evaluation of a material’s gravimetric surface area, i.e. surface area
-  per unit mass, is the Brunauer-Emmett-Teller (BET) method
+  <p>Surface area characterization is one of the most important
+  material’s characterization techniques for modern engineering
+  application. The most widely used approach to calculate a material’s
+  gravimetric surface area, i.e. surface area per unit mass, is the
+  Brunauer-Emmett-Teller (BET) method
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
-  et al., 1938</xref>). That is, given the adsorption isotherm of a gas
-  (i.e., N<sub>2</sub> or Ar) in an adsorbent, one can use the BET
-  method to determine the gravimetric surface area of the adsorbent upon
-  identification of an appropriate linear region in the isotherm. The
-  BET equation is used to fit the isotherm data to locate the linear
-  region of pressure where a monolayer forms. Afterwards, the uptake
-  value at a data point within the pressure range is chosen based on the
-  Rouquerol consistency criteria
-  (<xref alt="F. Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">F.
-  Rouquerol et al., 2013</xref>;
-  <xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
-  Rouquerol et al., 2007</xref>). The value is then multiplied by the
-  molecular cross-sectional area of the adsorbate to obtain the
-  material’s surface area, under the assumption that the material’s
-  surface is completely covered by the adsorbate molecules. Many
-  researchers perform the analyses manually on a spreadsheet, which is
+  et al., 1938</xref>). The method computes the surface area given the
+  adsorption isotherm of a probe gas (i.e., N<sub>2</sub> or Ar) in an
+  adsorbent. Despite its importance, many researchers either obtain the
+  BET area from commercial software that comes with equipment, or
+  perform the analyses manually on a spreadsheet, which is
   time-consuming, and nearly impossible for some types of isotherms,
   which leads to large variability in BET-calculated areas
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>). These challenges have motivated the development
-  of programs for the automated determination of BET areas
+  of programs for the automated and standardized calculation of BET
+  areas
   (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
   et al., 2020</xref>;
   <xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
@@ -175,13 +165,14 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <xref alt="Sadeghi et al., 2020" rid="ref-beatmap" ref-type="bibr">Sadeghi
   et al., 2020</xref>;
   <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
-  et al., 2019</xref>). Furthermore, shortcomings of BET as a tool for
-  surface area calculation, such as its relatively poor performance in
-  treating high surface area materials with multimodal pore sizes Wang
-  et al.
-  (<xref alt="2015" rid="ref-wang2015ultrahigh" ref-type="bibr">2015</xref>);
+  et al., 2019</xref>). Furthermore, shortcomings of BET method as a
+  tool for surface area characterization, such as its relatively poor
+  performance in treating high surface area materials with multimodal
+  pore sizes
   (<xref alt="Gómez-Gualdrón et al., 2016" rid="ref-gomez2016application" ref-type="bibr">Gómez-Gualdrón
-  et al., 2016</xref>), have led to the development of alternate methods
+  et al., 2016</xref>;
+  <xref alt="Wang et al., 2015" rid="ref-wang2015ultrahigh" ref-type="bibr">Wang
+  et al., 2015</xref>), have led to the development of alternate methods
   for surface area calculation from isotherms
   (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
   et al., 2020</xref>;
@@ -190,7 +181,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="theory-background">
   <title>Theory background</title>
-  <p>In the BET method, the surface area is calculated using Equation
+  <p>The surface area of a material is calculated using Equation
   <xref alt="1" rid="eqU003Asurface_area">1</xref>.
   <inline-formula><alternatives>
   <tex-math><![CDATA[S]]></tex-math>
@@ -214,8 +205,16 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <p>In order to attain <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
-  it is necessary to identify the monolayer loading region. This region
-  is assigned to the section of the isotherm where
+  it is necessary to identify the monolayer loading region from the
+  isotherm using the BET method. The BET method is based on the BET
+  equation <xref alt="2" rid="eqU003ABET">2</xref> which fits the
+  isotherm data to locate the linear region of pressure where a
+  monolayer forms.</p>
+  <p><named-content id="eqU003ABET" content-type="equation"><disp-formula><alternatives>
+  <tex-math><![CDATA[
+  \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}]]></tex-math>
+  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>C</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
+  <p>The linear region is assigned to the section of the isotherm where
   <inline-formula><alternatives>
   <tex-math><![CDATA[\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:mfrac><mml:mo>⋅</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>q</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>
@@ -231,96 +230,75 @@ a Creative Commons Attribution 4.0 International License (CC BY
   is the saturated vapor pressure, and <inline-formula><alternatives>
   <tex-math><![CDATA[q]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi></mml:math></alternatives></inline-formula>
-  is the adsorbate loading. <inline-formula><alternatives>
-  <tex-math><![CDATA[s]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>s</mml:mi></mml:math></alternatives></inline-formula>
-  is the slope of the line of <inline-formula><alternatives>
-  <tex-math><![CDATA[\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:mfrac><mml:mo>⋅</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>q</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>
-  versus <inline-formula><alternatives>
-  <tex-math><![CDATA[\frac{p}{p_0}]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:math></alternatives></inline-formula>
-  within the monolayer loading region, and
-  <inline-formula><alternatives>
-  <tex-math><![CDATA[i]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>i</mml:mi></mml:math></alternatives></inline-formula>
-  is the intercept of the line
-  (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
-  1973</xref>). <inline-formula><alternatives>
-  <tex-math><![CDATA[s]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>s</mml:mi></mml:math></alternatives></inline-formula>
-  and <inline-formula><alternatives>
-  <tex-math><![CDATA[i]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>i</mml:mi></mml:math></alternatives></inline-formula>
-  can be used to calculate the BET constant,
-  <inline-formula><alternatives>
-  <tex-math><![CDATA[C]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>,
-  and <inline-formula><alternatives>
-  <tex-math><![CDATA[q_m]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
-  (see Equations <xref alt="2" rid="eqU003AC">2</xref> and
-  <xref alt="3" rid="eqU003Aqm">3</xref>).</p>
-  <p><named-content id="eqU003AC" content-type="equation"><disp-formula><alternatives>
-  <tex-math><![CDATA[
-  C = \frac{s}{i} + 1]]></tex-math>
-  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>C</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mi>s</mml:mi><mml:mi>i</mml:mi></mml:mfrac><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
-  <p><named-content id="eqU003Aqm" content-type="equation"><disp-formula><alternatives>
-  <tex-math><![CDATA[
-  q_m = \frac{1}{s+i}]]></tex-math>
-  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:mi>s</mml:mi><mml:mo>+</mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
-  <p>The Rouquerol consistency criteria, which are recommended to use to
-  select a linear region, are as follows:
-  1. The linear region should only be a range of
-  <inline-formula><alternatives>
-  <tex-math><![CDATA[p/p_0]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
-  in which the value of <inline-formula><alternatives>
-  <tex-math><![CDATA[q(1-p/p_0)]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
-  monotonically increases with <inline-formula><alternatives>
-  <tex-math><![CDATA[p/p_0]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>.
-  2. The value of <inline-formula><alternatives>
-  <tex-math><![CDATA[C]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>
-  should be positive.
-  3. The value of the monolayer loading capacity should correspond to a
-  value of <inline-formula><alternatives>
-  <tex-math><![CDATA[p/p_0]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
-  which falls within the selected linear region.
-  4. The value of <inline-formula><alternatives>
-  <tex-math><![CDATA[p/p_0]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
-  calculated from BET theory, <inline-formula><alternatives>
-  <tex-math><![CDATA[1/(\sqrt{C}+1)]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>1</mml:mn><mml:mi>/</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msqrt><mml:mi>C</mml:mi></mml:msqrt><mml:mo>+</mml:mo><mml:mn>1</mml:mn><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>,
-  and <inline-formula><alternatives>
-  <tex-math><![CDATA[p/p_0]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
-  calculated from the third consistency rule should be equal (with ±10%
-  tolerance).
-  5. The linear region should end at the knee of the isotherm.</p>
+  is the adsorbate loading. Afterwards, the uptake value at a data point
+  within the pressure range is chosen based on the Rouquerol consistency
+  criteria
+  (<xref alt="F. Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">F.
+  Rouquerol et al., 2013</xref>;
+  <xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
+  Rouquerol et al., 2007</xref>). The value is then multiplied by the
+  molecular cross-sectional area of the adsorbate to obtain the
+  material’s surface area, under the assumption that the material’s
+  surface is completely covered by the adsorbate molecules.</p>
+  <p>A set of consistency criteria has been proposed by Rouquerol et
+  al. to select the linear region of the isotherm, so that the BET
+  method could be used to characterize the surface area in microporous
+  materials (materials with pores less than 20 angstrom). The
+  consistency criteria are as follows:</p>
+  <list list-type="order">
+    <list-item>
+      <p>The linear region should only be a range of
+      <inline-formula><alternatives>
+      <tex-math><![CDATA[p/p_0]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
+      in which the value of <inline-formula><alternatives>
+      <tex-math><![CDATA[q(1-p/p_0)]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+      monotonically increases with <inline-formula><alternatives>
+      <tex-math><![CDATA[p/p_0]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>.
+      </p>
+    </list-item>
+    <list-item>
+      <p>The value of the BET constant, <inline-formula><alternatives>
+      <tex-math><![CDATA[C]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>,
+      should be positive.
+      </p>
+    </list-item>
+    <list-item>
+      <p>The value of the monolayer loading capacity should correspond
+      to a value of <inline-formula><alternatives>
+      <tex-math><![CDATA[p/p_0]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
+      which falls within the selected linear region.
+      </p>
+    </list-item>
+    <list-item>
+      <p>The value of <inline-formula><alternatives>
+      <tex-math><![CDATA[p/p_0]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
+      calculated from BET theory, <inline-formula><alternatives>
+      <tex-math><![CDATA[1/(\sqrt{C}+1)]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>1</mml:mn><mml:mi>/</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msqrt><mml:mi>C</mml:mi></mml:msqrt><mml:mo>+</mml:mo><mml:mn>1</mml:mn><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>,
+      and <inline-formula><alternatives>
+      <tex-math><![CDATA[p/p_0]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
+      calculated from the third consistency rule should be equal (with
+      ±10% tolerance).
+      </p>
+    </list-item>
+    <list-item>
+      <p>The linear region should end at the knee of the isotherm.</p>
+    </list-item>
+  </list>
 </sec>
 <sec id="summary">
   <title>Summary</title>
-  <p>In contrast to previously developed programs which require use of
-  the command line
-  (<xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
-  &amp; Llewellyn, 2019</xref>;
-  <xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
-  et al., 2022</xref>) and familiarity with Python
-  (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
-  et al., 2020</xref>;
-  <xref alt="Iacomi &amp; Llewellyn, 2019" rid="ref-pygaps" ref-type="bibr">Iacomi
-  &amp; Llewellyn, 2019</xref>;
-  <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
-  et al., 2019</xref>), the SESAMI web interface allows a user to make
-  surface area predictions on their web browser simply by uploading
-  isotherm data. The website facilitates access to the previously
-  developed SESAMI models (SESAMI 1 and 2) for the evaluation of
-  material’s surface area
+  <p>The SESAMI web interface allows a user to make surface area
+  predictions on their web browser simply by uploading isotherm data.
+  The website facilitates access to the previously developed SESAMI
+  models (SESAMI 1 and 2) for the evaluation of material’s surface area
   (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
   et al., 2020</xref>;
   <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
@@ -369,10 +347,10 @@ a Creative Commons Attribution 4.0 International License (CC BY
   Rouquerol criteria, the pressure range and number of data points in
   the region, and the coefficient of determination. The interface also
   displays intermediate SESAMI 1 values for surface area calculation,
-  namely the BET constant, <inline-formula><alternatives>
+  namely <inline-formula><alternatives>
   <tex-math><![CDATA[C]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>,
-  and the monolayer adsorption loading, <inline-formula><alternatives>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>
+  and <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>.
   Furthermore, the SESAMI web interface allows the user to download

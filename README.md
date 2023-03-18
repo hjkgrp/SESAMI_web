@@ -1,5 +1,5 @@
 # Introduction
-Forget about using old excel spreadsheet from your co-workers! **On-the-fly**, the [SESAMI (Script to Estimate the Surface Area of Materials from their Isotherms) website](https://sesami-web.org/) performs the Brunauer-Emmett-Teller (BET), Excess Sorption Work (ESW), BET + ESW, and Machine Learning (ML) methods for surface area
+Forget about using old excel spreadsheet from your co-workers! **On-the-fly**, the [SESAMI (Script to Estimate the Surface Area of Materials from their Isotherms) website](https://sesami-web.org/) performs the Brunauer-Emmett-Teller (BET), BET+Excess Sorption Work (ESW), and Machine Learning (ML) methods for surface area
 estimation in nanoporous materials. This website allows user to upload either [Adsorption Information File (AIF)](https://pubs.acs.org/doi/10.1021/acs.langmuir.1c00122) or Comma Separated-Values (CSV) file. 
 
 This website is based on [MOFSimplify](https://github.com/hjkgrp/MOFSimplify) website developed by [Kulik Group](http://hjkgrp.mit.edu/) at MIT.
@@ -26,10 +26,10 @@ Here, a **linear region is a set of 4 consecutive points having an R<sup>2</sup>
 
 ![The SESAMI 1 algorithm](images/SESAMI_1_algorithm.png)
 
-## ESW areas
+<!-- ## ESW areas
 The ESW area is computed from the loading at the first minima on the ESW plot.
 
-We compute the slope at each point and identify the point where the slope changes sign from negative to positive to obtain the ESW minima. The slope at each point is the slope of a line fitted through 7 points; 3 before and 3 after the selected point. Even though using 7 points to compute the slopes in the SESAMI 1 study yielded satisfactory results, we still highly recommend that users visually inspect the choice of the first local minimum to ensure that it is reasonable.
+We compute the slope at each point and identify the point where the slope changes sign from negative to positive to obtain the ESW minima. The slope at each point is the slope of a line fitted through 7 points; 3 before and 3 after the selected point. Even though using 7 points to compute the slopes in the SESAMI 1 study yielded satisfactory results, we still highly recommend that users visually inspect the choice of the first local minimum to ensure that it is reasonable. -->
 
 ## BET + ESW areas
 The BET + ESW areas are computed in the same way as the BET areas except that the algorithm is forced to include the ESW minimum in the selected region. Thus, the chosen region **must satisfy** the consistency criteria 1, 2 and have an R<sup>2</sup> > 0.998, and include the relative pressure corresponding to the ESW minimum point. The correct calculation of the BET + ESW areas depends on the correct identification of the ESW minimum. If the ESW minimum is wrongly identified, the BET + ESW area will also be wrong. Thus, we recommend that users ensure that the first minimum is correctly identified. 
