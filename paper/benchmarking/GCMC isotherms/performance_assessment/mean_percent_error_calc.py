@@ -23,13 +23,14 @@ betsi_c = [1962, 3519, np.NAN, np.NAN, np.NAN, 1381, 1164, 2426, np.NAN, np.NAN,
 # Will loop through the program generated areas and compare to Zeo++
 print('1.67 A probe first')
 areas_to_compare = [BET_a, BET_b, BET_c, pyGAPS, beatmap_a, beatmap_b, betsi_c]
+software_names = ['SESAMI 1 BET', 'SESAMI 1 BET+ESW', 'SESAMI 2 LASSO', 'pyGAPS', 'BEaTmap 1', 'BEaTmap 2', 'BETSI']
 for i, my_list in enumerate(areas_to_compare):
 	software_predictions = np.array(my_list)
 	pseudo_ground_truth = np.array(zeo_167)
 	# Getting rid of NaN values
 	pseudo_ground_truth_clean = pseudo_ground_truth[np.logical_not(np.isnan(software_predictions))] # Only keep the non NAN values
 	software_predictions_clean = software_predictions[np.logical_not(np.isnan(software_predictions))] # Only keep the non NAN values
-	print(f'MAPE #{i+1} is {MAPE(pseudo_ground_truth_clean, software_predictions_clean)}')
+	print(f'MAPE for {software_names[i]} is {MAPE(pseudo_ground_truth_clean, software_predictions_clean)}')
 
 print('\n2.27 A probe next')
 for i, my_list in enumerate(areas_to_compare):
@@ -38,4 +39,4 @@ for i, my_list in enumerate(areas_to_compare):
 	# Getting rid of NaN values
 	pseudo_ground_truth_clean = pseudo_ground_truth[np.logical_not(np.logical_or(np.isnan(software_predictions),pseudo_ground_truth == 0))] # Only keep the non NAN values and non zero values (zero values are present from Zeo++ output)
 	software_predictions_clean = software_predictions[np.logical_not(np.logical_or(np.isnan(software_predictions),pseudo_ground_truth == 0))] # Only keep the non NAN values and non zero values
-	print(f'MAPE #{i+1} is {MAPE(pseudo_ground_truth_clean, software_predictions_clean)}')
+	print(f'MAPE for {software_names[i]} is {MAPE(pseudo_ground_truth_clean, software_predictions_clean)}')

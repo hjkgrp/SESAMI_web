@@ -19,6 +19,7 @@ betsi_c = [1962, 3519, np.NAN, np.NAN, np.NAN, 1381, 1164, 2426, np.NAN, np.NAN,
 # Will loop through the program generated areas and compare to Zeo++
 print('1.67 A probe first')
 areas_to_compare = [BET_a, BET_b, BET_c, pyGAPS, beatmap_a, beatmap_b, betsi_c]
+software_names = ['SESAMI 1 BET', 'SESAMI 1 BET+ESW', 'SESAMI 2 LASSO', 'pyGAPS', 'BEaTmap 1', 'BEaTmap 2', 'BETSI']
 for i, my_list in enumerate(areas_to_compare):
 	software_predictions = np.array(my_list)
 	pseudo_ground_truth = np.array(zeo_167)
@@ -27,7 +28,7 @@ for i, my_list in enumerate(areas_to_compare):
 	software_predictions_clean = software_predictions[np.logical_not(np.isnan(software_predictions))] # Only keep the non NAN values
 	# print(pseudo_ground_truth_clean)
 	# print(software_predictions_clean)
-	print(f'Correlation coefficient {i} is {pearsonr(pseudo_ground_truth_clean, software_predictions_clean)}')
+	print(f'Correlation coefficient for {software_names[i]} is {pearsonr(pseudo_ground_truth_clean, software_predictions_clean)}')
 print('First value in the tuple is the statistic.') # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html
 
 print('\n2.27 A probe next')
@@ -37,4 +38,4 @@ for i, my_list in enumerate(areas_to_compare):
 	# Getting rid of NaN values
 	pseudo_ground_truth_clean = pseudo_ground_truth[np.logical_not(np.isnan(software_predictions))] # Only keep the non NAN values
 	software_predictions_clean = software_predictions[np.logical_not(np.isnan(software_predictions))] # Only keep the non NAN values
-	print(f'Correlation coefficient {i} is {pearsonr(pseudo_ground_truth_clean, software_predictions_clean)}')
+	print(f'Correlation coefficient for {software_names[i]} is {pearsonr(pseudo_ground_truth_clean, software_predictions_clean)}')

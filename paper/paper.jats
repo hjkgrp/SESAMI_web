@@ -205,9 +205,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <p>In order to attain <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
-  as well as the BET constant, <inline-formula><alternatives>
+  as well as the BET constant (<inline-formula><alternatives>
   <tex-math><![CDATA[C]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>,
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>),
   it is necessary to identify the monolayer loading region from the
   isotherm using the BET method
   (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
@@ -339,8 +339,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   et al., 2022</xref>;
   <xref alt="Thommes et al., 2015" rid="ref-thommes2015physisorption" ref-type="bibr">Thommes
   et al., 2015</xref>). In addition, the SESAMI 1 code supports
-  arbitrary user-specified adsorbates if their cross-section, saturation
-  vapor pressure, and temperature are specified.</p>
+  isotherms with arbitrary user-specified adsorbates if temperature and
+  adsorbate cross-section and saturation vapor pressure are
+  specified.</p>
   <p>The SESAMI web interface has extensive error handling and clearly
   alerts users of issues with their adsorption isotherm data. For
   example, it alerts the user if no ESW minima is found by SESAMI 1 or
@@ -783,8 +784,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <caption>
       <p>Settings used for software for isotherm to surface area
       calculation. All BET calculations by SESAMI 1 and pyGAPS reported
-      in this work fulfill Rouquerol criteria 1 and
-      2.<styled-content id="settings_table"></styled-content> </p>
+      in this work fulfill Rouquerol criteria 1 and 2. SESAMI 1 code
+      requires 4 points for a line, while pyGAPS requires
+      3.<styled-content id="settings_table"></styled-content> </p>
     </caption>
     <table>
       <colgroup>
@@ -805,8 +807,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
           (LASSO)</td>
           <td>Run from SESAMI web interface<break/>Accessed February
           2023</td>
-          <td>Type of gas: Nitrogen<break/>Scope: BET and
-          BET+ESW<break/>R<sup>2</sup> cutoff:
+          <td>Type of gas: Nitrogen<break/>Custom adsorbate:
+          No<break/>Scope: BET and BET+ESW<break/>R<sup>2</sup> cutoff:
           0.9995<break/>R<sup>2</sup> min: 0.998<break/>Include ML
           prediction?: Yes<break/></td>
         </tr>
