@@ -312,6 +312,7 @@ class BETAn:
         """     
         scope = plotting_information['scope']
 
+        # ax.errorbar essentially is ax.plot with the settings used below. Makes a scatter. Benefit is that it shows up last in the legend.
         ax.errorbar(
             data["P_rel"],
             data["Loading"],
@@ -658,7 +659,7 @@ class BETAn:
         """
         This function computes the ESW area and ESW minima.
         Inputs:
-            data: The DataFrame containing columns 'Pressure' in Pa and 'Loading' in mol/kg framework.
+            data: The DataFrame containing columns 'Pressure' in Pa and 'Loading' in mol/kg framework. Also contains 'P_rel'
             eswpoints (optional): int. Helps calculate the slope at a point. The number of points around the point at which slope is to be
             computed.
         Outputs:
@@ -733,7 +734,15 @@ class BETAn:
         """
         [loading, phi, minima, eswarea] = self.eswdata(data, eswpoints)
 
-        ax.plot(loading, phi, "o")
+        # ax.errorbar essentially is ax.plot with the settings used below. Makes a scatter. Benefit is that it shows up last in the legend.
+        ax.errorbar(
+            loading,
+            phi,
+            yerr=None,
+            fmt="o",
+            capsize=3,
+            label="Excess sorption work",
+        )
         ax.set_ylim(ax.get_ylim())
 
         ax.xaxis.label.set_text("q / mol/kg")

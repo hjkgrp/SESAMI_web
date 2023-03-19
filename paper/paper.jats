@@ -19,7 +19,7 @@
 <article-id pub-id-type="doi">N/A</article-id>
 <title-group>
 <article-title>SESAMI APP: An Accessible Interface for Surface Area
-Prediction of Materials from Adsorption Isotherms</article-title>
+Calculation of Materials from Adsorption Isotherms</article-title>
 </title-group>
 <contrib-group>
 <contrib contrib-type="author">
@@ -145,9 +145,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   gravimetric surface area, i.e. surface area per unit mass, is the
   Brunauer-Emmett-Teller (BET) method
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
-  et al., 1938</xref>). The method computes the surface area given the
-  adsorption isotherm of a probe gas (i.e., N<sub>2</sub> or Ar) in an
-  adsorbent. Despite its importance, many researchers either obtain the
+  et al., 1938</xref>). The BET method computes the surface area given
+  the adsorption isotherm of a probe gas (i.e., N<sub>2</sub> or Ar) in
+  a material. Despite its importance, many researchers either obtain the
   BET area from commercial software that comes with equipment, or
   perform the analyses manually on a spreadsheet, which is
   time-consuming, and nearly impossible for some types of isotherms,
@@ -165,23 +165,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <xref alt="Sadeghi et al., 2020" rid="ref-beatmap" ref-type="bibr">Sadeghi
   et al., 2020</xref>;
   <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
-  et al., 2019</xref>). Furthermore, shortcomings of BET method as a
-  tool for surface area characterization, such as its relatively poor
-  performance in treating high surface area materials with multimodal
-  pore sizes
-  (<xref alt="Gómez-Gualdrón et al., 2016" rid="ref-gomez2016application" ref-type="bibr">Gómez-Gualdrón
-  et al., 2016</xref>;
-  <xref alt="Wang et al., 2015" rid="ref-wang2015ultrahigh" ref-type="bibr">Wang
-  et al., 2015</xref>), have led to the development of alternate methods
-  for surface area calculation from isotherms
-  (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
-  et al., 2020</xref>;
-  <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
   et al., 2019</xref>).</p>
 </sec>
 <sec id="theory-background">
   <title>Theory background</title>
-  <p>The surface area of a material is calculated using Equation
+  <p>The surface area of a material can be calculated using Equation
   <xref alt="1" rid="eqU003Asurface_area">1</xref>.
   <inline-formula><alternatives>
   <tex-math><![CDATA[S]]></tex-math>
@@ -205,14 +193,14 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <p>In order to attain <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
-  as well as the BET constant (<inline-formula><alternatives>
-  <tex-math><![CDATA[C]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>),
-  it is necessary to identify the monolayer loading region from the
-  isotherm using the BET method
-  (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
-  1973</xref>). This region is assigned to a section of the isotherm
-  where <inline-formula><alternatives>
+  the monolayer loading region from the isotherm can be identified using
+  the BET equation <xref alt="2" rid="eqU003ABET">2</xref>.</p>
+  <p><named-content id="eqU003ABET" content-type="equation"><disp-formula><alternatives>
+  <tex-math><![CDATA[
+  \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}]]></tex-math>
+  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>C</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
+  <p>This region is assigned to a section of the isotherm where
+  <inline-formula><alternatives>
   <tex-math><![CDATA[\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:mfrac><mml:mo>⋅</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>q</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>
   is linear as a function of <inline-formula><alternatives>
@@ -227,9 +215,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   is the saturated vapor pressure, and <inline-formula><alternatives>
   <tex-math><![CDATA[q]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi></mml:math></alternatives></inline-formula>
-  is the adsorbate loading. The linear region for BET analysis is
-  usually chosen based on the consistency criteria proposed by Rouquerol
-  et al.
+  is the adsorbate loading. ($C) is the BET constant. The linear region
+  for BET analysis is usually chosen based on the consistency criteria
+  proposed by Rouquerol et al.
   (<xref alt="F. Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">F.
   Rouquerol et al., 2013</xref>;
   <xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
@@ -288,13 +276,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   Å<sup>2</sup>/molecule for N<sub>2</sub>; 14.2 Å<sup>2</sup>/molecule
   for Ar), to obtain the material’s surface area, under the assumption
   that the adsorbate molecules only form a monolayer (Equation
-  <xref alt="1" rid="eqU003Asurface_area">1</xref>). The BET method is
-  based on the BET equation (Equation
-  <xref alt="2" rid="eqU003ABET">2</xref>).</p>
-  <p><named-content id="eqU003ABET" content-type="equation"><disp-formula><alternatives>
-  <tex-math><![CDATA[
-  \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}]]></tex-math>
-  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>C</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
+  <xref alt="1" rid="eqU003Asurface_area">1</xref>).</p>
 </sec>
 <sec id="summary">
   <title>Summary</title>
@@ -961,52 +943,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <publisher-name>GitHub</publisher-name>
       <year iso-8601-date="2020">2020</year>
       <uri>https://github.com/PMEAL/beatmap</uri>
-    </element-citation>
-  </ref>
-  <ref id="ref-gomez2016application">
-    <element-citation publication-type="article-journal">
-      <person-group person-group-type="author">
-        <name><surname>Gómez-Gualdrón</surname><given-names>Diego A</given-names></name>
-        <name><surname>Moghadam</surname><given-names>Peyman Z</given-names></name>
-        <name><surname>Hupp</surname><given-names>Joseph T</given-names></name>
-        <name><surname>Farha</surname><given-names>Omar K</given-names></name>
-        <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
-      </person-group>
-      <article-title>Application of Consistency Criteria to Calculate BET Areas of Micro-and Mesoporous Metal–Organic Frameworks</article-title>
-      <source>Journal of the American Chemical Society</source>
-      <publisher-name>ACS Publications</publisher-name>
-      <year iso-8601-date="2016">2016</year>
-      <volume>138</volume>
-      <issue>1</issue>
-      <pub-id pub-id-type="doi">10.1021/jacs.5b10266</pub-id>
-      <fpage>215</fpage>
-      <lpage>224</lpage>
-    </element-citation>
-  </ref>
-  <ref id="ref-wang2015ultrahigh">
-    <element-citation publication-type="article-journal">
-      <person-group person-group-type="author">
-        <name><surname>Wang</surname><given-names>Timothy C</given-names></name>
-        <name><surname>Bury</surname><given-names>Wojciech</given-names></name>
-        <name><surname>Gómez-Gualdrón</surname><given-names>Diego A</given-names></name>
-        <name><surname>Vermeulen</surname><given-names>Nicolaas A</given-names></name>
-        <name><surname>Mondloch</surname><given-names>Joseph E</given-names></name>
-        <name><surname>Deria</surname><given-names>Pravas</given-names></name>
-        <name><surname>Zhang</surname><given-names>Kainan</given-names></name>
-        <name><surname>Moghadam</surname><given-names>Peyman Z</given-names></name>
-        <name><surname>Sarjeant</surname><given-names>Amy A</given-names></name>
-        <name><surname>Snurr</surname><given-names>Randall Q</given-names></name>
-        <name><surname>others</surname></name>
-      </person-group>
-      <article-title>Ultrahigh Surface Area Zirconium MOFs and Insights into the Applicability of the BET Theory</article-title>
-      <source>Journal of the American Chemical Society</source>
-      <publisher-name>ACS Publications</publisher-name>
-      <year iso-8601-date="2015">2015</year>
-      <volume>137</volume>
-      <issue>10</issue>
-      <pub-id pub-id-type="doi">10.1021/ja512973b</pub-id>
-      <fpage>3585</fpage>
-      <lpage>3591</lpage>
     </element-citation>
   </ref>
   <ref id="ref-fagerlund1973determination">
