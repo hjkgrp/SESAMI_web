@@ -55,13 +55,13 @@ The surface area of a material can be calculated using Equation \ref{eq:surface_
 S = q_m N A_m
 \end{equation}
 
-In order to attain $q_m$, the monolayer loading region from the isotherm can be identified using the BET equation \ref{eq:BET}.
+In order to attain $q_m$, the monolayer loading region from the isotherm can be identified using the BET equation \ref{eq:BET}, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure,  $q$ is the adsorbate loading, and $C$ is the BET constant.
 
 \begin{equation}\label{eq:BET}
 \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}
 \end{equation}
 
-This region is assigned to a section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure, and $q$ is the adsorbate loading. ($C) is the BET constant. The linear region for BET analysis is usually chosen based on the consistency criteria proposed by Rouquerol et al. [@rouquerol2007bet; @rouquerol2013adsorption]. The consistency criteria are as follows:
+This region is assigned to a section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$. The linear region for BET analysis is usually chosen based on the consistency criteria proposed by Rouquerol et al. [@rouquerol2007bet; @rouquerol2013adsorption]. The consistency criteria are as follows:
 
 <!-- Use two spaces for a line break. -->
 1. The linear region should only be a range of $p/p_0$ in which the value of $q(1-p/p_0)$ monotonically increases with $p/p_0$.  
