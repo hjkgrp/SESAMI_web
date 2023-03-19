@@ -6,11 +6,11 @@ inputs:
     required: false
     default: joss
   paper-path:
-    description: /paper/
+    description: 
         Path to the main paper Markdown file, relative to the
         project's root directory.
     required: false
-    default: 'paper.md'
+    default: '/paper/paper.md'
 runs:
   using: docker
   image: 'docker://openjournals/inara:latest'
