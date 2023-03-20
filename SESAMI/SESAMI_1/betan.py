@@ -107,19 +107,23 @@ class BETAn:
             full
         ):  # In some applications, we don't want the ESW limits and stuff, we only want the values.
             # In those cases, we can simply change this parameter to something else.
+
+            # The first Rouquerol consistency criterion is as follows:
+            # The linear region should only be a range of p/p0 in which the value of q(1-p/p0) monotonically increases with p/p0
+            # Where q is loading and p/p0 is P_rel. So, the setting of con1limit below is the largest P_rel data point in the isotherm in the first region where q(1-p/p0) is monotonically increasing with p/p0
             if self.con1limitmanual == "No":
-                self.con1limit = self.getoptimum(
+                self.con1limit = self.getlocalextremum(
                     data, column="BET_y2", x="P_rel", how="Maxima", which=0, points=3
                 )[0]
 
             if self.eswminimamanual == "No":
-                self.eswminima = self.getoptimum(
+                self.eswminima = self.getlocalextremum(
                     data, column="phi", x="P_rel", how="Minima", which=0, points=3
                 )[0]
 
         return data
 
-    def getoptimum(self, data, column=None, x=None, how="Minima", which=0, points=3):
+    def getlocalextremum(self, data, column=None, x=None, how="Minima", which=0, points=3):
         """
         This function will get the optimum value and the corresponding index from a given set of finite number of data points.
         Such a function is not easily available elsewhere. The rationale is that we compute the slope at every point by fitting
@@ -200,7 +204,8 @@ class BETAn:
                     and data[minimap + 1 : minimap + points + 1]["target"].mean()
                     > data[data.index == minimap]["target"].values[0]
                 ):
-                    # This means that this is really a minima and not just due to the noise.
+                    # This means that this is really a minimum and not just due to the noise.
+                    # The data points before the candidate minimum are greater on average than the candidate, and those after the candidate are greater on average.
                     goodminimas.append(minimap)
             if goodminimas != []:
                 # Now, we need to get the minima that we are really looking for.
@@ -319,7 +324,7 @@ class BETAn:
             yerr=yerr,
             fmt="o",
             capsize=3,
-            label="BET data points",
+            label="Isotherm data points",
         )
 
         ax.xaxis.label.set_text("$p/p_0$")
@@ -400,7 +405,7 @@ class BETAn:
                     ax.get_ylim()[1],
                     colors=plt.cm.Greens(200),
                     linestyles="dashed",
-                    label="ESW minimum",
+                    label="First ESW minimum",
                 )
             if self.con1limit is not None:
                 ax.vlines(
@@ -501,7 +506,7 @@ class BETAn:
         if maketitle == "Yes":
             titletext = "BET Consistency Plot"
             ax3.set_title(titletext)
-        ax3.errorbar(data["P_rel"], data["BET_y2"], fmt="o", label="BET data points")
+        ax3.errorbar(data["P_rel"], data["BET_y2"], fmt="o", label="Isotherm data points")
         ax3.set_ylim(ax3.get_ylim())
 
         if tryminorticks == "Yes":
@@ -540,7 +545,7 @@ class BETAn:
                 ax3.get_ylim()[1],
                 colors=plt.cm.Greens(200),
                 linestyles="dashed",
-                label="ESW minimum",
+                label="First ESW minimum",
             )
         ax3.set_xlim(right=1.000)
 
@@ -677,7 +682,7 @@ class BETAn:
 
         # Now, we will use our function to get minima.
         if self.eswminima is None:
-            minima = self.getoptimum(
+            minima = self.getlocalextremum(
                 data, column="phi", x="P_rel", how="Minima", which=0, points=eswpoints
             )[0]
         else:
@@ -741,7 +746,7 @@ class BETAn:
             yerr=None,
             fmt="o",
             capsize=3,
-            label="Excess sorption work",
+            label="Isotherm data points",
         )
         ax.set_ylim(ax.get_ylim())
 
@@ -810,7 +815,7 @@ class BETAn:
                 ax.get_ylim()[1],
                 colors=plt.cm.Greens(200),
                 linestyles="dashed",
-                label="ESW minimum",
+                label="First ESW minimum",
             )
         else:
             ax.text(

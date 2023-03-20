@@ -150,7 +150,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   a material. Despite its importance, many researchers either obtain the
   BET area from commercial software that comes with equipment, or
   perform the analyses manually on a spreadsheet, which is
-  time-consuming, and nearly impossible for some types of isotherms,
+  time-consuming and nearly impossible for some types of isotherms,
   which leads to large variability in BET-calculated areas
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>). These challenges have motivated the development
@@ -178,7 +178,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
   is the molar amount of adsorbate forming a monolayer per unit mass of
-  adsorbent, <inline-formula><alternatives>
+  material, <inline-formula><alternatives>
   <tex-math><![CDATA[N]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>N</mml:mi></mml:math></alternatives></inline-formula>
   is the Avogadro constant, and <inline-formula><alternatives>
@@ -228,11 +228,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   follows:</p>
   <list list-type="order">
     <list-item>
-      <p>The linear region should only be a range of
+      <p>The linear region should only span a range of
       <inline-formula><alternatives>
       <tex-math><![CDATA[p/p_0]]></tex-math>
       <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
-      in which the value of <inline-formula><alternatives>
+      values in which <inline-formula><alternatives>
       <tex-math><![CDATA[q(1-p/p_0)]]></tex-math>
       <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
       monotonically increases with <inline-formula><alternatives>
@@ -297,7 +297,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <p>SESAMI 1 applies computational routines to identify suitable linear
   regions of adsorption isotherms for BET surface area calculations
   (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
-  1973</xref>). The automated workflow includes consideration of
+  1973</xref>). The automated workflow includes consideration of the
   Rouquerol criteria and the use of coefficients of determination as a
   measure of linearity. Furthermore, SESAMI 1 supports a combined
   BET+ESW (excess sorption work) approach for linear region selection;
