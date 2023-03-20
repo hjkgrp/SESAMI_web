@@ -38,7 +38,7 @@ affiliations:
    index: 4
  - name: Department of Chemistry, Massachusetts Institute of Technology, Cambridge, MA, USA
    index: 5
-date: 20 March 2023
+date: 21 March 2023
 bibliography: paper.bib
 
 
@@ -46,7 +46,7 @@ bibliography: paper.bib
 
 # Statement of need
 
-Surface area characterization is one of the most important material's characterization techniques for modern engineering application. The most widely used approach to calculate a material’s gravimetric surface area, i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET) method [@brunauer1938adsorption]. The BET method computes the surface area given the adsorption isotherm of a probe gas (i.e., N~2~ or Ar) in a material. Despite its importance, many researchers either obtain the BET area from commercial software that comes with equipment, or perform the analyses manually on a spreadsheet, which is time-consuming and nearly impossible for some types of isotherms, which leads to large variability in BET-calculated areas [@betsi]. These challenges have motivated the development of programs for the automated and standardized calculation of BET areas [@sesami_1; @pygaps; @sesami_2; @betsi; @beatmap]. 
+Surface area characterization is one of the most important ways to study a material. The most widely used approach to calculate a material’s gravimetric surface area, i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET) method [@brunauer1938adsorption]. The BET method computes the surface area given the adsorption isotherm of a probe gas (i.e., N~2~ or Ar) in a material. Despite its importance, many researchers either obtain the BET area from commercial software that comes with equipment, or perform the analyses manually on a spreadsheet, which is time-consuming and nearly impossible for some types of isotherms, which leads to large variability in BET-calculated areas [@betsi]. These challenges have motivated the development of programs for the automated and standardized calculation of BET areas [@sesami_1; @pygaps; @sesami_2; @betsi; @beatmap]. 
 
 # Theory background
 The surface area of a material can be calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of material, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
@@ -55,7 +55,7 @@ The surface area of a material can be calculated using Equation \ref{eq:surface_
 S = q_m N A_m
 \end{equation}
 
-In order to attain $q_m$, the monolayer loading region from the isotherm can be identified using the BET equation \ref{eq:BET}, where $p$ is the vapor pressure, $p_0$ is the saturated vapor pressure,  $q$ is the adsorbate loading, and $C$ is the BET constant.
+In order to attain $q_m$, the monolayer loading region from the isotherm can be identified using the BET equation \ref{eq:BET}, where $p$ is the vapor pressure, $p_0$ is the saturation vapor pressure, $q$ is the adsorbate loading, and $C$ is the BET constant.
 
 \begin{equation}\label{eq:BET}
 \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}
