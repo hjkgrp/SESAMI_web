@@ -49,7 +49,7 @@ bibliography: paper.bib
 Surface area characterization is one of the most important material's characterization techniques for modern engineering application. The most widely used approach to calculate a material’s gravimetric surface area, i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET) method [@brunauer1938adsorption]. The BET method computes the surface area given the adsorption isotherm of a probe gas (i.e., N~2~ or Ar) in a material. Despite its importance, many researchers either obtain the BET area from commercial software that comes with equipment, or perform the analyses manually on a spreadsheet, which is time-consuming, and nearly impossible for some types of isotherms, which leads to large variability in BET-calculated areas [@betsi]. These challenges have motivated the development of programs for the automated and standardized calculation of BET areas [@sesami_1; @pygaps; @sesami_2; @betsi; @beatmap]. 
 
 # Theory background
-The surface area of a material can be calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of adsorbent, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
+The surface area of a material can be calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of material, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
 
 \begin{equation}\label{eq:surface_area}
 S = q_m N A_m
