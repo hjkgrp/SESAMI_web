@@ -40,7 +40,7 @@ The BET + ESW areas are computed in the same way as the BET areas except that th
 The machine learning areas are computed using a Lasso linear regression model that takes as input the mean loading values of seven logarithmically divided pressure subregions. The model is trained on GCMC-calculated argon isotherms at 87 K. For more information, see [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518) and [SESAMI_2.py](/SESAMI/SESAMI_2/SESAMI_2.py).
 
 # Preparing Input Files
-A user can provide an isotherm to the website as either an AIF file or a CSV file.
+A user can provide an adsorption isotherm to the website as either an AIF file or a CSV file.
 
 Use https://clownfish-app-lzoex.ondigitalocean.app/ to convert instrument output to AIF file ormat.
 - Details on AIF file formatting can be found in [this repository](https://github.com/AIF-development-team/adsorptioninformationformat). The website https://adsorptioninformationformat.com/ will reflect changes as they occur.

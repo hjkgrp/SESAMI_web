@@ -106,8 +106,8 @@ Technology, Cambridge, MA, USA</institution>
 <author-notes>
 <corresp id="cor-1">* E-mail: <email></email></corresp>
 </author-notes>
-<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2023-03-20">
-<day>20</day>
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2023-03-21">
+<day>21</day>
 <month>3</month>
 <year>2023</year>
 </pub-date>
@@ -139,19 +139,19 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <body>
 <sec id="statement-of-need">
   <title>Statement of need</title>
-  <p>Surface area characterization is one of the most important
-  material’s characterization techniques for modern engineering
-  application. The most widely used approach to calculate a material’s
-  gravimetric surface area, i.e. surface area per unit mass, is the
-  Brunauer-Emmett-Teller (BET) method
+  <p>Surface area characterization is one of the most important ways to
+  study a material. The most widely used approach to calculate a
+  material’s gravimetric surface area, i.e. surface area per unit mass,
+  is the Brunauer-Emmett-Teller (BET) method
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
-  et al., 1938</xref>). The BET method computes the surface area given
-  the adsorption isotherm of a probe gas (i.e., N<sub>2</sub> or Ar) in
-  a material. Despite its importance, many researchers either obtain the
-  BET area from commercial software that comes with equipment, or
-  perform the analyses manually on a spreadsheet, which is
-  time-consuming and nearly impossible for some types of isotherms,
-  which leads to large variability in BET-calculated areas
+  et al., 1938</xref>). The BET method computes the surface area of a
+  material given the adsorption isotherm of a probe gas (i.e.,
+  N<sub>2</sub> or Ar) in that material. Despite its importance, many
+  researchers either obtain the BET area from commercial software that
+  comes with measurement equipment, or perform the analyses manually on
+  a spreadsheet, which is time-consuming and nearly impossible for some
+  types of isotherms. Furthermore, these two approaches lead to large
+  variability in BET-calculated areas
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>). These challenges have motivated the development
   of programs for the automated and standardized calculation of BET
@@ -167,8 +167,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <xref alt="Sinha et al., 2019" rid="ref-sesami_1" ref-type="bibr">Sinha
   et al., 2019</xref>).</p>
 </sec>
-<sec id="theory-background">
-  <title>Theory background</title>
+<sec id="bet-theory-background">
+  <title>BET theory background</title>
   <p>The surface area of a material can be calculated using Equation
   <xref alt="1" rid="eqU003Asurface_area">1</xref>.
   <inline-formula><alternatives>
@@ -194,14 +194,14 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
   the monolayer loading region from the isotherm can be identified using
-  the BET equation <xref alt="2" rid="eqU003ABET">2</xref>, where
-  <inline-formula><alternatives>
+  the BET equation (Equation <xref alt="2" rid="eqU003ABET">2</xref>),
+  where <inline-formula><alternatives>
   <tex-math><![CDATA[p]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>p</mml:mi></mml:math></alternatives></inline-formula>
   is the vapor pressure, <inline-formula><alternatives>
   <tex-math><![CDATA[p_0]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
-  is the saturated vapor pressure, <inline-formula><alternatives>
+  is the saturation vapor pressure, <inline-formula><alternatives>
   <tex-math><![CDATA[q]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi></mml:math></alternatives></inline-formula>
   is the adsorbate loading, and <inline-formula><alternatives>
@@ -212,8 +212,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <tex-math><![CDATA[
   \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}]]></tex-math>
   <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>C</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
-  <p>This region is assigned to a section of the isotherm where
-  <inline-formula><alternatives>
+  <p>The monolayer loading region is assigned to a section of the
+  isotherm where <inline-formula><alternatives>
   <tex-math><![CDATA[\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:mfrac><mml:mo>⋅</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>q</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>
   is linear as a function of <inline-formula><alternatives>
@@ -241,15 +241,18 @@ a Creative Commons Attribution 4.0 International License (CC BY
       </p>
     </list-item>
     <list-item>
-      <p>The value of the <inline-formula><alternatives>
+      <p>The value of <inline-formula><alternatives>
       <tex-math><![CDATA[C]]></tex-math>
       <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>
       should be positive.
       </p>
     </list-item>
     <list-item>
-      <p>The value of the monolayer loading capacity should correspond
-      to a value of <inline-formula><alternatives>
+      <p>The value of the monolayer loading capacity,
+      <inline-formula><alternatives>
+      <tex-math><![CDATA[q_m]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
+      should correspond to a value of <inline-formula><alternatives>
       <tex-math><![CDATA[p/p_0]]></tex-math>
       <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
       which falls within the selected linear region.
@@ -308,18 +311,19 @@ a Creative Commons Attribution 4.0 International License (CC BY
   minimum R<sup>2</sup>, such that a candidate linear region is favored
   to be selected if it has an R<sup>2</sup> above the cutoff, and a
   candidate linear region is only considered if it has an R<sup>2</sup>
-  above the minimum. On the other hand, SESAMI 2 applies a machine
-  learning (specifically, regularized linear regression with LASSO)
-  model for the accurate surface area prediction of high surface area
-  materials, improving on BET performance for these materials
+  above the minimum.</p>
+  <p>SESAMI 2 applies a machine learning (specifically, regularized
+  linear regression with LASSO) model for the accurate surface area
+  prediction of high surface area materials, improving on BET
+  performance for these materials
   (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
   et al., 2020</xref>). The LASSO model uses as input the average
   loading in seven isotherm pressure regions as well as pairwise
-  products of these loadings. The SESAMI routines support isotherms with
-  N<sub>2</sub> and argon adsorbate at 77 K or 87 K, respectively. We
-  note that a recent study shows that surface areas determined from
-  N<sub>2</sub> or Ar isotherms are similar, despite the latest 2015
-  IUPAC report’s suggested use of Ar
+  products of these loadings. The SESAMI 1 and 2 routines support
+  isotherms with N<sub>2</sub> and argon adsorbate at 77 K and 87 K,
+  respectively. We note that a recent study shows that surface areas
+  determined from N<sub>2</sub> and Ar isotherms are similar, despite
+  the 2015 IUPAC report’s suggested use of Ar
   (<xref alt="Datar et al., 2022" rid="ref-datar2022brunauer" ref-type="bibr">Datar
   et al., 2022</xref>;
   <xref alt="Thommes et al., 2015" rid="ref-thommes2015physisorption" ref-type="bibr">Thommes
@@ -346,7 +350,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>.
   Furthermore, the SESAMI web interface allows the user to download
   figures generated by SESAMI 1 that indicate, among other things, the
-  chosen linear monolayer loading regions by the BET and BET+ESW
+  linear monolayer loading regions chosen by the BET and BET+ESW
   approaches as well as the ESW plot
   (<xref alt="[fig:interface]" rid="figU003Ainterface">[fig:interface]</xref>).
   The user can convert output from commercial equipment to AIF format
@@ -379,7 +383,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   (GCMC) simulations using the open-source RASPA 2.0.47 software
   (<xref alt="Dubbeldam et al., 2016" rid="ref-dubbeldam2016raspa" ref-type="bibr">Dubbeldam
   et al., 2016</xref>), and experimental adsorption isotherms are
-  obtained from the experimental data reported by Islamogu and coworkers
+  obtained from the experimental data reported by Islamoglu and
+  coworkers
   (<xref alt="Islamoglu et al., 2022" rid="ref-islamoglu2022you" ref-type="bibr">Islamoglu
   et al., 2022</xref>). The data are then used to calculate the surface
   areas from the SESAMI website, BETSI
@@ -413,10 +418,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   consecutive data points and applying checks like the Rouquerol
   criteria to select a linear region for BET analysis. Indeed, this
   agreement is also observed over the 9 experimental isotherms (Table
-  <xref alt="3" rid="exp_area_table">3</xref>). The benchmark isotherms,
-  XLSX files of calculated surface areas across different software tools
-  for both GCMC and experimental isotherms, detailed settings used for
-  each software, and analysis scripts employed are available at
+  <xref alt="3" rid="exp_area_table">3</xref>). The CIF files used to
+  generate GCMC isotherms, benchmark isotherms, XLSX files of calculated
+  surface areas across different software tools for both GCMC and
+  experimental isotherms, detailed settings used for each software, and
+  analysis scripts employed are available at
   <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
   <table-wrap>
     <caption>
@@ -655,8 +661,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <caption>
       <p>Calculated surface areas (m<sup>2</sup>/g) for the 9 MOFs with
       experimental isotherms. Cases where a software does not find a
-      surface area are denoted by N/A. All other software take as input
-      the experimental
+      surface area are denoted by N/A. All software take as input the
+      experimental
       isotherms.<styled-content id="exp_area_table"></styled-content></p>
     </caption>
     <table>
@@ -770,8 +776,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <p>Settings used for software for isotherm to surface area
       calculation. All BET calculations by SESAMI 1 and pyGAPS reported
       in this work fulfill Rouquerol criteria 1 and 2. SESAMI 1 code
-      requires 4 points for a line, while pyGAPS requires
-      3.<styled-content id="settings_table"></styled-content> </p>
+      requires at least 4 points for a line, while pyGAPS requires at
+      least 3.<styled-content id="settings_table"></styled-content> </p>
     </caption>
     <table>
       <colgroup>
@@ -842,7 +848,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   Science of Technology Council (110-2222-E-002-011-MY3). We thank Timur
   Islamoglu, Karam Idrees, and Omar Farha for kindly providing the raw
   data of the experimental isotherms in the work by Islamoglu et al.
-  (<xref alt="2022" rid="ref-islamoglu2022you" ref-type="bibr">2022</xref>).</p>
+  (<xref alt="2022" rid="ref-islamoglu2022you" ref-type="bibr">2022</xref>).
+  We thank Madi Arsakay and Rodney Ruoff for their assistance in testing
+  the web interface.</p>
 </sec>
 </body>
 <back>
@@ -861,8 +869,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <source>The Journal of Physical Chemistry C</source>
       <year iso-8601-date="2019-07">2019</year><month>07</month>
       <volume>123</volume>
+      <issue>33</issue>
       <uri>https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116</uri>
       <pub-id pub-id-type="doi">10.1021/acs.jpcc.9b02116</pub-id>
+      <fpage>20195</fpage>
+      <lpage>20209</lpage>
     </element-citation>
   </ref>
   <ref id="ref-sesami_2">
@@ -876,8 +887,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <source>The Journal of Physical Chemistry Letters</source>
       <year iso-8601-date="2020-06">2020</year><month>06</month>
       <volume>11</volume>
+      <issue>14</issue>
       <uri>https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518</uri>
       <pub-id pub-id-type="doi">10.1021/acs.jpclett.0c01518</pub-id>
+      <fpage>5412</fpage>
+      <lpage>5417</lpage>
     </element-citation>
   </ref>
   <ref id="ref-pygaps">
@@ -886,12 +900,15 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Iacomi</surname><given-names>P.</given-names></name>
         <name><surname>Llewellyn</surname><given-names>P. L.</given-names></name>
       </person-group>
-      <article-title>pyGAPS: a Python-Based Framework for Adsorption Isotherm Processing and Material Characterisation</article-title>
+      <article-title>pyGAPS: A Python-Based Framework for Adsorption Isotherm Processing and Material Characterisation</article-title>
       <source>Adsorption</source>
       <year iso-8601-date="2019-09">2019</year><month>09</month>
       <volume>25</volume>
+      <issue>8</issue>
       <uri>https://link.springer.com/article/10.1007/s10450-019-00168-5</uri>
       <pub-id pub-id-type="doi">10.1007/s10450-019-00168-5</pub-id>
+      <fpage>1533</fpage>
+      <lpage>1542</lpage>
     </element-citation>
   </ref>
   <ref id="ref-betsi">
@@ -913,8 +930,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <source>Advanced Materials</source>
       <year iso-8601-date="2022-05">2022</year><month>05</month>
       <volume>34</volume>
+      <issue>27</issue>
       <uri>https://onlinelibrary.wiley.com/doi/full/10.1002/adma.202201502</uri>
       <pub-id pub-id-type="doi">10.1002/adma.202201502</pub-id>
+      <fpage>2201502</fpage>
+      <lpage></lpage>
     </element-citation>
   </ref>
   <ref id="ref-brunauer1938adsorption">
@@ -973,7 +993,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Maurin</surname><given-names>G.</given-names></name>
       </person-group>
       <source>Adsorption by Powders and Porous Solids: Principles, Methodology and Applications</source>
-      <publisher-name>Academic press</publisher-name>
+      <publisher-name>Academic Press</publisher-name>
       <year iso-8601-date="2013">2013</year>
       <edition>2nd Edition</edition>
     </element-citation>
