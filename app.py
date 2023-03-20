@@ -20,7 +20,7 @@ from pymongo import MongoClient
 app = flask.Flask(__name__)
 
 
-app.secret_key = "TODO make this actually secret later"  # Necessary for sessions.
+app.secret_key = "The not-so-secret secret key"  # Necessary for sessions.
 
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
 RUN_SESAMI_RUNNING = False  # This variable keeps track of whether the function run_SESAMI is currently running.
@@ -189,7 +189,7 @@ def aif_to_txt(content):
         "mol/kg",
         "mmol/g",
         "cm³/g"
-    ]  # TODO expand on allowed units in the future
+    ]  # May expand on allowed units in the future.
     if units_loading not in supported_units_loading:  # This means there is a problem.
         return f"Invalid/unsupported loading units in AIF file. Supported units are {supported_units_loading}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
@@ -221,7 +221,7 @@ def aif_to_txt(content):
         "pascal",
         "bar",
         "torr"
-    ]  # TODO expand on allowed units in the future
+    ]  # May expand on allowed units in the future.
     if units_pressure not in supported_units_pressure:  # This means there is a problem.
         return f"Invalid/unsupported pressure units in AIF file. Supported units are {supported_units_pressure}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
 
@@ -244,7 +244,7 @@ def aif_to_txt(content):
         conversion_multiplier = 133.322 # torr to Pascal
     pressure_data = [
         str(float(datum) * conversion_multiplier) for datum in pressure_data
-    ]  # Results in a list with entries of the correct units
+    ]  # Results in a list with entries of the correct units.
 
     with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "w") as f:
         f.write("\t".join(["Pressure", "Loading"]) + "\n")  # The column titles
@@ -416,7 +416,7 @@ def set_ID():
         "permission"
     ] = True  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to True
     session["plot_number"] = 0  # the number identifier for the SESAMI 1 figures
-    # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures
+    # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures.
     session["raw_plot_number"] = 0  # the number identifier for the raw data figures
 
     os.makedirs(f'user_{session["ID"]}')  # Making a folder for this user.

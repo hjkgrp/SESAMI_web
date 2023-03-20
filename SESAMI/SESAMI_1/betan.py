@@ -636,7 +636,7 @@ class BETAn:
             # ax2.text(linear['P_rel'].values[4], linear['BETy'].values[1], "R2=%.6f, C= %.4g,\nqm=%.2fmlSTP/gm, \nBETSA=%.2f m2/g"%(results.rsquared, C, qm,A_BET))
 
             # Change: I comment out the properties, since they will be displayed separately on the website.
-            # ax2.text(0.97, 0.22,'C= %.4g\n'%C+'$q_m$'+'=%.2f mol/kg \nBETSA=%.3f'%(qm,A_BET)+ '$m^{2}/g$'+'\nConsistency 3: %s\n Consistency 4: %s\n'%(con3, con4)+'Length of region: %d\n'%(q-p)+'$R^{2}$'+'=%.6f'%(results.rsquared),horizontalalignment='right', verticalalignment='center', bbox = bbox_props,transform= ax2.transAxes) # TODO here are the properties
+            # ax2.text(0.97, 0.22,'C= %.4g\n'%C+'$q_m$'+'=%.2f mol/kg \nBETSA=%.3f'%(qm,A_BET)+ '$m^{2}/g$'+'\nConsistency 3: %s\n Consistency 4: %s\n'%(con3, con4)+'Length of region: %d\n'%(q-p)+'$R^{2}$'+'=%.6f'%(results.rsquared),horizontalalignment='right', verticalalignment='center', bbox = bbox_props,transform= ax2.transAxes)
             ax2.xaxis.set_major_formatter(ticker.FormatStrFormatter("%.1e"))
             ax2.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.1e"))
             plt.setp(ax2.xaxis.get_majorticklabels(), rotation=30)
@@ -1225,7 +1225,7 @@ class BETAn:
                 )
                 self.makelinregplot(
                     plotting_information, ax5, rbetesw[0], rbetesw[1], data, maketitle="No"
-                )  # TODO can set maketitle to "Yes" if you want the individual plots to have titles
+                )  # Note, can set maketitle to "Yes" if you want the individual plots to have titles.
                 dpi = plotting_information["dpi"]
                 fig.savefig(
                     os.path.join(sumpath, f"isotherm_{plot_number}.png"),
