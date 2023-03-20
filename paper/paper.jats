@@ -194,7 +194,20 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
   the monolayer loading region from the isotherm can be identified using
-  the BET equation <xref alt="2" rid="eqU003ABET">2</xref>.</p>
+  the BET equation <xref alt="2" rid="eqU003ABET">2</xref>, where
+  <inline-formula><alternatives>
+  <tex-math><![CDATA[p]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>p</mml:mi></mml:math></alternatives></inline-formula>
+  is the vapor pressure, <inline-formula><alternatives>
+  <tex-math><![CDATA[p_0]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
+  is the saturated vapor pressure, <inline-formula><alternatives>
+  <tex-math><![CDATA[q]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi></mml:math></alternatives></inline-formula>
+  is the adsorbate loading, and <inline-formula><alternatives>
+  <tex-math><![CDATA[C]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>
+  is the BET constant.</p>
   <p><named-content id="eqU003ABET" content-type="equation"><disp-formula><alternatives>
   <tex-math><![CDATA[
   \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}]]></tex-math>
@@ -205,19 +218,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:mfrac><mml:mo>⋅</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>q</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>
   is linear as a function of <inline-formula><alternatives>
   <tex-math><![CDATA[\frac{p}{p_0}]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:math></alternatives></inline-formula>,
-  where <inline-formula><alternatives>
-  <tex-math><![CDATA[p]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>p</mml:mi></mml:math></alternatives></inline-formula>
-  is the vapor pressure, <inline-formula><alternatives>
-  <tex-math><![CDATA[p_0]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
-  is the saturated vapor pressure, and <inline-formula><alternatives>
-  <tex-math><![CDATA[q]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>q</mml:mi></mml:math></alternatives></inline-formula>
-  is the adsorbate loading. ($C) is the BET constant. The linear region
-  for BET analysis is usually chosen based on the consistency criteria
-  proposed by Rouquerol et al.
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:math></alternatives></inline-formula>.
+  The linear region for BET analysis is usually chosen based on the
+  consistency criteria proposed by Rouquerol et al.
   (<xref alt="F. Rouquerol et al., 2013" rid="ref-rouquerol2013adsorption" ref-type="bibr">F.
   Rouquerol et al., 2013</xref>;
   <xref alt="J. Rouquerol et al., 2007" rid="ref-rouquerol2007bet" ref-type="bibr">J.
@@ -281,7 +284,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <sec id="summary">
   <title>Summary</title>
   <p>The SESAMI web interface allows a user to make surface area
-  predictions on their web browser simply by uploading isotherm data.
+  calculations on their web browser simply by uploading isotherm data.
   The website facilitates access to the previously developed SESAMI
   models (SESAMI 1 and 2) for the evaluation of material’s surface area
   (<xref alt="Datar et al., 2020" rid="ref-sesami_2" ref-type="bibr">Datar
@@ -292,7 +295,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   which was previously packaged in Python and Jupyter Notebook
   scripts.</p>
   <p>SESAMI 1 applies computational routines to identify suitable linear
-  regions of adsorption isotherms for BET surface area predictions
+  regions of adsorption isotherms for BET surface area calculations
   (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
   1973</xref>). The automated workflow includes consideration of
   Rouquerol criteria and the use of coefficients of determination as a
@@ -326,7 +329,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   specified.</p>
   <p>The SESAMI web interface has extensive error handling and clearly
   alerts users of issues with their adsorption isotherm data. For
-  example, it alerts the user if no ESW minima is found by SESAMI 1 or
+  example, it alerts the user if no ESW minima are found by SESAMI 1 or
   if the data is incompatible with SESAMI 2 code due to data sparsity in
   certain pressure regions. As shown in
   <xref alt="[fig:interface]" rid="figU003Ainterface">[fig:interface]</xref>,
@@ -344,7 +347,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   Furthermore, the SESAMI web interface allows the user to download
   figures generated by SESAMI 1 that indicate, among other things, the
   chosen linear monolayer loading regions by the BET and BET+ESW
-  approaches as well as the excess sorption work plot
+  approaches as well as the ESW plot
   (<xref alt="[fig:interface]" rid="figU003Ainterface">[fig:interface]</xref>).
   The user can convert output from commercial equipment to AIF format
   and upload the converted data to the interface for analysis. The
@@ -366,7 +369,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="benchmarking">
   <title>Benchmarking</title>
-  <p>To assess the performance of the SESAMI code in predicting surface
+  <p>To assess the performance of the SESAMI code in calculating surface
   areas from isotherms, we benchmark the SESAMI routines against other
   similar programs for 13 simulated and 9 experimental N<sub>2</sub>
   isotherms obtained at 77 K for 14 metal-organic frameworks (MOFs),
@@ -411,7 +414,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   criteria to select a linear region for BET analysis. Indeed, this
   agreement is also observed over the 9 experimental isotherms (Table
   <xref alt="3" rid="exp_area_table">3</xref>). The benchmark isotherms,
-  XLSX files of surface area predictions across different software tools
+  XLSX files of calculated surface areas across different software tools
   for both GCMC and experimental isotherms, detailed settings used for
   each software, and analysis scripts employed are available at
   <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
@@ -585,11 +588,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   </table-wrap>
   <table-wrap>
     <caption>
-      <p>Comparison between surface area predictions from software for
+      <p>Comparison between calculated surface areas from software for
       isotherm to surface area calculation and from Zeo++, over the 13
       MOFs with GCMC isotherms. The mean absolute percent error and
       Pearson correlation coefficient are taken with respect to Zeo++
-      predictions for each software, over all successful surface area
+      calculations for each software, over all successful surface area
       calculations for that
       software.<styled-content id="corr_table"></styled-content></p>
     </caption>
