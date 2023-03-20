@@ -146,12 +146,12 @@ a Creative Commons Attribution 4.0 International License (CC BY
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
   et al., 1938</xref>). The BET method computes the surface area of a
   material given the adsorption isotherm of a probe gas (i.e.,
-  N<sub>2</sub> or Ar) in that material. Despite its importance, many
-  researchers either obtain the BET area from commercial software that
-  comes with measurement equipment, or perform the analyses manually on
-  a spreadsheet, which is time-consuming and nearly impossible for some
-  types of isotherms. Furthermore, these two approaches lead to large
-  variability in BET-calculated areas
+  N<sub>2</sub> or Ar) in that material. Many researchers either obtain
+  the BET area from commercial software that comes with measurement
+  equipment, or perform the analyses manually on a spreadsheet, which is
+  time-consuming and nearly impossible for some types of isotherms.
+  Furthermore, these two approaches lead to large variability in
+  BET-calculated areas
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>). These challenges have motivated the development
   of programs for the automated and standardized calculation of BET
@@ -387,7 +387,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   coworkers
   (<xref alt="Islamoglu et al., 2022" rid="ref-islamoglu2022you" ref-type="bibr">Islamoglu
   et al., 2022</xref>). The data are then used to calculate the surface
-  areas from the SESAMI website, BETSI
+  areas with the SESAMI website, BETSI
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>;
   <xref alt="Rampersad et al., 2020" rid="ref-betsi_github" ref-type="bibr">Rampersad
@@ -408,8 +408,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   learning model (run from the web interface) and BEaTmap have the best
   correlation with Zeo++ version 0.3 surface areas
   (<xref alt="Willems et al., 2012" rid="ref-willems2012algorithms" ref-type="bibr">Willems
-  et al., 2012</xref>) calculated with a 1.67 Å probe N<sub>2</sub>
-  molecule (Tables <xref alt="1" rid="gcmc_area_table">1</xref> and
+  et al., 2012</xref>) calculated with a 1.67 Å radius probe
+  N<sub>2</sub> molecule (Tables
+  <xref alt="1" rid="gcmc_area_table">1</xref> and
   <xref alt="2" rid="corr_table">2</xref>). Nevertheless, all software
   are in generally good agreement, underscoring the benefit of a
   computational approach to surface area calculation. The agreement
@@ -429,10 +430,10 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <p>Calculated surface areas (m<sup>2</sup>/g) for the 13 MOFs with
       GCMC isotherms. Cases where a software does not find a surface
       area are denoted by N/A. Zeo++ calculations are conducted with the
-      same CIF files used to generate GCMC isotherms, and a 1.67 Å probe
-      N<sub>2</sub> molecule, the high accuracy flag, and 2,000 Monte
-      Carlo samples per atom are used. All other software take as input
-      the GCMC
+      same CIF files used to generate GCMC isotherms, and a 1.67 Å
+      radius probe N<sub>2</sub> molecule, the high accuracy flag, and
+      2,000 Monte Carlo samples per atom are used. All other software
+      take as input the GCMC
       isotherms.<styled-content id="gcmc_area_table"></styled-content></p>
     </caption>
     <table>
