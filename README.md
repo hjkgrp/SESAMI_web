@@ -24,7 +24,7 @@ We consider the “right-most” region, which is the region having a high-press
 To select the best region (i.e., the linear region that satisfies the most consistency criteria), we search through all possible “linear” regions.
 Here, a **linear region is a set of 4+ consecutive points having an R<sup>2</sup> value of greater than 0.998**, and **fulfilling consistency criteria 1 and 2**. We start with the “right-most” region from the isotherm, and check if it is “linear.” If it is, we store it as the “current best region.” If not, we continue to consider subsequent regions until we find one that is “linear.” Then, we move on to other candidate regions at lower pressures. 
 
-If a region is not “linear” as judged by R<sup>2</sup>, it is disregarded. If it is “linear” and satisfies criteria 1 and 2, **we check if it satisfies consistency criteria 3, 4 and has an R<sup>2</sup> > 0.9995**. The satisfaction of all these conditions indicates that the region is suitable for BET analysis. We choose this as the “final best region” and the algorithm ends. If not, we check if it satisfies more consistency criteria than the “current best region.” If it does, we replace the “current best region” with the new region. This process is repeated until we reach the “left-most” region. At this point, we end the search by choosing the “current best region” as the “final best region.” The **final best region** is used to compute the **BET area for the structure**. See the function `picklen` in (betan.py)[SESAMI/SESAMI_1/betan.py].
+If a region is not “linear” as judged by R<sup>2</sup>, it is disregarded. If it is “linear” and satisfies criteria 1 and 2, **we check if it satisfies consistency criteria 3, 4 and has an R<sup>2</sup> > 0.9995**. The satisfaction of all these conditions indicates that the region is suitable for BET analysis. We choose this as the “final best region” and the algorithm ends. If not, we check if it satisfies more consistency criteria than the “current best region.” If it does, we replace the “current best region” with the new region. This process is repeated until we reach the “left-most” region. At this point, we end the search by choosing the “current best region” as the “final best region.” The **final best region** is used to compute the **BET area for the structure**. See the function `picklen` in [betan.py](/SESAMI/SESAMI_1/betan.py).
 
 ![The SESAMI 1 algorithm](images/SESAMI_1_algorithm.png)
 
@@ -37,7 +37,7 @@ We compute the slope at each point and identify the point where the slope change
 The BET + ESW areas are computed in the same way as the BET areas except that the algorithm is forced to include the first (lowest loading) ESW minimum in the selected region. Thus, the chosen region **must satisfy** consistency criteria 1 and 2 and have an R<sup>2</sup> > 0.998, and include the relative pressure corresponding to the ESW minimum point. The correct calculation of the BET + ESW areas depends on the correct identification of the ESW minimum. If the ESW minimum is wrongly identified, the BET + ESW area will also be wrong. Thus, we recommend that users ensure that the first minimum is correctly identified. 
 
 ## ML Areas
-The machine learning areas are computed using a Lasso linear regression model that takes as input the mean loading values of seven logarithmically divided pressure subregions. The model is trained on GCMC-calculated argon isotherms at 87 K. For more information, see [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518).
+The machine learning areas are computed using a Lasso linear regression model that takes as input the mean loading values of seven logarithmically divided pressure subregions. The model is trained on GCMC-calculated argon isotherms at 87 K. For more information, see [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518) and [SESAMI_2.py](/SESAMI/SESAMI_2/SESAMI_2.py).
 
 # Preparing Input Files
 A user can provide an isotherm to the website as either an AIF file or a CSV file.
@@ -53,6 +53,8 @@ For inputting isotherm data as a CSV file, see [this example](/example_input/exa
 `python app.py`
 3. Upload `AIF` or `CSV` formatted data.
 4. Click `Run calculation` and wait a few seconds.
+
+Note, the front end of the website is [index.html](index.html) and the backend is [app.py](app.py). The backend makes use of routines in the folder [SESAMI](/SESAMI), which contains the SESAMI 1 and 2 code.
 
 # References
 - [Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116),
