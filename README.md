@@ -4,7 +4,7 @@ estimation in nanoporous materials. This website allows a user to upload either 
 
 This website is based on the [MOFSimplify](https://github.com/hjkgrp/MOFSimplify) website developed by the [Kulik Group](http://hjkgrp.mit.edu/) at MIT.
 
-For additional support, feedback, and inquiry, please raise a GitHub issue in this repo.
+For additional support, feedback, and inquiry, please raise a GitHub issue in this repo. For specific questions, contact Yongchul Chung at <span style="color:blue">drygchung@gmail.com</span>.
 
 # Sample Output
 For the downloadable figures generated on the website, a user can adjust the font type, font size, dot-per-inch (dpi), and legend to their liking.
