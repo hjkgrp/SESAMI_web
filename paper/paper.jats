@@ -139,10 +139,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <body>
 <sec id="statement-of-need">
   <title>Statement of need</title>
-  <p>Surface area characterization is one of the most important ways to
-  study a material. The most widely used approach to calculate a
-  material’s gravimetric surface area, i.e. surface area per unit mass,
-  is the Brunauer-Emmett-Teller (BET) method
+  <p>Accurate characterization of surface area is critical for
+  understanding a material’s properties and performance. The most widely
+  used approach to calculate a material’s gravimetric surface area,
+  i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET)
+  method
   (<xref alt="Brunauer et al., 1938" rid="ref-brunauer1938adsorption" ref-type="bibr">Brunauer
   et al., 1938</xref>). The BET method computes the surface area of a
   material given the adsorption isotherm of a probe gas (i.e.,
@@ -282,7 +283,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   Å<sup>2</sup>/molecule for N<sub>2</sub>; 14.2 Å<sup>2</sup>/molecule
   for Ar), to obtain the material’s surface area, under the assumption
   that the adsorbate molecules only form a monolayer (Equation
-  <xref alt="1" rid="eqU003Asurface_area">1</xref>).</p>
+  <xref alt="1" rid="eqU003Asurface_area">1</xref>). The surface area
+  obtained this way is referred as the BET area.</p>
 </sec>
 <sec id="summary">
   <title>Summary</title>
@@ -298,7 +300,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   which was previously packaged in Python and Jupyter Notebook
   scripts.</p>
   <p>SESAMI 1 applies computational routines to identify suitable linear
-  regions of adsorption isotherms for BET surface area calculations
+  regions of adsorption isotherms for BET area calculations
   (<xref alt="Fagerlund, 1973" rid="ref-fagerlund1973determination" ref-type="bibr">Fagerlund,
   1973</xref>). The automated workflow includes consideration of the
   Rouquerol criteria and the use of coefficients of determination as a
@@ -844,14 +846,15 @@ a Creative Commons Attribution 4.0 International License (CC BY
   development was supported by the Office of Naval Research under grant
   number N00014-20-1-2150, as well as by the National Research
   Foundation of Korea (NRF) under grant number 2020R1C1C1010373 funded
-  by the government of Korea (MSIT). L. C. L. acknowledges the support
-  from the Yushan Young Scholar Program (NTU-110VV009) and the National
-  Science of Technology Council (110-2222-E-002-011-MY3). We thank Timur
+  by the government of Korea (MSIT). Computational time was provided by
+  KISTI (KSC-2022-CRE-0346). L. C. L. acknowledges the support from the
+  Yushan Young Scholar Program (NTU-110VV009) and the National Science
+  of Technology Council (110-2222-E-002-011-MY3). We thank Timur
   Islamoglu, Karam Idrees, and Omar Farha for kindly providing the raw
   data of the experimental isotherms in the work by Islamoglu et al.
   (<xref alt="2022" rid="ref-islamoglu2022you" ref-type="bibr">2022</xref>).
-  We thank Madi Arsakay and Rodney Ruoff for their assistance in testing
-  the web interface.</p>
+  We thank Dun-Yen Kang, Madi Arsakay, and Rodney Ruoff for their
+  assistance in testing the earlier version of web interface.</p>
 </sec>
 </body>
 <back>
