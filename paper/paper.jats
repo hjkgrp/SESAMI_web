@@ -284,7 +284,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   for Ar), to obtain the material’s surface area, under the assumption
   that the adsorbate molecules only form a monolayer (Equation
   <xref alt="1" rid="eqU003Asurface_area">1</xref>). The surface area
-  obtained this way is referred as the BET area.</p>
+  obtained this way is referred to as the BET area.</p>
 </sec>
 <sec id="summary">
   <title>Summary</title>
@@ -388,7 +388,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   obtained from the experimental data reported by Islamoglu and
   coworkers
   (<xref alt="Islamoglu et al., 2022" rid="ref-islamoglu2022you" ref-type="bibr">Islamoglu
-  et al., 2022</xref>). The data are then used to calculate the surface
+  et al., 2022</xref>). The isotherms are used to calculate surface
   areas with the SESAMI website, BETSI
   (<xref alt="Osterrieth et al., 2022" rid="ref-betsi" ref-type="bibr">Osterrieth
   et al., 2022</xref>;
@@ -854,7 +854,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
   data of the experimental isotherms in the work by Islamoglu et al.
   (<xref alt="2022" rid="ref-islamoglu2022you" ref-type="bibr">2022</xref>).
   We thank Dun-Yen Kang, Madi Arsakay, and Rodney Ruoff for their
-  assistance in testing the earlier version of web interface.</p>
+  assistance in testing the earlier version of the web interface.</p>
 </sec>
 </body>
 <back>
