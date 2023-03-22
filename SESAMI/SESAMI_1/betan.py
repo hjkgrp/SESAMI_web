@@ -844,7 +844,8 @@ class BETAn:
     # include ANOVA, t-tests, shapiro wilk test, outliers, generate graphs of residuals.
     def linregauto(self, p, q, data):
         """
-        This function computes all the statistical parameters associated with the fitting of a line. It also checks which consistency criteria that range satisfies and which ones it doesn't.
+        This function computes all the statistical parameters associated with the fitting of a line. 
+        It also checks which consistency criteria the linear region satisfies and which ones it does not.
 
         Parameters 
         ----------
@@ -927,6 +928,7 @@ class BETAn:
         C = slope / intercept + 1
         qm = 1 / (slope + intercept)  # 1/(mol/kg framework)
         # To check for 1st consistency criterion
+        # See https://doi.org/10.1021/acs.jpcc.9b02116 (3rd paragraph in introduction) for the consistency criteria
 
         ind_max = self.con1limit
         if ind_max is not None:
@@ -943,13 +945,13 @@ class BETAn:
             con2 = "Yes"
         else:
             con2 = "No"
-        # checking if third consistency criteria is satisfied
+        # Checking if third consistency criteria is satisfied
         lower_limit_y = data["Loading"][data["Loading"] <= qm].max()
         upper_limit_y = data["Loading"][data["Loading"] > qm].min()
         lower_limit_x = data["P_rel"][data["Loading"] <= qm].max()
         upper_limit_x = data["P_rel"][data["Loading"] > qm].min()
 
-        # Now i will do a linear interpolation to figure out x
+        # Now I will do a linear interpolation to figure out x
         m = (upper_limit_y - lower_limit_y) / (upper_limit_x - lower_limit_x) # slope
         x_BET3 = upper_limit_x - (upper_limit_y - qm) / m
         if linear["P_rel"].min() <= x_BET3 <= linear["P_rel"].max():
@@ -957,9 +959,9 @@ class BETAn:
         else:
             con3 = "No"
 
-        # Checking for BET 4th BET consistency criteria
+        # Checking for fourth consistency criteria
         x_BET4 = 1 / (scipy.sqrt(C) + 1)
-        if np.abs((x_BET4 - x_BET3) / x_BET3) < 0.2:
+        if np.abs((x_BET4 - x_BET3) / x_BET3) < 0.2: # 20% tolerance
             con4 = "Yes"
         else:
             con4 = "No"
