@@ -480,7 +480,7 @@ class BETAn:
     ):
         """
         This function takes an axis as an input and makes the plot to see the limits of the region
-        to be chosen to satisfy the first consistency criteria.
+        to be chosen to satisfy the first consistency criterion.
 
         Parameters 
         ----------
@@ -940,12 +940,12 @@ class BETAn:
             con1 = "Yes"
         else:
             con1 = "No"
-        # to check for second consistency criteria
+        # Checking for second consistency criterion
         if C > 0:
             con2 = "Yes"
         else:
             con2 = "No"
-        # Checking if third consistency criteria is satisfied
+        # Checking if third consistency criterion is satisfied
         lower_limit_y = data["Loading"][data["Loading"] <= qm].max()
         upper_limit_y = data["Loading"][data["Loading"] > qm].min()
         lower_limit_x = data["P_rel"][data["Loading"] <= qm].max()
@@ -959,7 +959,7 @@ class BETAn:
         else:
             con3 = "No"
 
-        # Checking for fourth consistency criteria
+        # Checking for fourth consistency criterion
         x_BET4 = 1 / (scipy.sqrt(C) + 1)
         if np.abs((x_BET4 - x_BET3) / x_BET3) < 0.2: # 20% tolerance
             con4 = "Yes"
