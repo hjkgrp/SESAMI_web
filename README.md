@@ -58,9 +58,9 @@ Note, the front end of the website is [index.html](index.html) and the backend i
 
 # References
 - [Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116),
-J. Phys. Chem. C 2019, 123, 33, 20195 - 20209
+J. Phys. Chem. C 2019, 123, 33, 20195 - 20209. This paper covers SESAMI 1.
 - [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518),
-J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
+J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417. This paper covers SESAMI 2.
 - [SESAMI APP: An Accessible Interface for Surface Area Calculation of Materials from Adsorption Isotherms](https://chemrxiv.org/engage/chemrxiv/article-details/641a7f88aad2a62ca124bb27). This paper, currently under review for the Journal of Open Source Software, covers the web interface.
 
 # Authors
