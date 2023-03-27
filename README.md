@@ -61,7 +61,7 @@ Note, the front end of the website is [index.html](index.html) and the backend i
 J. Phys. Chem. C 2019, 123, 33, 20195 - 20209
 - [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518),
 J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417
-- Reference for SESAMI web interface paper coming soon!
+- [SESAMI APP: An Accessible Interface for Surface Area Calculation of Materials from Adsorption Isotherms](https://chemrxiv.org/engage/chemrxiv/article-details/641a7f88aad2a62ca124bb27). This paper, currently under review for the Journal of Open Source Software, covers the web interface.
 
 # Authors
 - Gianmarco G. Terrones (SESAMI web interface development)
