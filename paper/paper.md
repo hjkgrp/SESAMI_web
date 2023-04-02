@@ -116,7 +116,7 @@ Table: Comparison between calculated surface areas from software for isotherm to
 | Software | Mean absolute percent error (MAPE)  | Pearson correlation coefficient  | Successful calculations (out of 13) |
 | ------ | ---- | ----- | --- |
 | SESAMI 1 (BET) | 19.4 | 0.85 | 13 |
-| SESAM1 1 (BET+ESW) | 17.9 | 0.72 | 12 |
+| SESAMI 1 (BET+ESW) | 17.9 | 0.72 | 12 |
 | SESAMI 2 (LASSO) | 12.4 | 0.95 | 13 |
 | BETSI | 17.0 | 0.92 | 5 |
 | pyGAPS | 23.0 | 0.75 | 12 |
@@ -143,7 +143,7 @@ Table: Settings used for software for isotherm to surface area calculation. All 
 | Software                          | Mode of access                     | Settings                                            |
 +===================================+====================================+=====================================================+
 | SESAMI 1 (BET)\                   | Run from SESAMI web interface\     | Type of gas: Nitrogen\                              |
-| SESAM1 1 (BET+ESW)\               | Accessed February 2023             | Custom adsorbate: No\                               |
+| SESAMI 1 (BET+ESW)\               | Accessed February 2023             | Custom adsorbate: No\                               |
 | SESAMI 2 (LASSO)                  |                                    | Scope: BET and BET+ESW\                             |
 |                                   |                                    | R^2^ cutoff: 0.9995\                                |
 |                                   |                                    | R^2^ min: 0.998\                                    |
