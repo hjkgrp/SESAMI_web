@@ -426,7 +426,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   files of calculated surface areas across different software tools for
   both GCMC and experimental isotherms, detailed settings used for each
   software, and analysis scripts employed are available at
-  <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
+  <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.
+  Software settings are also reported in
+  <xref alt="Table 4" rid="tabU003Asettings_table">Table 4</xref>.</p>
   <table-wrap>
     <caption>
       <p>Calculated surface areas (m<sup>2</sup>/g) for the 13 MOFs with
