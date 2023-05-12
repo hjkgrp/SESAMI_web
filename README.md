@@ -48,13 +48,17 @@ Use https://clownfish-app-lzoex.ondigitalocean.app/ to convert instrument output
 For inputting isotherm data as a CSV file, see [this example](/example_input/example_loading_data.csv).
 
 # Hosting Site on Your Computer
-1. Make and activate a Conda environment using [environment.yml](environment.yml). 
+1. Download and activate the required packages used by SESAMI web. This can be done in two ways:
+    * Option 1: Make and activate a Conda environment using [environment.yml](environment.yml). See [this resource](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file) for more information.
+    * Option 2: Install Python dependencies without Conda, referring to [environment.txt](environment.txt) for versioning information. These were the package versions used by the developers on macOS Ventura 13.3.1, on a 2020 MacBook Pro (non-M1).
 2. Use the following command in the terminal to run:
 `python app.py`
 3. Upload `AIF` or `CSV` formatted data.
 4. Click `Run calculation` and wait a few seconds.
 
 Note, the front end of the website is [index.html](index.html) and the backend is [app.py](app.py). The backend makes use of routines in the folder [SESAMI](/SESAMI), which contains the SESAMI 1 and 2 code.
+
+When running the site locally, one should disable the "Share data with developers" option.
 
 # References
 - [Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements](https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b02116),
