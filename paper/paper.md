@@ -49,17 +49,17 @@ bibliography: paper.bib
 Accurate characterization of surface area is critical for understanding a material's properties and performance. The most widely used approach to calculate a material’s gravimetric surface area, i.e. surface area per unit mass, is the Brunauer-Emmett-Teller (BET) method [@brunauer1938adsorption]. The BET method computes the surface area of a material given the adsorption isotherm of a probe gas (i.e., N~2~ or Ar) in that material. Many researchers either obtain the BET area from commercial software that comes with measurement equipment, or perform the analyses manually on a spreadsheet, which is time-consuming and nearly impossible for some types of isotherms. Furthermore, these two approaches lead to large variability in BET-calculated areas [@betsi]. These challenges have motivated the development of programs for the automated and standardized calculation of BET areas [@sesami_1; @pygaps; @sesami_2; @betsi; @beatmap]. 
 
 # BET theory background
-The surface area of a material can be calculated using Equation \ref{eq:surface_area}. $S$ is a material's surface area, $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of material, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
-
+The surface area of a material, $S$, can be calculated as 
 \begin{equation}\label{eq:surface_area}
-S = q_m N A_m
+S = q_m N A_m,
 \end{equation}
+where $q_m$ is the molar amount of adsorbate forming a monolayer per unit mass of material, $N$ is the Avogadro constant, and $A_m$ is the area taken up by a single adsorbate molecule in the monolayer. 
 
-In order to attain $q_m$, the monolayer loading region from the isotherm can be identified using the BET equation (Equation \ref{eq:BET}), where $p$ is the vapor pressure, $p_0$ is the saturation vapor pressure, $q$ is the adsorbate loading, and $C$ is the BET constant.
-
+In order to attain $q_m$, the monolayer loading region from the isotherm can be identified using the BET equation,
 \begin{equation}\label{eq:BET}
-\frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}
+\frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0},
 \end{equation}
+where $p$ is the vapor pressure, $p_0$ is the saturation vapor pressure, $q$ is the adsorbate loading, and $C$ is the BET constant.
 
 The monolayer loading region is assigned to a section of the isotherm where $\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}$ is linear as a function of $\frac{p}{p_0}$. The linear region for BET analysis is usually chosen based on the consistency criteria proposed by Rouquerol et al. [@rouquerol2007bet; @rouquerol2013adsorption]. The consistency criteria are as follows:
 

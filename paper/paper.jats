@@ -170,12 +170,15 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="bet-theory-background">
   <title>BET theory background</title>
-  <p>The surface area of a material can be calculated using Equation
-  <xref alt="1" rid="eqU003Asurface_area">1</xref>.
-  <inline-formula><alternatives>
+  <p>The surface area of a material, <inline-formula><alternatives>
   <tex-math><![CDATA[S]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>S</mml:mi></mml:math></alternatives></inline-formula>
-  is a material’s surface area, <inline-formula><alternatives>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>S</mml:mi></mml:math></alternatives></inline-formula>,
+  can be calculated as
+  <named-content id="eqU003Asurface_area" content-type="equation"><disp-formula><alternatives>
+  <tex-math><![CDATA[
+  S = q_m N A_m,]]></tex-math>
+  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>N</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo>,</mml:mo></mml:mrow></mml:math></alternatives></disp-formula></named-content>
+  where <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
   is the molar amount of adsorbate forming a monolayer per unit mass of
@@ -187,15 +190,15 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>A</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
   is the area taken up by a single adsorbate molecule in the
   monolayer.</p>
-  <p><named-content id="eqU003Asurface_area" content-type="equation"><disp-formula><alternatives>
-  <tex-math><![CDATA[
-  S = q_m N A_m]]></tex-math>
-  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>N</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
   <p>In order to attain <inline-formula><alternatives>
   <tex-math><![CDATA[q_m]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
   the monolayer loading region from the isotherm can be identified using
-  the BET equation (Equation <xref alt="2" rid="eqU003ABET">2</xref>),
+  the BET equation,
+  <named-content id="eqU003ABET" content-type="equation"><disp-formula><alternatives>
+  <tex-math><![CDATA[
+  \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0},]]></tex-math>
+  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>C</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac><mml:mo>,</mml:mo></mml:mrow></mml:math></alternatives></disp-formula></named-content>
   where <inline-formula><alternatives>
   <tex-math><![CDATA[p]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>p</mml:mi></mml:math></alternatives></inline-formula>
@@ -209,10 +212,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <tex-math><![CDATA[C]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>C</mml:mi></mml:math></alternatives></inline-formula>
   is the BET constant.</p>
-  <p><named-content id="eqU003ABET" content-type="equation"><disp-formula><alternatives>
-  <tex-math><![CDATA[
-  \frac{p/p_0}{q(1-p/p_0)} = \frac{1}{q_m C} + \frac{C-1}{q_m C}\frac{p}{p_0}]]></tex-math>
-  <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:mi>q</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>p</mml:mi><mml:mi>/</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>C</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:msub><mml:mi>q</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mi>C</mml:mi></mml:mrow></mml:mfrac><mml:mfrac><mml:mi>p</mml:mi><mml:msub><mml:mi>p</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></named-content></p>
   <p>The monolayer loading region is assigned to a section of the
   isotherm where <inline-formula><alternatives>
   <tex-math><![CDATA[\frac{p/p_0}{1-p/p_0} \cdot \frac{1}{q}]]></tex-math>
@@ -1014,6 +1013,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <year iso-8601-date="2007">2007</year>
       <volume>160</volume>
       <issue>07</issue>
+      <pub-id pub-id-type="doi">10.1016/s0167-2991(07)80008-5</pub-id>
       <fpage>49</fpage>
       <lpage>56</lpage>
     </element-citation>
