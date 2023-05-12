@@ -70,7 +70,7 @@ The monolayer loading region is assigned to a section of the isotherm where $\fr
 4. The value of $p/p_0$ calculated from BET theory, $1/(\sqrt{C}+1)$, and $p/p_0$ calculated from the third consistency rule should be equal (with ±10% tolerance).  
 5. The linear region should end at the knee of the isotherm.  
 
-Once a linear region is selected, the identified uptake value is multiplied by the molecular cross-sectional area of the adsorbate, typically derived from the bulk liquid density (16.2 Å^2^/molecule for N~2~; 14.2 Å^2^/molecule for Ar), to obtain the material's surface area, under the assumption that the adsorbate molecules only form a monolayer (Equation \ref{eq:surface_area}). The surface area obtained this way is referred to as the BET area.
+Once a linear region is selected, the identified uptake value is multiplied by the molecular cross-sectional area of the adsorbate, typically derived from the bulk liquid density (16.2 Å^2^/molecule for N~2~; 14.2 Å^2^/molecule for Ar), to obtain the material's surface area, under the assumption that the adsorbate molecules only form a monolayer (\autoref{eq:surface_area}). The surface area obtained this way is referred to as the BET area.
 
 # Summary
 
@@ -91,9 +91,9 @@ To assess the performance of the SESAMI code in calculating surface areas from i
 
 ![The crystal structures and isotherms of 3 of the 14 MOFs used to benchmark different isotherm to surface area codes.\label{fig:isotherms}](figures/crystal_structs_and_isotherms.tif)
 
-We find that over the set of 13 GCMC isotherms, the SESAMI machine learning model (run from the web interface) and BEaTmap have the best correlation with Zeo++ version 0.3 surface areas [@willems2012algorithms] calculated with a 1.67 Å radius probe N~2~ molecule (Tables \ref{gcmc_area_table} and \ref{corr_table}). Nevertheless, all software are in generally good agreement, underscoring the benefit of a computational approach to surface area calculation. The agreement between software is also not surprising due to the similar approach taken by most of the codes of considering multiple subsets of consecutive data points and applying checks like the Rouquerol criteria to select a linear region for BET analysis. Indeed, this agreement is also observed over the 9 experimental isotherms (Table \ref{exp_area_table}). The CIF files used to generate GCMC isotherms, benchmark isotherms, XLSX files of calculated surface areas across different software tools for both GCMC and experimental isotherms, detailed settings used for each software, and analysis scripts employed are available at <https://github.com/hjkgrp/SESAMI_web>.
+We find that over the set of 13 GCMC isotherms, the SESAMI machine learning model (run from the web interface) and BEaTmap have the best correlation with Zeo++ version 0.3 surface areas [@willems2012algorithms] calculated with a 1.67 Å radius probe N~2~ molecule (\autoref{tab:gcmc_area_table} and \autoref{tab:corr_table}). Nevertheless, all software are in generally good agreement, underscoring the benefit of a computational approach to surface area calculation. The agreement between software is also not surprising due to the similar approach taken by most of the codes of considering multiple subsets of consecutive data points and applying checks like the Rouquerol criteria to select a linear region for BET analysis. Indeed, this agreement is also observed over the 9 experimental isotherms (\autoref{tab:exp_area_table}). The CIF files used to generate GCMC isotherms, benchmark isotherms, XLSX files of calculated surface areas across different software tools for both GCMC and experimental isotherms, detailed settings used for each software, and analysis scripts employed are available at <https://github.com/hjkgrp/SESAMI_web>.
 
-Table: Calculated surface areas (m^2^/g) for the 13 MOFs with GCMC isotherms. Cases where a software does not find a surface area are denoted by N/A. Zeo++ calculations are conducted with the same CIF files used to generate GCMC isotherms, and a 1.67 Å radius probe N~2~ molecule, the high accuracy flag, and 2,000 Monte Carlo samples per atom are used. All other software take as input the GCMC isotherms.\label{gcmc_area_table}
+: Calculated surface areas (m^2^/g) for the 13 MOFs with GCMC isotherms. Cases where a software does not find a surface area are denoted by N/A. Zeo++ calculations are conducted with the same CIF files used to generate GCMC isotherms, and a 1.67 Å radius probe N~2~ molecule, the high accuracy flag, and 2,000 Monte Carlo samples per atom are used. All other software take as input the GCMC isotherms.\label{tab:gcmc_area_table}
 
 | | SESAMI 1 (BET)  | SESAMI 1 (BET+ESW)  | SESAMI 2 (LASSO)  | BETSI  | pyGAPS  | BEaTmap  | Zeo++  |
 | ------ | ------ | ------- | ------ | ---- | ---- | ----- | ---- |
@@ -111,7 +111,7 @@ Table: Calculated surface areas (m^2^/g) for the 13 MOFs with GCMC isotherms. Ca
 | UiO-66 | 1239 | 1239 | 1443 | N/A | 1242 | 1304 | 1289 |
 | ZIF-8 | 1429 | 1386 | 1575 | 1381 | 1390 | 1414 | 1588 |
 
-Table: Comparison between calculated surface areas from software for isotherm to surface area calculation and from Zeo++, over the 13 MOFs with GCMC isotherms. The mean absolute percent error and Pearson correlation coefficient are taken with respect to Zeo++ calculations for each software, over all successful surface area calculations for that software.\label{corr_table}
+: Comparison between calculated surface areas from software for isotherm to surface area calculation and from Zeo++, over the 13 MOFs with GCMC isotherms. The mean absolute percent error and Pearson correlation coefficient are taken with respect to Zeo++ calculations for each software, over all successful surface area calculations for that software.\label{tab:corr_table}
 
 | Software | Mean absolute percent error (MAPE)  | Pearson correlation coefficient  | Successful calculations (out of 13) |
 | ------ | ---- | ----- | --- |
@@ -122,7 +122,7 @@ Table: Comparison between calculated surface areas from software for isotherm to
 | pyGAPS | 23.0 | 0.75 | 12 |
 | BEaTmap | 12.6 | 0.93 | 12 |
 
-Table: Calculated surface areas (m^2^/g) for the 9 MOFs with experimental isotherms. Cases where a software does not find a surface area are denoted by N/A. All software take as input the experimental isotherms.\label{exp_area_table}
+: Calculated surface areas (m^2^/g) for the 9 MOFs with experimental isotherms. Cases where a software does not find a surface area are denoted by N/A. All software take as input the experimental isotherms.\label{tab:exp_area_table}
 
 | | SESAMI 1 (BET)  | SESAMI 1 (BET+ESW)  | SESAMI 2 (LASSO)  | BETSI  | pyGAPS  | BEaTmap  |
 | ------ | ------ | ------- | ------ | ---- | ---- | ----- |
@@ -136,7 +136,7 @@ Table: Calculated surface areas (m^2^/g) for the 9 MOFs with experimental isothe
 | UiO-66 | 1251 | 1228 | 1413 | 1250 | 1249 | 1246 |
 | ZIF-8 | 1092 | 910 | 1214 | N/A | 1082 | 1047 |
 
-Table: Settings used for software for isotherm to surface area calculation. All BET calculations by SESAMI 1 and pyGAPS reported in this work fulfill Rouquerol criteria 1 and 2. SESAMI 1 code requires at least 4 points for a line, while pyGAPS requires at least 3.\label{settings_table}
+: Settings used for software for isotherm to surface area calculation. All BET calculations by SESAMI 1 and pyGAPS reported in this work fulfill Rouquerol criteria 1 and 2. SESAMI 1 code requires at least 4 points for a line, while pyGAPS requires at least 3.\label{tab:settings_table}
 <!-- Need to use grid table for new lines in table. https://stackoverflow.com/questions/11700487/how-do-i-add-a-newline-in-a-markdown-table -->
 
 +-----------------------------------+------------------------------------+-----------------------------------------------------+

@@ -281,9 +281,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   typically derived from the bulk liquid density (16.2
   Å<sup>2</sup>/molecule for N<sub>2</sub>; 14.2 Å<sup>2</sup>/molecule
   for Ar), to obtain the material’s surface area, under the assumption
-  that the adsorbate molecules only form a monolayer (Equation
-  <xref alt="1" rid="eqU003Asurface_area">1</xref>). The surface area
-  obtained this way is referred to as the BET area.</p>
+  that the adsorbate molecules only form a monolayer
+  (<xref alt="Equation 1" rid="eqU003Asurface_area">Equation 1</xref>).
+  The surface area obtained this way is referred to as the BET area.</p>
 </sec>
 <sec id="summary">
   <title>Summary</title>
@@ -410,21 +410,22 @@ a Creative Commons Attribution 4.0 International License (CC BY
   correlation with Zeo++ version 0.3 surface areas
   (<xref alt="Willems et al., 2012" rid="ref-willems2012algorithms" ref-type="bibr">Willems
   et al., 2012</xref>) calculated with a 1.67 Å radius probe
-  N<sub>2</sub> molecule (Tables
-  <xref alt="1" rid="gcmc_area_table">1</xref> and
-  <xref alt="2" rid="corr_table">2</xref>). Nevertheless, all software
-  are in generally good agreement, underscoring the benefit of a
-  computational approach to surface area calculation. The agreement
-  between software is also not surprising due to the similar approach
-  taken by most of the codes of considering multiple subsets of
-  consecutive data points and applying checks like the Rouquerol
-  criteria to select a linear region for BET analysis. Indeed, this
-  agreement is also observed over the 9 experimental isotherms (Table
-  <xref alt="3" rid="exp_area_table">3</xref>). The CIF files used to
-  generate GCMC isotherms, benchmark isotherms, XLSX files of calculated
-  surface areas across different software tools for both GCMC and
-  experimental isotherms, detailed settings used for each software, and
-  analysis scripts employed are available at
+  N<sub>2</sub> molecule
+  (<xref alt="Table 1" rid="tabU003Agcmc_area_table">Table 1</xref> and
+  <xref alt="Table 2" rid="tabU003Acorr_table">Table 2</xref>).
+  Nevertheless, all software are in generally good agreement,
+  underscoring the benefit of a computational approach to surface area
+  calculation. The agreement between software is also not surprising due
+  to the similar approach taken by most of the codes of considering
+  multiple subsets of consecutive data points and applying checks like
+  the Rouquerol criteria to select a linear region for BET analysis.
+  Indeed, this agreement is also observed over the 9 experimental
+  isotherms
+  (<xref alt="Table 3" rid="tabU003Aexp_area_table">Table 3</xref>). The
+  CIF files used to generate GCMC isotherms, benchmark isotherms, XLSX
+  files of calculated surface areas across different software tools for
+  both GCMC and experimental isotherms, detailed settings used for each
+  software, and analysis scripts employed are available at
   <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.</p>
   <table-wrap>
     <caption>
@@ -435,7 +436,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       radius probe N<sub>2</sub> molecule, the high accuracy flag, and
       2,000 Monte Carlo samples per atom are used. All other software
       take as input the GCMC
-      isotherms.<styled-content id="gcmc_area_table"></styled-content></p>
+      isotherms.<styled-content id="tabU003Agcmc_area_table"></styled-content></p>
     </caption>
     <table>
       <colgroup>
@@ -602,7 +603,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       Pearson correlation coefficient are taken with respect to Zeo++
       calculations for each software, over all successful surface area
       calculations for that
-      software.<styled-content id="corr_table"></styled-content></p>
+      software.<styled-content id="tabU003Acorr_table"></styled-content></p>
     </caption>
     <table>
       <colgroup>
@@ -665,7 +666,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       experimental isotherms. Cases where a software does not find a
       surface area are denoted by N/A. All software take as input the
       experimental
-      isotherms.<styled-content id="exp_area_table"></styled-content></p>
+      isotherms.<styled-content id="tabU003Aexp_area_table"></styled-content></p>
     </caption>
     <table>
       <colgroup>
@@ -779,7 +780,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
       calculation. All BET calculations by SESAMI 1 and pyGAPS reported
       in this work fulfill Rouquerol criteria 1 and 2. SESAMI 1 code
       requires at least 4 points for a line, while pyGAPS requires at
-      least 3.<styled-content id="settings_table"></styled-content> </p>
+      least
+      3.<styled-content id="tabU003Asettings_table"></styled-content>
+      </p>
     </caption>
     <table>
       <colgroup>
