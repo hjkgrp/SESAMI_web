@@ -58,10 +58,8 @@ class BETAn:
             "R2 min"
         ]  # Website default is 0.998 
 
-        # Setting these variables to none allows users to set them externally later on.
-        self.eswminimamanual = "No"
+        # Setting these variables to None initially.
         self.eswminima = None
-        self.con1limitmanual = "No"
         self.con1limit = None
 
     def prepdata(
@@ -111,15 +109,13 @@ class BETAn:
             # The first Rouquerol consistency criterion is as follows:
             # The linear region should only be a range of p/p0 in which the value of q(1-p/p0) monotonically increases with p/p0
             # Where q is loading and p/p0 is P_rel. So, the setting of con1limit below is the largest P_rel data point in the isotherm in the first region where q(1-p/p0) is monotonically increasing with p/p0
-            if self.con1limitmanual == "No":
-                self.con1limit = self.getlocalextremum(
-                    data, column="BET_y2", x="P_rel", how="Maxima", which=0, points=3
-                )[0]
+            self.con1limit = self.getlocalextremum(
+                data, column="BET_y2", x="P_rel", how="Maxima", which=0, points=3
+            )[0]
 
-            if self.eswminimamanual == "No":
-                self.eswminima = self.getlocalextremum(
-                    data, column="phi", x="P_rel", how="Minima", which=0, points=3
-                )[0]
+            self.eswminima = self.getlocalextremum(
+                data, column="phi", x="P_rel", how="Minima", which=0, points=3
+            )[0]
 
         return data
 
@@ -1055,8 +1051,7 @@ class BETAn:
         starthighlimit = end - minlength
         if method == "BET+ESW":
             # We are ensuring that the ESW consistency criterion is always satisfied.
-            eswminima = self.eswminima
-            minima = eswminima
+            minima = self.eswminima
             if minima is not None:
                 endlowlimit = minima + 1
                 starthighlimit = (

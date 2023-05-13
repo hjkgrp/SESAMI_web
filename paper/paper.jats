@@ -413,22 +413,31 @@ a Creative Commons Attribution 4.0 International License (CC BY
   N<sub>2</sub> molecule
   (<xref alt="Table 1" rid="tabU003Agcmc_area_table">Table 1</xref> and
   <xref alt="Table 2" rid="tabU003Acorr_table">Table 2</xref>).
+  Differences in performance across software on this benchmark set can
+  be attributed to the differing implementations of linear region
+  identification, or in the case of the SESAMI machine learning model,
+  fundamental differences in how the software calculate surface areas.
   Nevertheless, all software are in generally good agreement,
   underscoring the benefit of a computational approach to surface area
   calculation. The agreement between software is also not surprising due
   to the similar approach taken by most of the codes of considering
   multiple subsets of consecutive data points and applying checks like
-  the Rouquerol criteria to select a linear region for BET analysis.
-  Indeed, this agreement is also observed over the 9 experimental
-  isotherms
-  (<xref alt="Table 3" rid="tabU003Aexp_area_table">Table 3</xref>). The
-  CIF files used to generate GCMC isotherms, benchmark isotherms, XLSX
-  files of calculated surface areas across different software tools for
-  both GCMC and experimental isotherms, detailed settings used for each
-  software, and analysis scripts employed are available at
+  the Rouquerol criteria to select a linear region for BET analysis
+  (SESAMI 1, BETSI, BEaTmap). The agreement between software is also
+  observed over the 9 experimental isotherms
+  (<xref alt="Table 3" rid="tabU003Aexp_area_table">Table 3</xref>).</p>
+  <p>The CIF files used to generate GCMC isotherms, benchmark isotherms,
+  XLSX files of calculated surface areas across different software tools
+  for both GCMC and experimental isotherms, detailed settings used for
+  each software, and analysis scripts employed are available at
   <ext-link ext-link-type="uri" xlink:href="https://github.com/hjkgrp/SESAMI_web">https://github.com/hjkgrp/SESAMI_web</ext-link>.
   Software settings are also reported in
-  <xref alt="Table 4" rid="tabU003Asettings_table">Table 4</xref>.</p>
+  <xref alt="Table 4" rid="tabU003Asettings_table">Table 4</xref>. When
+  a software for isotherm to surface area calculation does not find a
+  surface area, the reason can vary from no ESW minimum being found or
+  no suitable linear region containing an ESW minimum being found in the
+  case of SESAMI 1 (BET+ESW), to an insufficient number of data points
+  in the chosen BET region in the case of pyGAPS.</p>
   <table-wrap>
     <caption>
       <p>Calculated surface areas (m<sup>2</sup>/g) for the 13 MOFs with
