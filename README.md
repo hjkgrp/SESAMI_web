@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/484312417.svg)](https://zenodo.org/badge/latestdoi/484312417)
+
 # Introduction
 Forget about using an old excel spreadsheet from your co-workers! **On-the-fly**, the [SESAMI (Script to Estimate the Surface Area of Materials from their Isotherms) website](https://sesami-web.org/) performs Brunauer-Emmett-Teller (BET), BET+Excess Sorption Work (ESW), and Machine Learning (ML) methods for surface area
 estimation in nanoporous materials. This website allows a user to upload either an [Adsorption Information File (AIF)](https://pubs.acs.org/doi/10.1021/acs.langmuir.1c00122) or a Comma Separated-Values (CSV) file. 
