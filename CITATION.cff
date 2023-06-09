@@ -1,0 +1,62 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Terrones
+  given-names: Gianmarco G.
+  orcid: "https://orcid.org/0000-0001-5360-165X"
+- family-names: Chen
+  given-names: Yu
+  orcid: "https://orcid.org/0000-0002-6530-0974"
+- family-names: Datar
+  given-names: Archit
+  orcid: "https://orcid.org/0000-0002-5276-0103"
+- family-names: Lin
+  given-names: Li-Chiang
+  orcid: "https://orcid.org/0000-0002-2821-9501"
+- family-names: Kulik
+  given-names: Heather J.
+  orcid: "https://orcid.org/0000-0001-9342-0191"
+- family-names: Chung
+  given-names: Yongchul G.
+  orcid: "https://orcid.org/0000-0002-7756-0589"
+contact:
+- family-names: Chung
+  given-names: Yongchul G.
+  orcid: "https://orcid.org/0000-0002-7756-0589"
+doi: 10.5281/zenodo.7953483
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Terrones
+    given-names: Gianmarco G.
+    orcid: "https://orcid.org/0000-0001-5360-165X"
+  - family-names: Chen
+    given-names: Yu
+    orcid: "https://orcid.org/0000-0002-6530-0974"
+  - family-names: Datar
+    given-names: Archit
+    orcid: "https://orcid.org/0000-0002-5276-0103"
+  - family-names: Lin
+    given-names: Li-Chiang
+    orcid: "https://orcid.org/0000-0002-2821-9501"
+  - family-names: Kulik
+    given-names: Heather J.
+    orcid: "https://orcid.org/0000-0001-9342-0191"
+  - family-names: Chung
+    given-names: Yongchul G.
+    orcid: "https://orcid.org/0000-0002-7756-0589"
+  date-published: 2023-06-09
+  doi: 10.21105/joss.05429
+  issn: 2475-9066
+  issue: 86
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 5429
+  title: "SESAMI APP: An Accessible Interface for Surface Area
+    Calculation of Materials from Adsorption Isotherms"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.05429"
+  volume: 8
+title: "SESAMI APP: An Accessible Interface for Surface Area Calculation
+  of Materials from Adsorption Isotherms"
