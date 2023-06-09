@@ -28,15 +28,15 @@ authors:
     corresponding: true
     affiliation: 2
 affiliations:
- - name: Department of Chemical Engineering, Massachusetts Institute of Technology, Cambridge, MA, USA
+ - name: Department of Chemical Engineering, Massachusetts Institute of Technology, Cambridge, MA, United States of America
    index: 1
  - name: School of Chemical Engineering, Pusan National University, Busan, South Korea
    index: 2
- - name: William G. Lowrie Department of Chemical and Biomolecular Engineering, The Ohio State University, Columbus, OH, USA
+ - name: William G. Lowrie Department of Chemical and Biomolecular Engineering, The Ohio State University, Columbus, OH, United States of America
    index: 3
  - name: Department of Chemical Engineering, National Taiwan University, Taipei, Taiwan
    index: 4
- - name: Department of Chemistry, Massachusetts Institute of Technology, Cambridge, MA, USA
+ - name: Department of Chemistry, Massachusetts Institute of Technology, Cambridge, MA, United States of America
    index: 5
 date: 21 March 2023
 bibliography: paper.bib
