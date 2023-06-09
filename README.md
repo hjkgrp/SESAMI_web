@@ -1,3 +1,4 @@
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.05429/status.svg)](https://doi.org/10.21105/joss.05429)
 [![DOI](https://zenodo.org/badge/484312417.svg)](https://zenodo.org/badge/latestdoi/484312417)
 
 # Introduction
@@ -67,7 +68,7 @@ When running the site locally, one should disable the "Share data with developer
 J. Phys. Chem. C 2019, 123, 33, 20195 - 20209. This paper covers SESAMI 1.
 - [Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method](https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01518),
 J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417. This paper covers SESAMI 2.
-- [SESAMI APP: An Accessible Interface for Surface Area Calculation of Materials from Adsorption Isotherms](https://chemrxiv.org/engage/chemrxiv/article-details/641a7f88aad2a62ca124bb27). This paper, currently under review for the Journal of Open Source Software, covers the web interface.
+- [SESAMI APP: An Accessible Interface for Surface Area Calculation of Materials from Adsorption Isotherms](https://joss.theoj.org/papers/10.21105/joss.05429).
 
 # Authors
 - Gianmarco G. Terrones (SESAMI web interface development)
