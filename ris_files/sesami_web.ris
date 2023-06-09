@@ -6,7 +6,18 @@ AU  - Datar, Archit
 AU  - Lin, Li-Chiang
 AU  - Kulik, Heather J.
 AU  - Chung, Yongchul G.
-N1  - doi: 10.26434/chemrxiv-2023-pzkl0
-DO  - 10.26434/chemrxiv-2023-pzkl0
-M3  - doi: 10.26434/chemrxiv-2023-pzkl0
-UR  - https://doi.org/10.26434/chemrxiv-2023-pzkl0
+Y1  - 2023/06/09
+PY  - 2023
+DA  - 2023/06/09
+N1  - doi: 10.21105/joss.05429
+DO  - 10.21105/joss.05429
+T2  - Journal of Open Source Software
+JF  - Journal of Open Source Software
+JO  - J. Open Source Softw.
+SP  - 5429
+VL  - 8
+IS  - 86
+PB  - Open Journals
+M3  - doi: 10.21105/joss.05429
+UR  - https://doi.org/10.21105/joss.05429
+ER  - 
