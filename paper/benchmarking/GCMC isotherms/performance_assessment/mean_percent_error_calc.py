@@ -19,11 +19,12 @@ beatmap_b = [1980, np.NAN, 2094, 3331, 1304, 1414, 1212, 2423, 1791, 1147, 2672,
 zeo_167 = [2397, 3722, 1957, 3164, 1289, 1588, 1510, 1933, 1796, 1690, 3050, 3192, 3944]
 zeo_227 = [1768, 3338, 1783, 2617, 0, 0, 703, 1826, 1496, 1571, 2689, 2306, 3350]
 betsi_c = [1962, 3519, np.NAN, np.NAN, np.NAN, 1381, 1164, 2426, np.NAN, np.NAN, np.NAN, np.NAN, np.NAN] # BETSI option set 3
+betsi_new = [1962, 3519, 1799, 2879, 1201, 1381, 1164, 2426, 1815, 1172, 2082, 1077, 3756] # newer BETSI version, option set 3
 
 # Will loop through the program generated areas and compare to Zeo++
 print('1.67 A probe first')
-areas_to_compare = [BET_a, BET_b, BET_c, pyGAPS, beatmap_a, beatmap_b, betsi_c]
-software_names = ['SESAMI 1 BET', 'SESAMI 1 BET+ESW', 'SESAMI 2 LASSO', 'pyGAPS', 'BEaTmap 1', 'BEaTmap 2', 'BETSI']
+areas_to_compare = [BET_a, BET_b, BET_c, pyGAPS, beatmap_a, beatmap_b, betsi_c, betsi_new]
+software_names = ['SESAMI 1 BET', 'SESAMI 1 BET+ESW', 'SESAMI 2 LASSO', 'pyGAPS', 'BEaTmap 1', 'BEaTmap 2', 'BETSI', 'BETSI_new']
 for i, my_list in enumerate(areas_to_compare):
 	software_predictions = np.array(my_list)
 	pseudo_ground_truth = np.array(zeo_167)
