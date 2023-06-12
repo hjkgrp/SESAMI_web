@@ -8,7 +8,7 @@ def MAPE(Y_actual,Y_Predicted):
     mape = np.mean(np.abs((Y_actual - Y_Predicted)/Y_actual))*100
     return mape
 
-# Using the data from calculated_areas.xlsx
+# Using the data from GCMC_calculated_areas_and_software_settings.xlsx
 
 BET_a = [2001, 3502, 2107, 3828, 1239, 1429, 1221, 2386, 1828, 44, 2439, 2711, 3543] # BET SESAMI
 BET_b = [1933, 3543, 1853, 2862, 1239, 1386, 1168, 2438, 1834, np.NAN, 2181, 934, 3594] # BET+ESW SESAMI
