@@ -78,7 +78,7 @@ J. Phys. Chem. Lett. 2020, 11, 14, 5412 - 5417. This paper covers SESAMI 2.
 # JOSS Paper Supplementary Files
 Files used for software performance benchmarking can be found [here](paper/benchmarking).
 
-Note: In the benchmarking of the [JOSS paper](https://joss.theoj.org/papers/10.21105/joss.05429), an [older version of BETSI](https://github.com/nakulrampal/betsi-gui/tree/89b3ec7a216084d4bb6e2963918c781f32810190) was used. The [newer version](https://github.com/nakulrampal/betsi-gui/tree/e68e3def588ef46116ce32677cdf51401f261701) has implemented bug fixes and makes successful predictions where the previous version did not. The updated BETSI results, corresponding to Tables 1-3 of the paper, are [here](/paper/benchmarking/new_BETSI_benchmark.xlsx).
+Note: In the benchmarking of the [JOSS paper](https://joss.theoj.org/papers/10.21105/joss.05429), an [older version of BETSI](https://github.com/nakulrampal/betsi-gui/tree/89b3ec7a216084d4bb6e2963918c781f32810190) was used. The [newer version](https://github.com/nakulrampal/betsi-gui/tree/e68e3def588ef46116ce32677cdf51401f261701) has implemented bug fixes and makes successful predictions where the previous version did not. The updated BETSI results, corresponding to Tables 1-3 of the paper, are [here](/paper/benchmarking/new_BETSI_benchmark.xlsx) and [here](/paper/benchmarking/new_BETSI_updated_tables.pdf).
 
 # Funding Acknowledgements
 - Gianmarco G. Terrones was supported by the Government of Portugal through the Portuguese Foundation for International Cooperation in Science, Technology and Higher Education and through the MIT Portugal Program. 
