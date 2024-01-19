@@ -220,7 +220,9 @@ def aif_to_txt(content):
         "Pa",
         "pascal",
         "bar",
-        "torr"
+        "torr",
+        "mbar",
+        "mb",
     ]  # May expand on allowed units in the future.
     if units_pressure not in supported_units_pressure:  # This means there is a problem.
         return f"Invalid/unsupported pressure units in AIF file. Supported units are {supported_units_pressure}. Please refer to the example AIF in the Source Code."  # Quits, does not proceed with the rest of the function.
@@ -242,6 +244,8 @@ def aif_to_txt(content):
         conversion_multiplier = 100000 # bar to Pascal
     elif units_pressure == "torr":
         conversion_multiplier = 133.322 # torr to Pascal
+    elif units_pressure in ["mbar", "mb"]:
+        conversion_multiplier = 100 # mbar to Pascal
     pressure_data = [
         str(float(datum) * conversion_multiplier) for datum in pressure_data
     ]  # Results in a list with entries of the correct units.
