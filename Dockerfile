@@ -12,6 +12,7 @@ WORKDIR ${APP_HOME}
 ADD . $APP_HOME
 
 # Installing the necessary packages
+RUN pip install --no-cache-dir werkzeug==2.2.2
 RUN pip install --no-cache-dir flask==2.1.0
 RUN pip install --no-cache-dir pandas==1.4.2
 RUN pip install --no-cache-dir scipy==1.8.0
