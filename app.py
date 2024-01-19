@@ -211,7 +211,8 @@ def aif_to_txt(content):
     units_pressure = None
     for line in content:
         if "_units_pressure" in line:
-            units_pressure = line.split()  # split on spaces
+            line_modified = line.replace("'", "") # Removing all single quotation marks
+            units_pressure = line_modified.split()  # split on spaces
             units_pressure = units_pressure[1]
 
     if units_pressure is None:  # This means there is a problem.
