@@ -40,10 +40,10 @@ jobs:
       uses: conda-incubator/setup-miniconda@v3
       id: conda-setup
       with:
-        miniforge-variant: Mambaforge
-        miniforge-version: latest
+        installer-url: https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
+        use-mamba: true
         activate-environment: SESAMI_web_git
-        cache-downloads: false  # Added to disable caching of the installer
+        cache-downloads: false
     # Get date for the cache key
     - name: Get current time
       uses: josStorer/get-current-time@v2.0.2
