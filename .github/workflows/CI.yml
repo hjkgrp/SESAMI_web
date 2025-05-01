@@ -43,6 +43,7 @@ jobs:
         miniforge-variant: Mambaforge
         miniforge-version: latest
         activate-environment: SESAMI_web_git
+        cache-downloads: false  # Added to disable caching of the installer
     # Get date for the cache key
     - name: Get current time
       uses: josStorer/get-current-time@v2.0.2
