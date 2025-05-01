@@ -46,7 +46,7 @@ jobs:
         channels: conda-forge
         channel-priority: strict
         auto-activate-base: false
-        use-mamba: true
+        use-mamba: false
     
     # Get date for the cache key
     - name: Get current time
@@ -71,7 +71,7 @@ jobs:
     
     # Install environment from yaml file if cache-hit == false
     - name: Update conda env
-      run: mamba env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
+      run: conda env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
       if: steps.cache.outputs.cache-hit != 'true'
 
     # - name: Debugging
