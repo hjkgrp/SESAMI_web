@@ -35,19 +35,24 @@ jobs:
         uname -a
         df -h
         ulimit -a
-    # More info on the whole conda setup: https://github.com/conda-incubator/setup-miniconda
+    
+    # Use an older, more stable version of the action
     - name: Setup Conda
-      uses: conda-incubator/setup-miniconda@v3
-      id: conda-setup
+      uses: conda-incubator/setup-miniconda@v2
       with:
-        installer-url: https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
-        use-mamba: true
+        auto-update-conda: true
+        python-version: ${{ matrix.python-version }}
         activate-environment: SESAMI_web_git
-        cache-downloads: false
+        channels: conda-forge
+        channel-priority: strict
+        auto-activate-base: false
+        use-mamba: true
+    
     # Get date for the cache key
     - name: Get current time
       uses: josStorer/get-current-time@v2.0.2
       id: current-time
+    
     # Actual caching
     - name: Cache conda env
       uses: actions/cache@v3
@@ -63,6 +68,7 @@ jobs:
           ${{ runner.os }}-${{ runner.arch }}-conda-${{ steps.current-time.outputs.year }}-${{
           steps.current-time.outputs.month }}-${{ hashFiles('devtools/conda-envs/mols.yml') }}-${{
           env.CACHE_NUMBER }}
+    
     # Install environment from yaml file if cache-hit == false
     - name: Update conda env
       run: mamba env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
