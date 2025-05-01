@@ -37,7 +37,7 @@ jobs:
         ulimit -a
     # More info on the whole conda setup: https://github.com/conda-incubator/setup-miniconda
     - name: Setup Conda
-      uses: conda-incubator/setup-miniconda@v2
+      uses: conda-incubator/setup-miniconda@v3
       id: conda-setup
       with:
         miniforge-variant: Mambaforge
