@@ -1,7 +1,8 @@
-Dockerfile
-README.md
-*.pyc
-*.pyo
-*.pyd
+.git
+.github
 __pycache__
 .pytest_cache
+user_*
+paper
+tests
+*.pyc
