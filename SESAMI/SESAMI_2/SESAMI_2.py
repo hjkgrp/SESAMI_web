@@ -273,7 +273,7 @@ def calculation_v2_runner(MAIN_PATH, USER_ID):
     # Identifying if any bins are empty (NaN values).
     empty_bins = [] # Will keep track of the indices of the empty bins.
     for i in range(n_bins):
-        if np.isnan(test_data.iloc[0][i+1]): # The +1 is to skip the first column, which is the name.
+        if np.isnan(test_data.iloc[0, i+1]): # The +1 is to skip the first column, which is the name.
             empty_bins.append(i)
     empty_bin_boundaries = [] # Will keep track of the boundaries of the bins that are empty.
     for i in empty_bins:

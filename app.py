@@ -7,6 +7,8 @@ import time
 import stat
 import shutil
 import uuid
+import secrets
+from threading import Lock
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -18,14 +20,36 @@ from datetime import datetime
 from pymongo import MongoClient
 
 app = flask.Flask(__name__)
-
-
-app.secret_key = "The not-so-secret secret key"  # Necessary for sessions.
+app.secret_key = os.environ.get("FLASK_SECRET_KEY") or secrets.token_hex(32)
+app.config.update(
+    MAX_CONTENT_LENGTH=2 * 1024 * 1024,
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=os.environ.get("FLASK_ENV") != "development",
+)
 
 MAIN_PATH = os.path.abspath(".") + "/"  # the main directory
-RUN_SESAMI_RUNNING = False  # This variable keeps track of whether the function run_SESAMI is currently running.
-RUN_SESAMI_RUNNING_SETTIME = time.time() # This variable keeps track of the last time RUN_SESAMI_RUNNING was changed to True; set it to time.time() on startup
-MONGODB_URI = "mongodb+srv://iast:Tuxe5F5TL0oQQjcM@cluster1.jadjk.mongodb.net/data_isotherm?retryWrites=true&w=majority"
+RUN_SESAMI_LOCK = Lock()
+MONGODB_URI = os.environ.get("MONGODB_URI")
+
+
+def user_path(filename=""):
+    """Return a path constrained to the server-generated per-session directory."""
+    user_id = session.get("ID")
+    if not user_id:
+        flask.abort(400, "Session is not initialized. Reload the application.")
+    base = os.path.join(MAIN_PATH, f"user_{user_id}")
+    os.makedirs(base, exist_ok=True)
+    return os.path.join(base, filename)
+
+
+@app.after_request
+def add_security_headers(response):
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    return response
 
 # Next two lines are for later use, when comparing any user uploaded isotherms to the example isotherm.
 with open(f"{MAIN_PATH}example_input/example_input.txt", "r") as f:
@@ -65,7 +89,7 @@ def serve_images(path):
 
 @app.route("/generated_plots/<path:path>")
 def serve_plots(path):
-    return flask.send_from_directory(f'user_{session["ID"]}', path)
+    return flask.send_from_directory(user_path(), path)
 
 
 @app.route("/example_inputs")
@@ -86,19 +110,19 @@ def serve_aif():
 # Writes the uploaded CSV as a CSV and TXT file. Writes them in the users designated folder.
 @app.route("/save_csv_txt", methods=["POST"])
 def save_csv_txt():
-    my_dict = json.loads(
-        flask.request.get_data()
-    )  # This is a dictionary. It is the information passed in from the frontend.
-    my_content = my_dict["my_content"]
+    my_dict = flask.request.get_json(silent=False)
+    my_content = my_dict.get("my_content")
+    if not isinstance(my_content, list) or len(my_content) > 10000:
+        flask.abort(400, "CSV input must contain at most 10,000 rows.")
 
     # Writing the CSV the user provided.
-    with open(f'{MAIN_PATH}user_{session["ID"]}/input.csv', "w", newline="") as f:
+    with open(user_path("input.csv"), "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerows(my_content)
 
     # Converting the CSV to a TXT, and saving the TXT.
-    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "w") as output_file:
-        with open(f'{MAIN_PATH}user_{session["ID"]}/input.csv', "r") as input_file:
+    with open(user_path("input.txt"), "w") as output_file:
+        with open(user_path("input.csv"), "r") as input_file:
             [
                 output_file.write("\t".join(row) + "\n")
                 for row in csv.reader(input_file)
@@ -110,13 +134,13 @@ def save_csv_txt():
 # Writes the uploaded AIF as an AIF and TXT file. Writes them in the users designated folder.
 @app.route("/save_aif_txt", methods=["POST"])
 def save_aif_txt():
-    my_dict = json.loads(
-        flask.request.get_data()
-    )  # This is a dictionary. It is the information passed in from the frontend.
-    my_content = my_dict["my_content"]
+    my_dict = flask.request.get_json(silent=False)
+    my_content = my_dict.get("my_content")
+    if not isinstance(my_content, str) or len(my_content.encode("utf-8")) > 2 * 1024 * 1024:
+        flask.abort(400, "AIF input must be text no larger than 2 MiB.")
 
     # Writing the AIF the user provided.
-    with open(f'{MAIN_PATH}user_{session["ID"]}/input.aif', "w", newline="") as f:
+    with open(user_path("input.aif"), "w", newline="") as f:
         f.writelines(my_content)
 
     # Converting the AIF to a TXT, and saving the TXT.
@@ -251,7 +275,7 @@ def aif_to_txt(content):
         str(float(datum) * conversion_multiplier) for datum in pressure_data
     ]  # Results in a list with entries of the correct units.
 
-    with open(f'{MAIN_PATH}user_{session["ID"]}/input.txt', "w") as f:
+    with open(user_path("input.txt"), "w") as f:
         f.write("\t".join(["Pressure", "Loading"]) + "\n")  # The column titles
         [
             f.write("\t".join([pressure_data[i], adsorption_data[i]]) + "\n")
@@ -263,28 +287,13 @@ def aif_to_txt(content):
     return "All good!"
 
 
-@app.route("/run_SESAMI", methods=["POST"])
 def run_SESAMI():
     # This function runs SESAMI 1 and SESAMI 2 on the user's isotherm.
     # It generates diagnostics (SESAMI 1 and 2) and figures (SESAMI 1).
     # Assumes the user's input.txt has been made by the website already.
 
-    global RUN_SESAMI_RUNNING, RUN_SESAMI_RUNNING_SETTIME  # global variables
-
-    # Only one user can run this function at a time.
-    while RUN_SESAMI_RUNNING:
-        time.sleep(5)  # Sleep for 5 seconds.
-        print("Sleep 5 seconds")
-        if (time.time() - RUN_SESAMI_RUNNING_SETTIME) > 15: # more than fifteen seconds have passed since run_SESAMI was triggered by some user
-            RUN_SESAMI_RUNNING = False
-
-    RUN_SESAMI_RUNNING = True
-    RUN_SESAMI_RUNNING_SETTIME = time.time()
-
     ### SESAMI 1
-    user_options = json.loads(
-        flask.request.get_data()
-    )  # This is a dictionary. It is the information passed in from the frontend.
+    user_options = flask.request.get_json(silent=False)
 
     # Running the SESAMI 1 calculation. Makes plots.
     BET_dict, BET_ESW_dict = calculation_runner(
@@ -295,17 +304,14 @@ def run_SESAMI():
 
     # Packaging the diagnostics to be sent back to the frontend (index.html).
     if BET_dict == 'No eswminima': # This is a problem.
-        RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
         return (
             "No eswminima"  # Quits, does not proceed with the rest of the function.
         )        
     if BET_dict == 'BET linear failure':  # This is a problem.
-        RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
         return (
             "BET linear failure"  # Quits, does not proceed with the rest of the function.
         )
     if BET_ESW_dict == 'BET+ESW linear failure': # This is a problem.
-        RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
         return (
             "BET+ESW linear failure"  # Quits, does not proceed with the rest of the function.
         )        
@@ -373,8 +379,17 @@ def run_SESAMI():
         "plot_number": session["plot_number"] - 1,
     }
 
-    RUN_SESAMI_RUNNING = False  # Important to set this to False when the function is quit, so that other users can use the function.
     return calculation_results  # Sends back SESAMI 1 and 2 diagnostics to be displayed, as well as the plot number so the appropriate plots are displayed.
+
+
+@app.route("/run_SESAMI", methods=["POST"])
+def run_SESAMI_serialized():
+    if not RUN_SESAMI_LOCK.acquire(timeout=30):
+        flask.abort(503, "The calculation service is busy. Please retry shortly.")
+    try:
+        return run_SESAMI()
+    finally:
+        RUN_SESAMI_LOCK.release()
 
 
 def is_number(s):
@@ -416,10 +431,10 @@ def set_ID():
     :return: string, The session ID for this user.
     """
 
-    session["ID"] = uuid.uuid4()  # a unique ID for this session
+    session["ID"] = str(uuid.uuid4())  # a unique ID for this session
     session[
         "permission"
-    ] = True  # keeps track of if user gave us permission to store the isotherms they predict on; defaults to True
+    ] = False  # data collection must be explicitly enabled by the user
     session["plot_number"] = 0  # the number identifier for the SESAMI 1 figures
     # Having unique names for all figures generated (as opposed to overwriting figures) prevents issues in the front end when displaying figures.
     session["raw_plot_number"] = 0  # the number identifier for the raw data figures
@@ -433,10 +448,10 @@ def set_ID():
         for dir in dirs:
             # Note: the way this is set up, don't name folders with the phrase "user_" in them if you want them to be permanent.
             if (
-                target_str in dir and file_age_in_seconds(dir) > 7200
+                dir.startswith(target_str) and file_age_in_seconds(os.path.join(root, dir)) > 7200
             ):  # 7200s is two hours
                 # target_str in dir to find all folders with user_ in them
-                shutil.rmtree(dir)
+                shutil.rmtree(os.path.join(root, dir))
 
     return str(session["ID"])
 
@@ -507,9 +522,7 @@ def process_info():
 
     global EXAMPLE_FILE_CONTENT  # global variable
 
-    if not session[
-        "permission"
-    ]:  # The user has not given us permission to store information on their isotherms
+    if not session.get("permission", False):
         return (
             "",
             204,
@@ -524,7 +537,9 @@ def process_info():
             204,
         )  # 204 no content response. Don't proceed with the rest of the function.
 
-    client = MongoClient(MONGODB_URI)  # connect to public ip google gcloud mongodb
+    if not MONGODB_URI:
+        flask.abort(503, "Data storage is not configured.")
+    client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
 
     db = client.data_isotherm
     collection = db.BET  # The BET collection in isotherm_db database
@@ -532,9 +547,7 @@ def process_info():
     # The keys of this dictionary will be name, email, institution, adsorbent, isotherm_data, adsorbate, ip, and timestamp.
     final_dict = {}
 
-    info_dict = json.loads(
-        flask.request.get_data()
-    )  # This is a dictionary. It is the information passed in from the frontend.
+    info_dict = flask.request.get_json(silent=False)
 
     final_dict["name"] = info_dict["name"]
     final_dict["email"] = info_dict["email"]
@@ -579,7 +592,9 @@ def change_permission():
     """
 
     # Grab data
-    permission = json.loads(flask.request.get_data())
+    permission = flask.request.get_json(silent=False)
+    if not isinstance(permission, bool):
+        flask.abort(400, "permission must be a boolean")
     session["permission"] = permission
 
     return str(permission)
@@ -637,5 +652,4 @@ def show_data():
 
 
 if __name__ == "__main__":
-    print(MONGODB_URI)
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=False)

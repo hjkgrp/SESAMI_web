@@ -1,90 +1,31 @@
 name: CI
 
 on:
-  # GitHub has started calling new repo's first branch "main" https://github.com/github/renaming
-  # Existing codes likely still have "master" as the primary branch
-  # Both are tracked here to keep legacy and new codes working
   push:
-    branches:
-      - "master"
-      - "main"
+    branches: [main]
   pull_request:
-    branches:
-      - "master"
-      - "main"
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
-  CI:
-    name: Test on ${{ matrix.os }}, Python ${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: ["ubuntu-latest"]
-        python-version: ["3.8"]
-#         include:
-#           - os: ubuntu-latest
-#             python-version: 3.7
-    defaults:
-      run:
-        shell: bash -l {0}
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt pytest pip-audit
+      - run: python -m pytest -q
+      - run: python -m pip_audit -r requirements.txt
 
-    - name: Additional info about the build
-      run: |
-        uname -a
-        df -h
-        ulimit -a
-    
-    # Use an older, more stable version of the action
-    - name: Setup Conda
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        auto-update-conda: true
-        python-version: ${{ matrix.python-version }}
-        activate-environment: SESAMI_web_git
-        channels: conda-forge
-        channel-priority: strict
-        auto-activate-base: false
-        use-mamba: false
-    
-    # Get date for the cache key
-    - name: Get current time
-      uses: josStorer/get-current-time@v2.0.2
-      id: current-time
-    
-    # Actual caching
-    - name: Cache conda env
-      uses: actions/cache@v3
-      id: cache
-      env:
-        # Increase this value to reset cache if mols.yml has not changed
-        CACHE_NUMBER: 0
-      with:
-        # TODO: Figure out how to avoid this hard coded path. For some reason $CONDA does not work.
-        path: /usr/share/miniconda/envs/SESAMI_web_git
-        key:
-          # Key contains current year and month to ensure it is updated once a month
-          ${{ runner.os }}-${{ runner.arch }}-conda-${{ steps.current-time.outputs.year }}-${{
-          steps.current-time.outputs.month }}-${{ hashFiles('devtools/conda-envs/mols.yml') }}-${{
-          env.CACHE_NUMBER }}
-    
-    # Install environment from yaml file if cache-hit == false
-    - name: Update conda env
-      run: conda env update -n SESAMI_web_git -f devtools/conda-envs/env.yml
-      if: steps.cache.outputs.cache-hit != 'true'
-
-    # - name: Debugging
-    #   run: |
-    #     pwd
-    #     ls
-
-    # - name: Install package
-    #   run: |
-    #     pip install -e .
-    #     pip install pytest-cov codecov
-    #     conda list
-    
-    - name: Run tests
-      run: |
-        python -m pytest
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --tag sesami-web:test .

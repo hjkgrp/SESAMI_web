@@ -97,7 +97,7 @@ class BETAn:
         data["BETy"] = data["P_rel"] / (data["Loading"] * (1 - data["P_rel"]))
         data["BET_y2"] = data["Loading"] * (1 - data["P_rel"]) # Used for first Rouquerol consistency criterion. See SESAMI 1 paper.
         data["phi"] = (
-            data["Loading"] / 1000 * self.R * self.T * scipy.log(data["P_rel"])
+            data["Loading"] / 1000 * self.R * self.T * np.log(data["P_rel"])
         )  # J/g ; equation 1 of https://doi.org/10.1021/acs.jpcc.9b02116. Factor of 1000 to convert from 1/kg to 1/g
 
         # We will also add a line here that calculates the consistency 1 limit. This will ensure that the we need to compute the upper limit of consistency1 only once.
@@ -184,7 +184,7 @@ class BETAn:
         for i in np.arange(start + points, end - points + 1, 1):
             regdata = data[i - points : i + points + 1][["target", "x"]]
             res = smf.ols("target ~ x", regdata).fit()
-            slope = res.params[1]
+            slope = res.params.iloc[1]
             data.at[i, "slopes"] = slope
         minimas = data.index[
             (data["slopes"].shift(1).fillna(0) < 0)
@@ -266,7 +266,7 @@ class BETAn:
 
         """
         # See equation 1 of 10.1021/acs.jpcc.9b02116. The SESAMI 1 paper.
-        phi = load / 1000 * 8.314 * T * scipy.log(p_rel)
+        phi = load / 1000 * 8.314 * T * np.log(p_rel)
 
         return phi
 
@@ -673,7 +673,7 @@ class BETAn:
         data = data.copy(deep=True)
 
         data["phi"] = (
-            data["Loading"] / 1000 * self.R * self.T * scipy.log(data["P_rel"])
+            data["Loading"] / 1000 * self.R * self.T * np.log(data["P_rel"])
         )  # J/g ; equation 1 of https://doi.org/10.1021/acs.jpcc.9b02116. Factor of 1000 to convert from 1/kg to 1/g
 
         # Now, we will use our function to get minima.
@@ -747,7 +747,7 @@ class BETAn:
         ax.set_ylim(ax.get_ylim())
 
         ax.xaxis.label.set_text("q / mol/kg")
-        ax.yaxis.label.set_text("$\Phi$" + " / J/g")
+        ax.yaxis.label.set_text(r"$\Phi$" + " / J/g")
         if maketitle == "Yes":
             ax.set_title("ESW Plot")
         ax.set_xlim((0, ax.get_xlim()[1]))
@@ -956,7 +956,7 @@ class BETAn:
             con3 = "No"
 
         # Checking for fourth consistency criterion
-        x_BET4 = 1 / (scipy.sqrt(C) + 1)
+        x_BET4 = 1 / (np.sqrt(C) + 1)
         if np.abs((x_BET4 - x_BET3) / x_BET3) < 0.2: # 20% tolerance
             con4 = "Yes"
         else:

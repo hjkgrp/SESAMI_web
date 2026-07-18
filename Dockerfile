@@ -1,26 +1,17 @@
-# Based on the example at https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service
+FROM python:3.12-slim
 
-# Getting base image
-FROM python:3.10-slim
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    APP_HOME=/app
 
-# Allow statements and log messages to immediately appear in the Knative logs
-ENV PYTHONUNBUFFERED True
-
-# Adding the necessary files, like app.py, to the image
-ENV APP_HOME /app
 WORKDIR ${APP_HOME}
-ADD . $APP_HOME
 
-# Installing the necessary packages
-RUN pip install --no-cache-dir werkzeug==2.2.2
-RUN pip install --no-cache-dir flask==2.1.0
-RUN pip install --no-cache-dir pandas==1.4.2
-RUN pip install --no-cache-dir scipy==1.8.0
-RUN pip install --no-cache-dir matplotlib==3.5.2
-RUN pip install --no-cache-dir statsmodels==0.13.2
-RUN pip install --no-cache-dir scikit-learn==1.0.2
-RUN pip install --no-cache-dir gunicorn==20.1.0
-RUN pip install --no-cache-dir pymongo[srv]==4.1.1
+RUN addgroup --system app && adduser --system --ingroup app app
+COPY requirements.txt .
+RUN python -m pip install --no-cache-dir --upgrade pip \
+    && python -m pip install --no-cache-dir -r requirements.txt
+COPY --chown=app:app . .
 
-# Running the website
-CMD exec gunicorn --bind 0.0.0.0:8000 --workers 1 --threads 4 --timeout 0 app:app
+USER app
+EXPOSE 8000
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "1", "--threads", "4", "--timeout", "120", "--access-logfile", "-", "app:app"]
